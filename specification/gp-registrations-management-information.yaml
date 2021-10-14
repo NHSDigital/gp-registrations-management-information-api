@@ -1,0 +1,47 @@
+openapi: "3.0.0"
+x-nhs-api-spec-guid: 4631c387-3793-4413-8c61-395e014864b2
+x-meta:
+  service_name: "gp-registrations-management-information"
+  short_service_name: "gprmi"
+  product_display_name: "GP Registrations Management Information API"
+  service_base_path: "gp-registrations-mi"
+  product_description: "A new MI solution to be implemented by all suppliers"
+  pipeline_name_prefix: "GP-Registrations-Management-Information"
+info:
+  version: 0.0.1
+  title: GP Registrations Management Information API
+  description: |
+    # Overview
+    Currently, suppliers on the 2.2b specification for GP2GP supply management information (MI) via a MESH mailbox, on a weekly basis.
+    We are proposing a new MI solution to be implemented by all suppliers. This solution would be for suppliers to send events across the registrations flow in JSON format via a RESTful API.
+  license:
+    name: MIT
+  contact:
+    url: 'https://nhsconnect.github.io/prm-external-developer-website/rfcs/'
+    email: alina.balusescu1@nhs.net
+paths:
+  /registration/{registrationId}/{registrationEvent}:
+    post:
+      summary: Submit registration event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information.
+        See the [the GP registration management information RFC](https://nhsconnect.github.io/prm-external-developer-website/rfcs/) for how to structure the payload data.
+      parameters:
+        - name: registrationId
+          in: path
+          required: true
+          description: The id of the registration event
+          schema:
+            type: string
+        - name: registrationEvent
+          in: path
+          required: true
+          description: The type of registration event to be recorded
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            'application/json': {}

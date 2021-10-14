@@ -1,0 +1,65 @@
+SERVICE_NAME: gp-registrations-management-information
+PRODUCT_DISPLAY_NAME: GP Registrations Management Information API
+DESCRIPTION: A new MI solution to be implemented by all suppliers
+APIGEE_ENVIRONMENTS:
+  - name: internal-dev
+    display_name: Internal Development
+  - name: internal-dev-sandbox
+    display_name: Internal Development Sandbox
+  - name: internal-qa
+    display_name: Internal QA
+  - name: internal-qa-sandbox
+    display_name: Internal QA Sandbox
+  - name: ref
+    display_name: Reference
+  - name: sandbox
+    display_name: Sandbox
+# Enable int environment when ready by uncommenting:
+#   - name: int
+#     display_name: Integration Testing
+---
+meta:
+  api:
+    name: gp-registrations-management-information
+    guid: e93d2091-a081-4aab-a578-5e751c51aac6
+    spec_guids:
+      - 4631c387-3793-4413-8c61-395e014864b2
+  schema_version: 1.1
+apigee:
+  environments:
+{% for ENV in APIGEE_ENVIRONMENTS %}
+{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
+{% set NAME = SERVICE_NAME + '-' + ENV.name %}
+  - name: {{ ENV.name }}
+    products:
+      - name: {{ NAME }}
+        approvalType: auto
+        attributes:
+          - name: access
+            value: public
+          - name: ratelimit
+            value: 300pm
+        description: {{ DESCRIPTION }}
+        displayName: {{ TITLE }}
+        environments: [ {{ ENV.name }} ]
+        proxies:
+          - {{ SERVICE_NAME }}-{{ ENV.name }}
+          - identity-service-{{ ENV.name }}
+        scopes:
+          - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
+          - 'urn:nhsd:apim:user-nhs-id:aal3:{{ SERVICE_NAME }}'
+        quota: '300'
+        quotaInterval: '1'
+        quotaTimeUnit: minute
+    specs:
+      - name: {{ NAME }}
+        path: {{ SERVICE_NAME }}.json
+    api_catalog:
+      - edgeAPIProductName: {{ NAME }}
+        anonAllowed: true
+        description: {{ DESCRIPTION }}
+        requireCallbackUrl: false
+        title: {{ TITLE }}
+        visibility: false
+        specId: {{ NAME }}
+{% endfor %}
