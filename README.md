@@ -1,6 +1,8 @@
 # GP Registrations Management Information API
 
 ![Build](https://github.com/NHSDigital/gp-registrations-management-information/workflows/Build/badge.svg?branch=master)
+[![Build Status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status/GP-Registrations-Management-Information/GP-Registrations-Management-Information-Build?branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=332&branchName=master)
+[![Build Status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status/GP-Registrations-Management-Information/GP-Registrations-Management-Information-Release?branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=334&branchName=master)
 
 This is a RESTful HL7® FHIR® API specification for the *Template API*.
 
