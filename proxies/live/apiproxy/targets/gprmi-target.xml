@@ -36,7 +36,7 @@
     </HTTPTargetConnection>
   -->
   <HTTPTargetConnection>
-    <URL>http://dev-gp-registrations-mi-alb-783279340.eu-west-2.elb.amazonaws.com</URL>
+    <URL>http://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env</URL>
     <Properties>
       <Property name="supports.http10">true</Property>
       <Property name="request.retain.headers">User-Agent,Referer,Accept-Language</Property>
