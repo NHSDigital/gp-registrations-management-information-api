@@ -16,6 +16,9 @@
         <Name>OauthV2.VerifyAccessToken</Name>
       </Step>
       <Step>
+        <Name>VerifyApiKey.FromHeader</Name>
+      </Step>
+      <Step>
         <Name>Quota</Name>
       </Step>
       <Step>
