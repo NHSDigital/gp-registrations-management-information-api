@@ -13,10 +13,14 @@ APIGEE_ENVIRONMENTS:
   - name: ref
     display_name: Reference
   - name: sandbox
+    portal_visibility: false
     display_name: Sandbox
   - name: int
-    make_spec_visible: true
     display_name: Integration Testing
+  - name: prod
+    approval_type: manual
+    portal_visibility: false
+    display_name: Production
 ---
 meta:
   api:
@@ -33,7 +37,7 @@ apigee:
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
-        approvalType: auto
+        approvalType: {{ ENV.approval_type | default('auto') }}
         attributes:
           - name: access
             value: public
@@ -60,6 +64,6 @@ apigee:
         description: {{ DESCRIPTION }}
         requireCallbackUrl: false
         title: {{ TITLE }}
-        visibility: {{ ENV.make_spec_visible | default(false) }}
+        visibility: {{ ENV.portal_visibility | default(true) }}
         specId: {{ NAME }}
 {% endfor %}
