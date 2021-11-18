@@ -35,27 +35,21 @@ extends:
     spec_file: ${{ variables.spec_file }}
     apigee_deployments:
       - environment: internal-dev
-        make_spec_visible: true  # Off by default. Turn on to allow expose API developers can subscribe their Apps to
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
       - environment: internal-qa
-        make_spec_visible: true
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
       - environment: internal-qa-sandbox
         proxy_path: sandbox
-        make_spec_visible: true
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
-    # make_spec_visible is false for sandbox environment
     # (App subscription make sense for most sandbox implementations)
       - environment: sandbox
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-smoke-tests.yml
-    # Enable int environment when ready by uncommenting:
       - environment: int
-        make_spec_visible: true
         depends_on:
           - internal_qa
           - internal_qa_sandbox

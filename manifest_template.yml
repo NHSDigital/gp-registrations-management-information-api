@@ -13,9 +13,9 @@ APIGEE_ENVIRONMENTS:
   - name: ref
     display_name: Reference
   - name: sandbox
+    portal_visibility: false
     display_name: Sandbox
   - name: int
-    make_spec_visible: true
     display_name: Integration Testing
 ---
 meta:
@@ -60,6 +60,6 @@ apigee:
         description: {{ DESCRIPTION }}
         requireCallbackUrl: false
         title: {{ TITLE }}
-        visibility: {{ ENV.make_spec_visible | default(false) }}
+        visibility: {{ ENV.portal_visibility | default(true) }}
         specId: {{ NAME }}
 {% endfor %}
