@@ -33,6 +33,8 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
+    jinja_templates:
+      TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
@@ -59,3 +61,5 @@ extends:
         depends_on:
           - internal_qa
           - internal_qa_sandbox
+        jinja_templates:
+          TARGET_URL: https://u0r7aqgvvj.execute-api.eu-west-2.amazonaws.com/prod-env
