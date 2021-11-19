@@ -27,7 +27,7 @@
     </HTTPTargetConnection>
   -->
   <HTTPTargetConnection>
-    <URL>https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env</URL>
+    <URL>{{ TARGET_URL }}</URL>
     <Properties>
       <Property name="supports.http10">true</Property>
       <Property name="request.retain.headers">User-Agent,Referer,Accept-Language</Property>
