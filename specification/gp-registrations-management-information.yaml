@@ -20,7 +20,7 @@ info:
     url: 'https://nhsconnect.github.io/prm-external-developer-website/rfcs/'
     email: ian.griffiths12@nhs.net
 paths:
-  /registration/{registrationEvent}:
+  /registration/{version}/{registrationEvent}:
     post:
       summary: Submit registration event
       operationId: postData
@@ -28,6 +28,12 @@ paths:
         Use this endpoint to submit GP registration management information.
         See the [the GP registration management information RFC](https://nhsconnect.github.io/prm-external-developer-website/rfcs/) for how to structure the payload data.
       parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
         - name: registrationEvent
           in: path
           required: true
