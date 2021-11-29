@@ -12,7 +12,7 @@ info:
   title: GP Registrations Management Information API
   description: |
     # Overview
-    Use this API to send management information about GP registrations to us at NHS Digital.
+    Use this API to send real-time management information about GP registrations to us at NHS Digital.
     
     Currently you can send us information about the following type of events:
     - when GP2GP registrations started
