@@ -5,15 +5,20 @@ x-meta:
   short_service_name: "gprmi"
   product_display_name: "GP Registrations Management Information API"
   service_base_path: "gp-registrations-mi"
-  product_description: "A new MI solution to be implemented by all suppliers"
+  product_description: "An API to capture GP Registrations management information (MI)"
   pipeline_name_prefix: "GP-Registrations-Management-Information"
 info:
   version: 0.0.1
   title: GP Registrations Management Information API
   description: |
     # Overview
-    Currently, suppliers on the 2.2b specification for GP2GP supply management information (MI) via a MESH mailbox, on a weekly basis.
-    We are proposing a new MI solution to be implemented by all suppliers. This solution would be for suppliers to send events across the registrations flow in JSON format via a RESTful API.
+    Use this API to send management information about GP registrations to us at NHS Digital.
+    
+    Currently you can send us information about the following type of events:
+    - when GP2GP registrations started
+    - when an EHR has been Generated
+    
+    This API replaces the existing weekly submission of GP2GP information sent to us via a MESH mailbox, as required by GP2GP V2.2b.
   license:
     name: MIT
   contact:
