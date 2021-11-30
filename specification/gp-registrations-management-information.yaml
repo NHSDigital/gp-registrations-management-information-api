@@ -50,7 +50,7 @@ info:
     ## Environments and testing
 
     ### Sandbox testing
-    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing) is in development and will be avaialble for you soon.
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing) is in development and will be available for you soon.
 
     ### Integration testing
     Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
