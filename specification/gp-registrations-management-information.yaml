@@ -11,14 +11,55 @@ info:
   version: 0.0.1
   title: GP Registrations Management Information API
   description: |
-    # Overview
+    ## Overview
     Use this API to send real-time management information about GP registrations to us at NHS Digital.
-    
+
     Currently you can send us information about the following type of events:
-    - when GP2GP registrations started
-    - when an EHR has been Generated
-    
+    * when GP2GP registrations started
+    * when an EHR has been Generated
+
+    You cannot:
+    * read any management information data submitted to us
+
     This API replaces the existing weekly submission of GP2GP information sent to us via a MESH mailbox, as required by GP2GP V2.2b.
+
+    ## Who can use this API
+    This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development.
+    You must do this before you can go live (see ‘Onboarding’ below). 
+
+    ## Related APIs
+    [GP2GP - HL7 API](https://digital.nhs.uk/developer/api-catalogue/gp2gp) 
+
+    ## API status
+    This API is in [Alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#api-status)
+
+    ## Technology
+    This API uses HTTP POST to submit data.
+
+    ## Network access
+    This API is only available on the internet. For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis#internet-only-apis).
+
+    ## Security and authorisation
+
+    ### Application-restricted access
+    This access mode is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis),
+    meaning we authenticate the calling application but not the end user.
+    To use this access mode, use the following security pattern:
+    * [Application-restricted RESTful APIs - API key authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-api-key-authentication)
+
+    ## Environments and testing
+
+    ### Sandbox testing
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing) is in development and will be available for you soon.
+
+    ### Integration testing
+    Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
+    * is for formal integration testing
+    * is for receiving data quality reports of test data
+
+    ## Onboarding
+    You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead. More details on the onboarding process to follow.
+
   license:
     name: MIT
   contact:
