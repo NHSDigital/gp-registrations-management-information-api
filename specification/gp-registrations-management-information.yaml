@@ -12,18 +12,18 @@ info:
   title: GP Registrations Management Information API
   description: |
     ## Overview
-    Use this API to send real-time management information about GP registrations to us at NHS Digital. As part of the registration process, a protocol called GP2GP is used to transfer electronic health records (EHR). It consists of multiple messages going back and forth between the software systems of two GP practices - the one sending the electronic health record across and the one receiving the EHR of a patient).
+    Use this API to send real-time management information about GP registrations to us at NHS Digital. As part of the registration process, a protocol called [GP2GP](https://digital.nhs.uk/developer/api-catalogue/gp2gp) is used to transfer electronic health records (EHR). It consists of multiple messages going back and forth between the software systems of two GP practices - the one sending the electronic health record across and the one receiving the EHR of a patient).
 
     Currently you can send us information about the following type of events:
-    * when GP2GP registration has started - the first message initiated as part of the GP2GP protocol
-    * when an electronic health record (EHR) has been generated
+    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP protocol
+    * when the sending practice generates the electronic health record
+    * when the requesting practice requests an EHR
+    * when the sending practice sends an EHR
     
     With upcoming features you will be able to send us information about other type of events, such as (and not exclusively):
-    * when an EHR has been requested
-    * when an EHR has been sent by the sending practice
-    * when an EHR has been validated by the receiving practice
-    * when an EHR has been integrated by the receiving practice
-    * when a GP2GP registration has been completed
+    * when the requesting practice validates an EHR
+    * when the requesting practice integrates an EHR
+    * when the requesting practice has completed the GP2GP registration
 
     You cannot:
     * read any management information data submitted to us
