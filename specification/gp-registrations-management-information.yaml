@@ -12,7 +12,11 @@ info:
   title: GP Registrations Management Information API
   description: |
     ## Overview
-    Use this API to send real-time management information about GP registrations to us at NHS Digital. As part of the registration process, a protocol called [GP2GP](https://digital.nhs.uk/developer/api-catalogue/gp2gp) is used to transfer electronic health records (EHR). It consists of multiple messages going back and forth between the software systems of two GP practices - the one sending the electronic health record across and the one receiving the EHR of a patient).
+    Use this API to send real-time management information about GP registrations to us at NHS Digital. As part of the exisitng registration process, a protocol called [GP2GP](https://digital.nhs.uk/developer/api-catalogue/gp2gp) is used to transfer electronic health records (EHR). It consists of multiple messages going back and forth between the software systems of two GP practices - the one sending the electronic health record across and the one receiving the EHR of a patient).
+    As the registration process is being updated a new protocol called [GP Connect](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir) will be used to transfer the EHR using a slightly different record migration model.
+    This API will receive Management Information from GP practices using either protocol.
+
+    ### GP2GP
 
     Currently you can send us information about the following type of events:
     * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP protocol
@@ -25,6 +29,22 @@ info:
     * when the requesting practice integrates an EHR
     * when the requesting practice has completed the GP2GP registration
 
+    ### GP Connect
+
+    Currently you can send us information about the following type of events:
+    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP Connect protocol
+    * when the request is sent to migrate the structured record
+    * when the response has been received from migrating the structured record
+
+    With upcoming features you will be able to send us information about other type of events, such as (and not exclusively):
+    * when the request is sent to migrate a document
+    * when the response has been received from migrating a document
+    * when the EHR is ready to integrate
+    * when the EHR has been integrated
+    * when the registration has been completed
+    * when an internal transfer of an EHR has been completed between to GP practices using the same supplier system
+    * when an error occurs
+
     You cannot:
     * read any management information data submitted to us
 
@@ -36,6 +56,12 @@ info:
 
     ## Related APIs
     Use [GP2GP - HL7 API](https://digital.nhs.uk/developer/api-catalogue/gp2gp) to learn more the existing GP2GP protocol.
+
+    Use the following to learn more about the newer GP Connect protocol:
+    * [GP Connect Access Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-document-fhir)
+    * [GP Connect Access Record: HTML - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-html-fhir)
+    * [GP Connect Access Record: Structured - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir)
+    * [GP Connect Send Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-send-document-fhir)
 
     ## API status
     This API is in [alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#api-status) 
