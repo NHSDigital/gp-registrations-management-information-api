@@ -129,11 +129,50 @@ components:
           type: string
           description: The ODS code of the practice generating this event
       example:
-        eventId: 1234-123456-1234-123454
+        eventId: 1234-1234-1234-1234
         eventGeneratedDateTime: 2020-02-08T09:30:26Z
         registrationId: 6235-123456-8947-127834
         reportingSystemSupplier: supplierOne
         reportingPracticeOdsCode: ABC1234
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+        - status
+        - message
+        - errors
+  responses:
+    OK:
+      description: OK. Expected response to a valid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              eventId:
+                type: string
+                example: 1234-1234-1234-1234
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
 
 tags:
   - name: GP2GP
@@ -194,12 +233,8 @@ paths:
                         registrationStartedDateTime: 2020-02-08T08:30:26Z
       responses:
         '200':
-          description: OK. Expected response to a valid request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  eventId:
-                    type: string
-                    example: 1234-123456-1234-123454
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
