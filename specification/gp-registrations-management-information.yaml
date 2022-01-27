@@ -239,6 +239,39 @@ components:
         type: allergy/flag
         uniqueIdentifier: 1323-132345-1323-132345
         reason: Doesn't map properly
+    Degrade:
+      type: object
+      required:
+        - type
+        - metadata
+        - code
+      properties:
+        type:
+          type: string
+          description: The type/category of this degrade
+        metadata:
+          type: string
+          description: Any additional metadata that provides valuable intel on this degrade
+        code:
+          type: object
+          properties:
+            coding:
+              type: array
+              items:
+                properties:
+                  code:
+                    type: string
+                    description: The designated code for this particular degrade
+                  system:
+                    type: string
+                    description: The system in which this degrade occurred
+      example:
+        type: core_ehr / attachment
+        metadata: other degrades metadata
+        code:
+          coding:
+            - code: 886721000000107
+              system: http://snomed.info/sct
     Error:
       type: object
       properties:
@@ -532,7 +565,105 @@ paths:
                       gpTransferMetadata:
                         conversationId: 4345-9869-4930-6840
                         transferEventDateTime: 2020-02-08T08:30:26Z
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 
+  /registration/{version}/gp2gp/ehrValidated:
+    post:
+      tags:
+        - GP2GP
+      summary: Submit EHR validated event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is validated.
+      parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
+      requestBody:
+        description: The request body required for the EHR validated event
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BaseEvent'
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: '#/components/schemas/Registration'
+                        gpTransferMetadata:
+                          $ref: '#/components/schemas/GP Transfer Metadata'
+                        ehr:
+                          properties:
+                            ehrTotalSizeBytes:
+                              type: integer
+                              description: The total size in bytes of the GP2GP message as reconstituted by the receiving system including all attachments received
+                            ehrStructuredSizeBytes:
+                              type: integer
+                              description: The total size in bytes of structured part of the GP2GP message as received by the receiving system (attachments are NOT to be included)
+                            attachment:
+                              type: array
+                              description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
+                              items:
+                                $ref: '#/components/schemas/Attachment'
+                            placeholder:
+                              type: array
+                              description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
+                              items:
+                                $ref: '#/components/schemas/Placeholder'
+                            degrade:
+                              type: array
+                              description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
+                              items:
+                                $ref: '#/components/schemas/Degrade'
+
+                  example:
+                    payload:
+                      registration:
+                        requestingPracticeOdsCode: ABC1234
+                        sendingPracticeOdsCode: XYZ4567
+                      gpTransferMetadata:
+                        conversationId: 4345-9869-4930-6840
+                        transferEventDateTime: 2020-02-08T08:30:26Z
+                      ehr:
+                        ehrTotalSizeBytes: 5699433
+                        ehrStructuredSizeBytes: 4096
+                        attachment:
+                          - attachmentId: 3424-342456-3424-342456
+                            clinicalType: Scanned document
+                            mimeType: application/pdf
+                            sizeBytes: 3084322
+                          - attachmentId: 1323-132345-1323-132345
+                            mimeType: audio/mpeg
+                            sizeBytes: 24352346
+                        placeholder:
+                          - placeholderId: 9876-987654-9876-987654
+                            attachmentId: 1323-132345-1323-132345
+                            generatedBy: XYZ4567
+                            reason: 1
+                            originalMimeType: audio/mpeg
+                        degrade:
+                          - type: core_ehr / attachment
+                            metadata: other degrades metadata
+                            code:
+                              coding:
+                                - code: 886721000000107
+                                  system: http://snomed.info/sct
       responses:
         '200':
           $ref: '#/components/responses/OK'
