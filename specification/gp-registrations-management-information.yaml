@@ -794,3 +794,61 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
+  /registration/{version}/gpconnect/registrationStarted:
+    post:
+      tags:
+        - GP Connect
+      summary: Submit registration event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information for when a registration is started.
+      parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
+      requestBody:
+        description: The request body required for the registration started event
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BaseEvent'
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          type: object
+                          description: An object that contains information about the registration process
+                          properties:
+                            registrationType:
+                              type: string
+                              description: The type of this registration (newRegistrant, etc...)
+                            registrationStartedDateTime:
+                              type: string
+                              description: The ISO 8601 Date time in UTC of when the registration started
+                            requestingPracticeOdsCode:
+                              type: string
+                              description: The ODS code of the practice requesting the EHR
+                  example:
+                    payload:
+                      registration:
+                        registrationType: newRegistrant
+                        requestingPracticeOdsCode: ABC1234
+                        registrationStartedDateTime: 2020-02-08T08:30:26Z
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
