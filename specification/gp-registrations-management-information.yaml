@@ -303,6 +303,21 @@ components:
         reason:
     Error:
       type: object
+      required:
+        - errorCode
+        - errorDescription
+      properties:
+        errorCode:
+          type: string
+          description: The error code associated with this error
+        errorDescription:
+          type: string
+          description: The description of the error that has occurred
+      example:
+        errorCode: FD34
+        errorDescription: Could not connect to sending practice
+    Rest Error:
+      type: object
       properties:
         status:
           type: string
@@ -332,13 +347,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Rest Error'
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Rest Error'
 
 
 tags:
@@ -1316,6 +1331,62 @@ paths:
                       integration:
                         integrationStatus: filed as attachment/ suppressed/ merged/ rejected
                         reason: Reason for integration status
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /registration/{version}/gpconnect/error:
+    post:
+      tags:
+        - GP Connect
+      summary: Submit error event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
+      parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
+      requestBody:
+        description: The request body required for the error event
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BaseEvent'
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: '#/components/schemas/Registration'
+                        gpTransferMetadata:
+                          $ref: '#/components/schemas/GP Transfer Metadata'
+                        error:
+                          $ref: '#/components/schemas/Error'
+                  example:
+                    payload:
+                      registration:
+                        requestingPracticeOdsCode: ABC1234
+                        sendingPracticeOdsCode: XYZ4567
+                      gpTransferMetadata:
+                        conversationId: 4345-9869-4930-6840
+                        transferEventDateTime: 2020-02-08T08:30:26Z
+                      error:
+                        errorCode: FD34
+                        errorDescription: Could not connect to sending practice
       responses:
         '200':
           $ref: '#/components/responses/OK'
