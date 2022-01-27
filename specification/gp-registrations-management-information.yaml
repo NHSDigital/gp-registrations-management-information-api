@@ -1009,7 +1009,7 @@ paths:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
                           $ref: '#/components/schemas/GP Transfer Metadata'
-                        structuredRecordMigration:
+                        attachment:
                           $ref: '#/components/schemas/Attachment'
                   example:
                     payload:
@@ -1024,6 +1024,69 @@ paths:
                         clinicalType: Scanned document
                         mimeType: application/pdf
                         sizeBytes: 3084322
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /registration/{version}/gpconnect/migrateDocumentResponse:
+    post:
+      tags:
+        - GP Connect
+      summary: Submit Migrate document response event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information immediately after the Requesting System receives a response on every individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
+      parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
+      requestBody:
+        description: The request body required for the migrate document response event
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BaseEvent'
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: '#/components/schemas/Registration'
+                        gpTransferMetadata:
+                          $ref: '#/components/schemas/GP Transfer Metadata'
+                        attachment:
+                          $ref: '#/components/schemas/Attachment'
+                        documentMigration:
+                          $ref: '#/components/schemas/Migration'
+                  example:
+                    payload:
+                      registration:
+                        requestingPracticeOdsCode: ABC1234
+                        sendingPracticeOdsCode: XYZ4567
+                      gpTransferMetadata:
+                        conversationId: 4345-9869-4930-6840
+                        transferEventDateTime: 2020-02-08T08:30:26Z
+                      attachment:
+                        attachmentId: 3424-342456-3424-342456
+                        clinicalType: Scanned document
+                        mimeType: application/pdf
+                        sizeBytes: 3084322
+                      documentMigration:
+                        status: FAILURE
+                        reason: Large file size
       responses:
         '200':
           $ref: '#/components/responses/OK'
