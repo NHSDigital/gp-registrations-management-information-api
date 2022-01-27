@@ -391,6 +391,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
   /registration/{version}/gp2gp/ehrRequested:
     post:
       tags:
@@ -735,6 +736,57 @@ paths:
                       integration:
                         integrationStatus: filed as attachment/ suppressed/ merged/ rejected
                         reason: Reason for integration status
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /registration/{version}/gp2gp/registrationComplete:
+    post:
+      tags:
+        - GP2GP
+      summary: Submit Registration Complete event
+      operationId: postData
+      description: |
+        Use this endpoint to submit GP registration management information for when a GP2GP registration is complete.
+      parameters:
+        - name: version
+          in: path
+          required: true
+          description: The API version, currently v1
+          schema:
+            type: string
+      requestBody:
+        description: The request body required for the registration complete event
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/BaseEvent'
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: '#/components/schemas/Registration'
+                        gpTransferMetadata:
+                          $ref: '#/components/schemas/GP Transfer Metadata'
+                  example:
+                    payload:
+                      registration:
+                        requestingPracticeOdsCode: ABC1234
+                        sendingPracticeOdsCode: XYZ4567
+                      gpTransferMetadata:
+                        conversationId: 4345-9869-4930-6840
+                        transferEventDateTime: 2020-02-08T08:30:26Z
       responses:
         '200':
           $ref: '#/components/responses/OK'
