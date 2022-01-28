@@ -149,7 +149,7 @@ components:
       example:
         requestingPracticeOdsCode: ABC1234
         sendingPracticeOdsCode: XYZ4567
-    GP Transfer Metadata:
+    GPTransferMetadata:
       type: object
       required:
         - conversationId
@@ -316,7 +316,7 @@ components:
       example:
         errorCode: FD34
         errorDescription: Could not connect to sending practice
-    Rest Error:
+    RestError:
       type: object
       properties:
         status:
@@ -347,20 +347,20 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Rest Error'
+            $ref: '#/components/schemas/RestError'
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Rest Error'
+            $ref: '#/components/schemas/RestError'
 
 
 tags:
-  - name: GP2GP
-    description: Endpoints to submit events for the GP2GP protocol
   - name: GP Connect
     description: Endpoints to submit events for the GP Connect protocol
+  - name: GP2GP
+    description: Endpoints to submit events for the GP2GP protocol
 
 paths:
   /registration/{version}/gp2gp/registrationStarted:
@@ -368,7 +368,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit registration event
-      operationId: postData
+      operationId: registrationStarted
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
       parameters:
@@ -426,7 +426,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit EHR requested event
-      operationId: postData
+      operationId: ehrRequested
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested.
       parameters:
@@ -455,7 +455,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                   example:
                     payload:
                       registration:
@@ -477,7 +477,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit EHR generated event
-      operationId: postData
+      operationId: ehrGenerated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is generated.
       parameters:
@@ -506,7 +506,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -572,7 +572,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit EHR sent event
-      operationId: postData
+      operationId: ehrSent
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is sent.
       parameters:
@@ -601,7 +601,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                   example:
                     payload:
                       registration:
@@ -623,7 +623,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit EHR validated event
-      operationId: postData
+      operationId: ehrValidated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is validated.
       parameters:
@@ -652,7 +652,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -722,7 +722,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit EHR integrated event
-      operationId: postData
+      operationId: ehrIntegrated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is integrated.
       parameters:
@@ -751,7 +751,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -778,7 +778,7 @@ paths:
       tags:
         - GP2GP
       summary: Submit Registration Complete event
-      operationId: postData
+      operationId: registrationComplete
       description: |
         Use this endpoint to submit GP registration management information for when a GP2GP registration is complete.
       parameters:
@@ -807,7 +807,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                   example:
                     payload:
                       registration:
@@ -829,7 +829,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit registration event
-      operationId: postData
+      operationId: registrationStartedGC
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
       parameters:
@@ -887,7 +887,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit Migrate Structured Record Request event
-      operationId: postData
+      operationId: migrateStructuredRecordRequest
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System will make a request via GP Connect using the ‘Migrate Structured Record’ end point using the previous Health Care Provider code that was cached
       parameters:
@@ -916,7 +916,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                   example:
                     payload:
                       registration:
@@ -938,7 +938,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit Migrate Structured Record response event
-      operationId: postData
+      operationId: migrateStructuredRecordResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System has received a response from the request made via GP Connect using the ‘Migrate Structured Record’ end point. In a happy-path scenario, the response should contain the "Migrate Patient Record Bundle"
       parameters:
@@ -967,7 +967,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         structuredRecordMigration:
                           $ref: '#/components/schemas/Migration'
                   example:
@@ -994,7 +994,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit Migrate document request event
-      operationId: postData
+      operationId: migrateDocumentRequest
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System makes an individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
       parameters:
@@ -1023,7 +1023,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         attachment:
                           $ref: '#/components/schemas/Attachment'
                   example:
@@ -1052,7 +1052,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit Migrate document response event
-      operationId: postData
+      operationId: migrateDocumentResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System receives a response on every individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
       parameters:
@@ -1081,7 +1081,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         attachment:
                           $ref: '#/components/schemas/Attachment'
                         documentMigration:
@@ -1115,7 +1115,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit EHR ready to integrate event
-      operationId: postData
+      operationId: ehrReadyToIntegrateGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System allows the user to see a pre-processed view of the Record Bundle and all associated documents so they can determine whether to integrate
       parameters:
@@ -1144,7 +1144,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         ehr:
                           type: object
                           description: An object that contains information about the EHR used in the record transfer
@@ -1181,7 +1181,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit EHR integrated event
-      operationId: postData
+      operationId: ehrIntegratedGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the clinical staff member has chosen to integrate the Patient record into the system.
       parameters:
@@ -1210,7 +1210,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -1237,7 +1237,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit Registration Complete event
-      operationId: postData
+      operationId: registrationCompleteGC
       description: |
         Use this endpoint to submit GP registration management information once a receiving practice has successfully registered a patient. This should be sent after the EHR integrated event.
       parameters:
@@ -1266,7 +1266,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                   example:
                     payload:
                       registration:
@@ -1288,7 +1288,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit internal transfer event
-      operationId: postData
+      operationId: internalTransfer
       description: |
         Use this endpoint to submit GP registration management information immediately after a patient transfer has occurred between two practices using the same Supplier System.
       parameters:
@@ -1317,7 +1317,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -1344,7 +1344,7 @@ paths:
       tags:
         - GP Connect
       summary: Submit error event
-      operationId: postData
+      operationId: errorGC
       description: |
         Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
       parameters:
@@ -1373,7 +1373,7 @@ paths:
                         registration:
                           $ref: '#/components/schemas/Registration'
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GP Transfer Metadata'
+                          $ref: '#/components/schemas/GPTransferMetadata'
                         error:
                           $ref: '#/components/schemas/Error'
                   example:
