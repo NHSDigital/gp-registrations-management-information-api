@@ -1,0 +1,14 @@
+type: object
+required:
+  - integrationStatus
+  - reason
+properties:
+  integrationStatus:
+    type: string
+    description: The status of this integration, (filed as attachment/ suppressed/ merged/ rejected)
+  reason:
+    type: string
+    description: The reason for this integration status
+example:
+  integrationStatus: filed as attachment/ suppressed/ merged/ rejected
+  reason: Reason for integration status
