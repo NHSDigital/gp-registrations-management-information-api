@@ -1,0 +1,15 @@
+type: object
+required:
+  - conversationId
+  - transferEventDateTime
+properties:
+  conversationId:
+    type: string
+    description: The ConversationID used in the GP2GP process for this registration
+  transferEventDateTime:
+    type: string
+    description: The ISO 8601 Date time in UTC that this patient transfer event occurred
+    format: date-time
+example:
+  conversationId: 4345-9869-4930-6840
+  transferEventDateTime: 2020-02-08T08:30:27Z
