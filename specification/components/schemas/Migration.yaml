@@ -1,0 +1,13 @@
+type: object
+required:
+  - status
+properties:
+  status:
+    type: string
+    description: The status of this structured record migration (SUCCESS/FAILURE)
+  reason:
+    type: string
+    description: The reason for the status of this structured record migration
+example:
+  status: SUCCESS
+  reason:

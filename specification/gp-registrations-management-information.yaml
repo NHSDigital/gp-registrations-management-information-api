@@ -99,51 +99,6 @@ info:
     email: ian.griffiths12@nhs.net
 
 components:
-  schemas:
-    Migration:
-      type: object
-      required:
-        - status
-      properties:
-        status:
-          type: string
-          description: The status of this structured record migration (SUCCESS/FAILURE)
-        reason:
-          type: string
-          description: The reason for the status of this structured record migration
-      example:
-        status: SUCCESS
-        reason:
-    Error:
-      type: object
-      required:
-        - errorCode
-        - errorDescription
-      properties:
-        errorCode:
-          type: string
-          description: The error code associated with this error
-        errorDescription:
-          type: string
-          description: The description of the error that has occurred
-      example:
-        errorCode: FD34
-        errorDescription: Could not connect to sending practice
-    RestError:
-      type: object
-      properties:
-        status:
-          type: string
-        message:
-          type: string
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-        - status
-        - message
-        - errors
   responses:
     OK:
       description: OK. Expected response to a valid request
@@ -160,13 +115,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RestError'
+            $ref: components/schemas/RestError.yaml
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RestError'
+            $ref: components/schemas/RestError.yaml
 
 
 tags:
@@ -772,7 +727,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         structuredRecordMigration:
-                          $ref: '#/components/schemas/Migration'
+                          $ref: components/schemas/Migration.yaml
                   example:
                     payload:
                       registration:
@@ -888,7 +843,7 @@ paths:
                         attachment:
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
-                          $ref: '#/components/schemas/Migration'
+                          $ref: components/schemas/Migration.yaml
                   example:
                     payload:
                       registration:
@@ -1178,7 +1133,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         error:
-                          $ref: '#/components/schemas/Error'
+                          $ref: components/schemas/Error.yaml
                   example:
                     payload:
                       registration:

@@ -1,0 +1,14 @@
+type: object
+required:
+  - errorCode
+  - errorDescription
+properties:
+  errorCode:
+    type: string
+    description: The error code associated with this error
+  errorDescription:
+    type: string
+    description: The description of the error that has occurred
+example:
+  errorCode: FD34
+  errorDescription: Could not connect to sending practice
