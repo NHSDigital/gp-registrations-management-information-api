@@ -100,37 +100,6 @@ info:
 
 components:
   schemas:
-    Registration:
-      type: object
-      required:
-        - requestingPracticeOdsCode
-        - sendingPracticeOdsCode
-      properties:
-        requestingPracticeOdsCode:
-          type: string
-          description: The ODS code of the practice requesting the EHR
-        sendingPracticeOdsCode:
-          type: string
-          description: The ODS code of the practice sending the EHR
-      example:
-        requestingPracticeOdsCode: ABC1234
-        sendingPracticeOdsCode: XYZ4567
-    GPTransferMetadata:
-      type: object
-      required:
-        - conversationId
-        - transferEventDateTime
-      properties:
-        conversationId:
-          type: string
-          description: The ConversationID used in the GP2GP process for this registration
-        transferEventDateTime:
-          type: string
-          description: The ISO 8601 Date time in UTC that this patient transfer event occurred
-          format: date-time
-      example:
-        conversationId: 4345-9869-4930-6840
-        transferEventDateTime: 2020-02-08T08:30:26Z
     Attachment:
       type: object
       required:
@@ -374,7 +343,7 @@ paths:
                               type: string
                               description: The ODS code of the practice requesting the EHR
                   example:
-                    $ref: components/examples/registrationStarted.json
+                    $ref: components/examples/gp2gp/registrationStarted.json
       responses:
         '200':
           $ref: '#/components/responses/OK'
@@ -415,17 +384,11 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gp2gp/ehrRequested.json
       responses:
         '200':
           $ref: '#/components/responses/OK'
@@ -466,9 +429,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -561,9 +524,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                   example:
                     payload:
                       registration:
@@ -612,9 +575,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -711,9 +674,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -767,9 +730,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                   example:
                     payload:
                       registration:
@@ -876,9 +839,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                   example:
                     payload:
                       registration:
@@ -927,9 +890,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         structuredRecordMigration:
                           $ref: '#/components/schemas/Migration'
                   example:
@@ -983,9 +946,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         attachment:
                           $ref: '#/components/schemas/Attachment'
                   example:
@@ -1041,9 +1004,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         attachment:
                           $ref: '#/components/schemas/Attachment'
                         documentMigration:
@@ -1104,9 +1067,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           type: object
                           description: An object that contains information about the EHR used in the record transfer
@@ -1170,9 +1133,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -1226,9 +1189,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                   example:
                     payload:
                       registration:
@@ -1277,9 +1240,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: '#/components/schemas/Integration'
                   example:
@@ -1333,9 +1296,9 @@ paths:
                       type: object
                       properties:
                         registration:
-                          $ref: '#/components/schemas/Registration'
+                          $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
-                          $ref: '#/components/schemas/GPTransferMetadata'
+                          $ref: components/schemas/GPTransferMetadata.yaml
                         error:
                           $ref: '#/components/schemas/Error'
                   example:

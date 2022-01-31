@@ -1,0 +1,14 @@
+type: object
+required:
+  - requestingPracticeOdsCode
+  - sendingPracticeOdsCode
+properties:
+  requestingPracticeOdsCode:
+    type: string
+    description: The ODS code of the practice requesting the EHR
+  sendingPracticeOdsCode:
+    type: string
+    description: The ODS code of the practice sending the EHR
+example:
+  requestingPracticeOdsCode: ABC1234
+  sendingPracticeOdsCode: XYZ4567
