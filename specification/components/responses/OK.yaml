@@ -1,0 +1,9 @@
+description: OK. Expected response to a valid request
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        eventId:
+          type: string
+          example: 1234-1234-1234-1234
