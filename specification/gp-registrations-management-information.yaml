@@ -100,54 +100,6 @@ info:
 
 components:
   schemas:
-    Degrade:
-      type: object
-      required:
-        - type
-        - metadata
-        - code
-      properties:
-        type:
-          type: string
-          description: The type/category of this degrade
-        metadata:
-          type: string
-          description: Any additional metadata that provides valuable intel on this degrade
-        code:
-          type: object
-          properties:
-            coding:
-              type: array
-              items:
-                properties:
-                  code:
-                    type: string
-                    description: The designated code for this particular degrade
-                  system:
-                    type: string
-                    description: The system in which this degrade occurred
-      example:
-        type: core_ehr / attachment
-        metadata: other degrades metadata
-        code:
-          coding:
-            - code: 886721000000107
-              system: http://snomed.info/sct
-    Integration:
-      type: object
-      required:
-        - integrationStatus
-        - reason
-      properties:
-        integrationStatus:
-          type: string
-          description: The status of this integration, (filed as attachment/ suppressed/ merged/ rejected)
-        reason:
-          type: string
-          description: The reason for this integration status
-      example:
-        integrationStatus: filed as attachment/ suppressed/ merged/ rejected
-        reason: Reason for integration status
     Migration:
       type: object
       required:
@@ -526,7 +478,7 @@ paths:
                               type: array
                               description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
                               items:
-                                $ref: '#/components/schemas/Degrade'
+                                $ref: components/schemas/Degrade.yaml
 
                   example:
                     payload:
@@ -604,7 +556,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
-                          $ref: '#/components/schemas/Integration'
+                          $ref: components/schemas/Integration.yaml
                   example:
                     payload:
                       registration:
@@ -1001,7 +953,7 @@ paths:
                           description: An object that contains information about the EHR used in the record transfer
                           properties:
                             degrade:
-                              $ref: '#/components/schemas/Degrade'
+                              $ref: components/schemas/Degrade.yaml
                   example:
                     payload:
                       registration:
@@ -1063,7 +1015,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
-                          $ref: '#/components/schemas/Integration'
+                          $ref: components/schemas/Integration.yaml
                   example:
                     payload:
                       registration:
@@ -1170,7 +1122,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
-                          $ref: '#/components/schemas/Integration'
+                          $ref: components/schemas/Integration.yaml
                   example:
                     payload:
                       registration:
