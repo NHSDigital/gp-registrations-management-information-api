@@ -6,8 +6,10 @@ content:
       properties:
         status:
           type: string
+          example: INTERNAL_SERVER_ERROR
         message:
           type: string
+          example: Something went wrong
         errors:
           type: array
           items:
@@ -16,3 +18,6 @@ content:
         - status
         - message
         - errors
+      example:
+        status: INTERNAL_SERVER_ERROR
+        message: Something went wrong
