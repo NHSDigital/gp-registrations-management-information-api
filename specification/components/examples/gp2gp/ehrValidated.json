@@ -1,0 +1,59 @@
+{
+  "eventId": "1234-123456-1234-123451",
+  "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+  "registrationId": "9087-978098-9087-978098",
+  "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+  "reportingPracticeOdsCode": "XYZ4567",
+  "payload": {
+    "registration": {
+      "requestingPracticeOdsCode": "ABC1234",
+      "sendingPracticeOdsCode": "XYZ4567"
+    },
+    "gpTransferMetadata": {
+      "conversationId": "4345-986959-4930-684038",
+      "transferEventDateTime": "2020-02-08T09:30:26Z"
+    },
+    "ehr": {
+      "ehrTotalSizeBytes": 5699433,
+      "ehrStructuredSizeBytes": 4096,
+      "degrade": [
+        {
+          "type": "core_ehr / attachment",
+          "metadata": "other degrades metadata",
+          "code": {
+            "coding": [
+              {
+                "code": "886721000000107",
+                "system": "http://snomed.info/sct"
+              }
+            ]
+          }
+        }
+      ],
+      "attachment": [
+        {
+          "attachmentId": "3424-342456-3424-342456",
+          "clinicalType": "Scanned document",
+          "mimeType": "application/pdf",
+          "sizeBytes": 3084322
+        }
+      ],
+      "placeholder": [
+        {
+          "placeholderId": "9876-987654-9876-987654",
+          "attachmentId": "1323-132345-1323-132345",
+          "generatedBy": "XYZ4567",
+          "reason": 1,
+          "originalMimeType": "audio/mpeg"
+        },
+        {
+          "placeholderId": "4354-435467-4354-435467",
+          "attachmentId": "3424-342456-3424-342456",
+          "generatedBy": "ABC1234",
+          "reason": 2,
+          "originalMimeType": "audio/mpeg"
+        }
+      ]
+    }
+  }
+}

@@ -261,36 +261,8 @@ paths:
                           type: array
                           items:
                             $ref: components/schemas/UnsupportedDataItem.yaml
-
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      ehr:
-                        ehrTotalSizeBytes: 5699433
-                        ehrStructuredSizeBytes: 4096
-                        attachment:
-                          - attachmentId: 3424-342456-3424-342456
-                            clinicalType: Scanned document
-                            mimeType: application/pdf
-                            sizeBytes: 3084322
-                          - attachmentId: 1323-132345-1323-132345
-                            mimeType: audio/mpeg
-                            sizeBytes: 24352346
-                        placeholder:
-                          - placeholderId: 9876-987654-9876-987654
-                            attachmentId: 1323-132345-1323-132345
-                            generatedBy: XYZ4567
-                            reason: 1
-                            originalMimeType: audio/mpeg
-                      unsupportedDataItem:
-                        - type: allergy/flag
-                          uniqueIdentifier: 1323-132345-1323-132345
-                          reason: Doesn't map properly
+                    $ref: components/examples/gp2gp/ehrGenerated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -335,13 +307,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gp2gp/ehrSent.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -408,39 +374,8 @@ paths:
                               description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
                               items:
                                 $ref: components/schemas/Degrade.yaml
-
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      ehr:
-                        ehrTotalSizeBytes: 5699433
-                        ehrStructuredSizeBytes: 4096
-                        attachment:
-                          - attachmentId: 3424-342456-3424-342456
-                            clinicalType: Scanned document
-                            mimeType: application/pdf
-                            sizeBytes: 3084322
-                          - attachmentId: 1323-132345-1323-132345
-                            mimeType: audio/mpeg
-                            sizeBytes: 24352346
-                        placeholder:
-                          - placeholderId: 9876-987654-9876-987654
-                            attachmentId: 1323-132345-1323-132345
-                            generatedBy: XYZ4567
-                            reason: 1
-                            originalMimeType: audio/mpeg
-                        degrade:
-                          - type: core_ehr / attachment
-                            metadata: other degrades metadata
-                            code:
-                              coding:
-                                - code: 886721000000107
-                                  system: http://snomed.info/sct
+                    $ref: components/examples/gp2gp/ehrValidated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -487,16 +422,7 @@ paths:
                         integration:
                           $ref: components/schemas/Integration.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      integration:
-                        integrationStatus: filed as attachment/ suppressed/ merged/ rejected
-                        reason: Reason for integration status
+                    $ref: components/examples/gp2gp/ehrIntegrated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -541,13 +467,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gp2gp/registrationCompleted.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
