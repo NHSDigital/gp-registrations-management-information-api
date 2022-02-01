@@ -116,6 +116,24 @@ paths:
       operationId: registrationStarted
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "6235-123456-8947-127834",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "registrationStartedDateTime": "2020-02-08T08:30:26Z",
+              "registrationType": "newRegistrant",
+              "requestingPracticeOdsCode": "ABC1234"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -125,23 +143,7 @@ paths:
             type: string
       requestBody:
         description: |
-          The request body required for the registration started event:
-          ```json
-          {
-            "eventId": "1234-1234-1234-1234",
-            "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-            "registrationId": "6235-123456-8947-127834",
-            "reportingSystemSupplier": "EMIS",
-            "reportingPracticeOdsCode": "ABC1234",
-            "payload": {
-              "registration": {
-                "registrationStartedDateTime": "2020-02-08T08:30:26Z",
-                "registrationType": "newRegistrant",
-                "requestingPracticeOdsCode": "ABC1234"
-              }
-            }
-          }
-          ```
+          The request body required for the registration started event
         required: true
         content:
           application/json:
@@ -188,7 +190,7 @@ paths:
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested:
 
-        The request body required for the ehr requested event:
+        ### Request Body example:
         ```json
         {
           "eventId": "1234-1234-1234-1234",
@@ -253,7 +255,60 @@ paths:
       operationId: ehrGenerated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is generated.
-        $ref: components/examples/gp2gp/ehrGenerated.json
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123451",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "XYZ4567",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "ehr": {
+              "ehrTotalSizeBytes": 5699433,
+              "ehrStructuredSizeBytes": 4096,
+              "attachment": [
+                {
+                  "attachmentId": "3424-342456-3424-342456",
+                  "clinicalType": "Scanned document",
+                  "mimeType": "application/pdf",
+                  "sizeBytes": 3084322
+                },
+                {
+                  "attachmentId": "1323-132345-1323-132345",
+                  "mimeType": "audio/mpeg",
+                  "sizeBytes": 24352346
+                }
+              ],
+              "placeholder": [
+                {
+                  "placeholderId": "9876-987654-9876-987654",
+                  "attachmentId": "1323-132345-1323-132345",
+                  "generatedBy": "XYZ4567",
+                  "reason": 1,
+                  "originalMimeType": "audio/mpeg"
+                }
+              ]
+            },
+            "unsupportedDataItem": [
+              {
+                "type": "allergy/flag",
+                "uniqueIdentifier": "1323-132345-1323-132345",
+                "reason": "reason for being unsupported / why is it unsupported in gp2gp / what would have to change in gp2gp to express this"
+              }
+            ]
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -321,6 +376,27 @@ paths:
       operationId: ehrSent
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is sent.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T08:30:25Z"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -366,6 +442,69 @@ paths:
       operationId: ehrValidated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is validated.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123451",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "XYZ4567",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "ehr": {
+              "ehrTotalSizeBytes": 5699433,
+              "ehrStructuredSizeBytes": 4096,
+              "degrade": [
+                {
+                  "type": "core_ehr / attachment",
+                  "metadata": "other degrades metadata",
+                  "code": {
+                    "coding": [
+                      {
+                        "code": "886721000000107",
+                        "system": "http://snomed.info/sct"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "attachment": [
+                {
+                  "attachmentId": "3424-342456-3424-342456",
+                  "clinicalType": "Scanned document",
+                  "mimeType": "application/pdf",
+                  "sizeBytes": 3084322
+                }
+              ],
+              "placeholder": [
+                {
+                  "placeholderId": "9876-987654-9876-987654",
+                  "attachmentId": "1323-132345-1323-132345",
+                  "generatedBy": "XYZ4567",
+                  "reason": 1,
+                  "originalMimeType": "audio/mpeg"
+                },
+                {
+                  "placeholderId": "4354-435467-4354-435467",
+                  "attachmentId": "3424-342456-3424-342456",
+                  "generatedBy": "ABC1234",
+                  "reason": 2,
+                  "originalMimeType": "audio/mpeg"
+                }
+              ]
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -434,6 +573,31 @@ paths:
       operationId: ehrIntegrated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is integrated.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123451",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "XYZ4567",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "integration": {
+              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
+              "reason": "Reason for integration status"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -481,6 +645,27 @@ paths:
       operationId: registrationCompleted
       description: |
         Use this endpoint to submit GP registration management information for when a GP2GP registration is complete.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T08:30:25Z"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -526,6 +711,24 @@ paths:
       operationId: registrationStartedGC
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "registrationStartedDateTime": "2020-02-08T09:30:26Z",
+              "requestingPracticeOdsCode": "ABC1234",
+              "registrationType": "newRegistrant"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -580,6 +783,27 @@ paths:
       operationId: migrateStructuredRecordRequest
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System will make a request via GP Connect using the ‘Migrate Structured Record’ end point using the previous Health Care Provider code that was cached
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T08:30:25Z"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -625,6 +849,30 @@ paths:
       operationId: migrateStructuredRecordResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System has received a response from the request made via GP Connect using the ‘Migrate Structured Record’ end point. In a happy-path scenario, the response should contain the "Migrate Patient Record Bundle"
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "structuredRecordMigration": {
+              "status": "SUCCESS",
+              "reason": ""
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -672,6 +920,32 @@ paths:
       operationId: migrateDocumentRequest
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System makes an individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "attachment": {
+              "attachmentId": "3424-342456-3424-342456",
+              "clinicalType": "Scanned document",
+              "mimeType": "application/pdf",
+              "sizeBytes": 3084322
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -719,6 +993,36 @@ paths:
       operationId: migrateDocumentResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System receives a response on every individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "attachment": {
+              "attachmentId": "3424-342456-3424-342456",
+              "clinicalType": "Scanned document",
+              "mimeType": "application/pdf",
+              "sizeBytes": 3084322
+            },
+            "documentMigration": {
+              "status": "FAILURE",
+              "reason": "Large file size"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -768,6 +1072,42 @@ paths:
       operationId: ehrReadyToIntegrateGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System allows the user to see a pre-processed view of the Record Bundle and all associated documents so they can determine whether to integrate
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "ehr": {
+              "degrade": [
+                {
+                  "type": "core_ehr / attachment",
+                  "metadata": "other degrades metadata",
+                  "code": {
+                    "coding": [
+                      {
+                        "code": "886721000000107",
+                        "system": "http://snomed.info/sct"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -820,6 +1160,30 @@ paths:
       operationId: ehrIntegratedGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the clinical staff member has chosen to integrate the Patient record into the system.
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123451",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "integration": {
+              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
+              "reason": "Reason for integration status"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -867,6 +1231,26 @@ paths:
       operationId: registrationCompletedGC
       description: |
         Use this endpoint to submit GP registration management information once a receiving practice has successfully registered a patient. This should be sent after the EHR integrated event.
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T08:30:25Z"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -912,6 +1296,30 @@ paths:
       operationId: internalTransfer
       description: |
         Use this endpoint to submit GP registration management information immediately after a patient transfer has occurred between two practices using the same Supplier System.
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123451",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "integration": {
+              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
+              "reason": "Reason for integration status"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -959,6 +1367,30 @@ paths:
       operationId: errorGC
       description: |
         Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T09:30:26Z"
+            },
+            "error": {
+              "errorCode": "",
+              "errorDescription": "stacktrace? detailed error message?"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
