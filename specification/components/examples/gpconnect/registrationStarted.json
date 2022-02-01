@@ -1,0 +1,14 @@
+{
+  "eventId": "1234-123456-1234-123454",
+  "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+  "registrationId": "9087-978098-9087-978098",
+  "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+  "reportingPracticeOdsCode": "ABC1234",
+  "payload": {
+    "registration": {
+      "registrationStartedDateTime": "2020-02-08T09:30:26Z",
+      "requestingPracticeOdsCode": "ABC1234",
+      "registrationType": "newRegistrant"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "eventId": "1234-123456-1234-123454",
+  "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+  "registrationId": "9087-978098-9087-978098",
+  "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+  "reportingPracticeOdsCode": "ABC1234",
+  "payload": {
+    "registration": {
+      "requestingPracticeOdsCode": "ABC1234",
+      "sendingPracticeOdsCode": "XYZ4567"
+    },
+    "gpTransferMetadata": {
+      "conversationId": "4345-986959-4930-684038",
+      "transferEventDateTime": "2020-02-08T09:30:26Z"
+    }
+  }
+}
