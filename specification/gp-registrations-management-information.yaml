@@ -431,12 +431,12 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/registrationComplete:
+  /registration/{version}/gp2gp/registrationCompleted:
     post:
       tags:
         - GP2GP
-      summary: Submit Registration Complete event
-      operationId: registrationComplete
+      summary: Submit Registration Completed event
+      operationId: registrationCompleted
       description: |
         Use this endpoint to submit GP registration management information for when a GP2GP registration is complete.
       parameters:
@@ -447,7 +447,7 @@ paths:
           schema:
             type: string
       requestBody:
-        description: The request body required for the registration complete event
+        description: The request body required for the registration completed event
         required: true
         content:
           application/json:
@@ -521,11 +521,7 @@ paths:
                               type: string
                               description: The ODS code of the practice requesting the EHR
                   example:
-                    payload:
-                      registration:
-                        registrationType: newRegistrant
-                        requestingPracticeOdsCode: ABC1234
-                        registrationStartedDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gpconnect/registrationStarted.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -570,13 +566,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gpconnect/migrateStructuredRecordRequest.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -623,16 +613,7 @@ paths:
                         structuredRecordMigration:
                           $ref: components/schemas/Migration.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      structuredRecordMigration:
-                        status: SUCCESS
-                        reason:
+                    $ref: components/examples/gpconnect/migrateStructuredRecordResponse.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -679,18 +660,7 @@ paths:
                         attachment:
                           $ref: components/schemas/Attachment.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      attachment:
-                        attachmentId: 3424-342456-3424-342456
-                        clinicalType: Scanned document
-                        mimeType: application/pdf
-                        sizeBytes: 3084322
+                    $ref: components/examples/gpconnect/migrateDocumentRequest.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -739,21 +709,7 @@ paths:
                         documentMigration:
                           $ref: components/schemas/Migration.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      attachment:
-                        attachmentId: 3424-342456-3424-342456
-                        clinicalType: Scanned document
-                        mimeType: application/pdf
-                        sizeBytes: 3084322
-                      documentMigration:
-                        status: FAILURE
-                        reason: Large file size
+                    $ref: components/examples/gpconnect/migrateDocumentResponse.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -804,21 +760,7 @@ paths:
                             degrade:
                               $ref: components/schemas/Degrade.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      ehr:
-                        degrade:
-                          - type: core_ehr / attachment
-                            metadata: other degrades metadata
-                            code:
-                              coding:
-                                - code: 886721000000107
-                                  system: http://snomed.info/sct
+                    $ref: components/examples/gpconnect/ehrReadyToIntegrate.json
 
       responses:
         '200':
@@ -866,16 +808,7 @@ paths:
                         integration:
                           $ref: components/schemas/Integration.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      integration:
-                        integrationStatus: filed as attachment/ suppressed/ merged/ rejected
-                        reason: Reason for integration status
+                    $ref: components/examples/gpconnect/ehrIntegrated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -884,12 +817,12 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/registrationComplete:
+  /registration/{version}/gpconnect/registrationCompleted:
     post:
       tags:
         - GP Connect
-      summary: Submit Registration Complete event
-      operationId: registrationCompleteGC
+      summary: Submit Registration Completed event
+      operationId: registrationCompletedGC
       description: |
         Use this endpoint to submit GP registration management information once a receiving practice has successfully registered a patient. This should be sent after the EHR integrated event.
       parameters:
@@ -900,7 +833,7 @@ paths:
           schema:
             type: string
       requestBody:
-        description: The request body required for the registration complete event
+        description: The request body required for the registration completed event
         required: true
         content:
           application/json:
@@ -920,13 +853,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
+                    $ref: components/examples/gpconnect/registrationCompleted.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -973,16 +900,7 @@ paths:
                         integration:
                           $ref: components/schemas/Integration.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      integration:
-                        integrationStatus: filed as attachment/ suppressed/ merged/ rejected
-                        reason: Reason for integration status
+                    $ref: components/examples/gpconnect/internalTransfer.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1029,16 +947,7 @@ paths:
                         error:
                           $ref: components/schemas/Error.yaml
                   example:
-                    payload:
-                      registration:
-                        requestingPracticeOdsCode: ABC1234
-                        sendingPracticeOdsCode: XYZ4567
-                      gpTransferMetadata:
-                        conversationId: 4345-9869-4930-6840
-                        transferEventDateTime: 2020-02-08T08:30:26Z
-                      error:
-                        errorCode: FD34
-                        errorDescription: Could not connect to sending practice
+                    $ref: components/examples/gpconnect/error.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
