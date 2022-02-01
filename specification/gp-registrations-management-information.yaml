@@ -124,7 +124,24 @@ paths:
           schema:
             type: string
       requestBody:
-        description: The request body required for the registration started event
+        description: |
+          The request body required for the registration started event:
+          ```json
+          {
+            "eventId": "1234-1234-1234-1234",
+            "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+            "registrationId": "6235-123456-8947-127834",
+            "reportingSystemSupplier": "EMIS",
+            "reportingPracticeOdsCode": "ABC1234",
+            "payload": {
+              "registration": {
+                "registrationStartedDateTime": "2020-02-08T08:30:26Z",
+                "registrationType": "newRegistrant",
+                "requestingPracticeOdsCode": "ABC1234"
+              }
+            }
+          }
+          ```
         required: true
         content:
           application/json:
@@ -169,7 +186,28 @@ paths:
       summary: Submit EHR requested event
       operationId: ehrRequested
       description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested.
+        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested:
+
+        The request body required for the ehr requested event:
+        ```json
+        {
+          "eventId": "1234-1234-1234-1234",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "EMIS",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "gpTransferMetadata": {
+              "conversationId": "4345-986959-4930-684038",
+              "transferEventDateTime": "2020-02-08T08:30:25Z"
+            }
+          }
+        }
+        ```
       parameters:
         - name: version
           in: path
@@ -215,6 +253,7 @@ paths:
       operationId: ehrGenerated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is generated.
+        $ref: components/examples/gp2gp/ehrGenerated.json
       parameters:
         - name: version
           in: path

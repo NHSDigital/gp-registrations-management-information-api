@@ -1,0 +1,7 @@
+{
+  "status": "BAD_REQUEST",
+  "message": "Failed to validate fields",
+  "errors": [
+    "reportingPracticeOdsCode: must not be empty"
+  ]
+}
