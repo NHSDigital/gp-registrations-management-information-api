@@ -6,13 +6,21 @@ content:
       properties:
         status:
           type: string
+          example: BAD_REQUEST
         message:
           type: string
+          example: Failed to validate fields
         errors:
           type: array
           items:
             type: string
+            example: reportingPracticeOdsCode must not be empty
       required:
         - status
         - message
         - errors
+      example:
+        status: BAD_REQUEST
+        message: Failed to validate fieldsFailed to validate fields
+        errors:
+          - reportingPracticeOdsCode must not be empty
