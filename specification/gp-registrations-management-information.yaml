@@ -108,7 +108,7 @@ tags:
     description: Endpoints to submit events for the GP2GP protocol
 
 paths:
-  /registration/{version}/gp2gp/registrationStarted:
+  /gp2gp/registrationStarted:
     post:
       tags:
         - GP2GP
@@ -181,7 +181,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/ehrRequested:
+  /gp2gp/ehrRequested:
     post:
       tags:
         - GP2GP
@@ -247,7 +247,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/ehrGenerated:
+  /gp2gp/ehrGenerated:
     post:
       tags:
         - GP2GP
@@ -368,7 +368,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/ehrSent:
+  /gp2gp/ehrSent:
     post:
       tags:
         - GP2GP
@@ -434,7 +434,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/ehrValidated:
+  /gp2gp/ehrValidated:
     post:
       tags:
         - GP2GP
@@ -565,7 +565,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/ehrIntegrated:
+  /gp2gp/ehrIntegrated:
     post:
       tags:
         - GP2GP
@@ -637,7 +637,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gp2gp/registrationCompleted:
+  /gp2gp/registrationCompleted:
     post:
       tags:
         - GP2GP
@@ -703,7 +703,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/registrationStarted:
+  /gpconnect/registrationStarted:
     post:
       tags:
         - GP Connect
@@ -775,7 +775,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/migrateStructuredRecordRequest:
+  /gpconnect/migrateStructuredRecordRequest:
     post:
       tags:
         - GP Connect
@@ -841,7 +841,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/migrateStructuredRecordResponse:
+  /gpconnect/migrateStructuredRecordResponse:
     post:
       tags:
         - GP Connect
@@ -912,7 +912,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/migrateDocumentRequest:
+  /gpconnect/migrateDocumentRequest:
     post:
       tags:
         - GP Connect
@@ -985,7 +985,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/migrateDocumentResponse:
+  /gpconnect/migrateDocumentResponse:
     post:
       tags:
         - GP Connect
@@ -1064,7 +1064,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/ehrReadyToIntegrate:
+  /gpconnect/ehrReadyToIntegrate:
     post:
       tags:
         - GP Connect
@@ -1152,7 +1152,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/ehrIntegrated:
+  /gpconnect/ehrIntegrated:
     post:
       tags:
         - GP Connect
@@ -1223,7 +1223,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/registrationCompleted:
+  /gpconnect/registrationCompleted:
     post:
       tags:
         - GP Connect
@@ -1288,7 +1288,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/internalTransfer:
+  /gpconnect/internalTransfer:
     post:
       tags:
         - GP Connect
@@ -1359,7 +1359,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /registration/{version}/gpconnect/error:
+  /gpconnect/error:
     post:
       tags:
         - GP Connect
