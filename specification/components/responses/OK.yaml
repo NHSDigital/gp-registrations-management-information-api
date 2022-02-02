@@ -7,3 +7,5 @@ content:
         eventId:
           type: string
           example: 1234-1234-1234-1234
+      example:
+        eventId: 1234-1234-1234-1234
