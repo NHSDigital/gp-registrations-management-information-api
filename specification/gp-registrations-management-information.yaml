@@ -134,13 +134,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: |
           The request body required for the registration started event
@@ -210,13 +203,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR requested event
         required: true
@@ -309,13 +295,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR generated event
         required: true
@@ -397,13 +376,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR sent event
         required: true
@@ -505,13 +477,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR validated event
         required: true
@@ -598,13 +563,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR integrated event
         required: true
@@ -666,13 +624,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the registration completed event
         required: true
@@ -729,13 +680,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the registration started event
         required: true
@@ -804,13 +748,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the migrate structured record request event
         required: true
@@ -873,13 +810,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the migrate structured record response event
         required: true
@@ -946,13 +876,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the migrate document request event
         required: true
@@ -1023,13 +946,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the migrate document response event
         required: true
@@ -1108,13 +1024,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR ready to integrate event
         required: true
@@ -1184,13 +1093,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the EHR integrated event
         required: true
@@ -1251,13 +1153,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the registration completed event
         required: true
@@ -1320,13 +1215,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the internal transfer event
         required: true
@@ -1391,13 +1279,6 @@ paths:
           }
         }
         ```
-      parameters:
-        - name: version
-          in: path
-          required: true
-          description: The API version, currently v1
-          schema:
-            type: string
       requestBody:
         description: The request body required for the error event
         required: true
