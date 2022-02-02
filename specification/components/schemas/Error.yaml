@@ -6,9 +6,8 @@ properties:
   errorCode:
     type: string
     description: The error code associated with this error
+    example: FD34
   errorDescription:
     type: string
     description: The description of the error that has occurred
-example:
-  errorCode: FD34
-  errorDescription: Could not connect to sending practice
+    example: Could not connect to sending practice
