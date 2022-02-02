@@ -21,6 +21,6 @@ content:
         - errors
       example:
         status: BAD_REQUEST
-        message: Failed to validate fieldsFailed to validate fields
+        message: Failed to validate fields
         errors:
           - reportingPracticeOdsCode must not be empty
