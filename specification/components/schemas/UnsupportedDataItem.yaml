@@ -7,13 +7,12 @@ properties:
   type:
     type: string
     description: The type/category of the unsupported data item
+    example: allergy/flag
   uniqueIdentifier:
     type: string
     description: A unique id for the unsupported data item that can be resolved in the clinical system
+    example: 1323-132345-1323-132345
   reason:
     type: string
     description: The reason for being unsupported / why is it unsupported in gp2gp? / what would have to change in gp2gp to express this?
-example:
-  type: allergy/flag
-  uniqueIdentifier: 1323-132345-1323-132345
-  reason: Doesn't map properly
+    example: Doesn't map properly

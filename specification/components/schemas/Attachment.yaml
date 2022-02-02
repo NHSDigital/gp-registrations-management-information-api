@@ -7,17 +7,16 @@ properties:
   attachmentId:
     type: string
     description: A unique id for the attachment that can be resolved in the clinical system
+    example: 3424-342456-3424-342456
   clinicalType:
     type: string
     description: The text value corresponding to the value used in EhrAttachmentCode in the code element of ExternalDocument as defined in the MIM
+    example: Scanned document
   mimeType:
     type: string
     description: The mime type of the attachment as used as part of the text element in ExternalDocument as defined in the MIM
+    example: application/pdf
   sizeBytes:
     type: integer
     description: The size in bytes of the attachment
-example:
-  attachmentId: 3424-342456-3424-342456
-  clinicalType: Scanned document
-  mimeType: application/pdf
-  sizeBytes: 3084322
+    example: 3084322

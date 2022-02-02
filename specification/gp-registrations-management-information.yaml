@@ -158,14 +158,15 @@ paths:
                             registrationType:
                               type: string
                               description: The type of this registration (newRegistrant, etc...)
+                              example: newRegistrant
                             registrationStartedDateTime:
                               type: string
                               description: The ISO 8601 Date time in UTC of when the registration started
+                              example: 2020-02-08T08:30:26Z
                             requestingPracticeOdsCode:
                               type: string
                               description: The ODS code of the practice requesting the EHR
-                  example:
-                    $ref: components/examples/gp2gp/registrationStarted.json
+                              example: ABC1234
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -223,8 +224,6 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
-                  example:
-                    $ref: components/examples/gp2gp/ehrRequested.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -320,9 +319,11 @@ paths:
                             ehrTotalSizeBytes:
                               type: integer
                               description: The total size in bytes of the GP2GP message BEFORE it is split for transfer including all attachments
+                              example: 5699433
                             ehrStructuredSizeBytes:
                               type: integer
                               description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included)
+                              example: 4096
                             attachment:
                               type: array
                               description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
@@ -337,8 +338,6 @@ paths:
                           type: array
                           items:
                             $ref: components/schemas/UnsupportedDataItem.yaml
-                  example:
-                    $ref: components/examples/gp2gp/ehrGenerated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -396,8 +395,6 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
-                  example:
-                    $ref: components/examples/gp2gp/ehrSent.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -502,9 +499,11 @@ paths:
                             ehrTotalSizeBytes:
                               type: integer
                               description: The total size in bytes of the GP2GP message as reconstituted by the receiving system including all attachments received
+                              example: 5699433
                             ehrStructuredSizeBytes:
                               type: integer
                               description: The total size in bytes of structured part of the GP2GP message as received by the receiving system (attachments are NOT to be included)
+                              example: 4096
                             attachment:
                               type: array
                               description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
@@ -520,8 +519,6 @@ paths:
                               description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
                               items:
                                 $ref: components/schemas/Degrade.yaml
-                  example:
-                    $ref: components/examples/gp2gp/ehrValidated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -585,8 +582,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
-                  example:
-                    $ref: components/examples/gp2gp/ehrIntegrated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -644,8 +639,6 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
-                  example:
-                    $ref: components/examples/gp2gp/registrationCompleted.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -703,14 +696,15 @@ paths:
                             registrationType:
                               type: string
                               description: The type of this registration (newRegistrant, etc...)
+                              example: newRegistrant
                             registrationStartedDateTime:
                               type: string
                               description: The ISO 8601 Date time in UTC of when the registration started
+                              example: 2020-02-08T08:30:26Z
                             requestingPracticeOdsCode:
                               type: string
                               description: The ODS code of the practice requesting the EHR
-                  example:
-                    $ref: components/examples/gpconnect/registrationStarted.json
+                              example: ABC1234
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -768,8 +762,6 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
-                  example:
-                    $ref: components/examples/gpconnect/migrateStructuredRecordRequest.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -832,8 +824,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         structuredRecordMigration:
                           $ref: components/schemas/Migration.yaml
-                  example:
-                    $ref: components/examples/gpconnect/migrateStructuredRecordResponse.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -898,8 +888,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         attachment:
                           $ref: components/schemas/Attachment.yaml
-                  example:
-                    $ref: components/examples/gpconnect/migrateDocumentRequest.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -970,8 +958,6 @@ paths:
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
                           $ref: components/schemas/Migration.yaml
-                  example:
-                    $ref: components/examples/gpconnect/migrateDocumentResponse.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1050,9 +1036,6 @@ paths:
                           properties:
                             degrade:
                               $ref: components/schemas/Degrade.yaml
-                  example:
-                    $ref: components/examples/gpconnect/ehrReadyToIntegrate.json
-
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1115,8 +1098,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
-                  example:
-                    $ref: components/examples/gpconnect/ehrIntegrated.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1173,8 +1154,6 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
-                  example:
-                    $ref: components/examples/gpconnect/registrationCompleted.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1237,8 +1216,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
-                  example:
-                    $ref: components/examples/gpconnect/internalTransfer.json
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1301,8 +1278,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         error:
                           $ref: components/schemas/Error.yaml
-                  example:
-                    $ref: components/examples/gpconnect/error.json
       responses:
         '200':
           $ref: components/responses/OK.yaml

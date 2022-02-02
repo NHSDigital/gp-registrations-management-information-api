@@ -7,11 +7,15 @@ properties:
   type:
     type: string
     description: The type/category of this degrade
+    example: core_ehr / attachment
   metadata:
     type: string
     description: Any additional metadata that provides valuable intel on this degrade
+    example: other degrades metadata
   code:
     type: object
+    required:
+      - coding
     properties:
       coding:
         type: array
@@ -20,13 +24,11 @@ properties:
             code:
               type: string
               description: The designated code for this particular degrade
+              example: 886721000000107
             system:
               type: string
               description: The system in which this degrade occurred
-example:
-  type: core_ehr / attachment
-  metadata: other degrades metadata
-  code:
-    coding:
-      - code: 886721000000107
-        system: http://snomed.info/sct
+              example: http://snomed.info/sct
+          required:
+            - code
+            - system
