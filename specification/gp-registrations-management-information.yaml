@@ -18,27 +18,23 @@ info:
 
     ### GP2GP
 
-    Currently you can send us information about the following type of events:
+    Using this protocol you will send us information about the following type of events:
     * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP protocol
     * when the sending practice generates the electronic health record
     * when the requesting practice requests an EHR
     * when the sending practice sends an EHR
-    
-    With upcoming features you will be able to send us information about other type of events, such as (and not exclusively):
     * when the requesting practice validates an EHR
     * when the requesting practice integrates an EHR
     * when the requesting practice has completed the GP2GP registration
 
     ### GP Connect
 
-    Currently you can send us information about the following type of events:
+    Using this protocol you will send us information about the following type of events:
     * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP Connect protocol
     * when the request is sent to migrate the structured record
     * when the response has been received from migrating the structured record
-
-    With upcoming features you will be able to send us information about other type of events, such as (and not exclusively):
-    * when the request is sent to migrate a document
-    * when the response has been received from migrating a document
+    * when a request is sent to migrate a document
+    * when a response has been received from migrating a document
     * when the EHR is ready to integrate
     * when the EHR has been integrated
     * when the registration has been completed
