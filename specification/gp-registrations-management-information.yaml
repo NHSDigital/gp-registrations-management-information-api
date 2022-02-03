@@ -171,6 +171,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: |
           The request body required for the registration started event
@@ -241,6 +248,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR requested event
         required: true
@@ -331,6 +345,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR generated event
         required: true
@@ -412,6 +433,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR sent event
         required: true
@@ -511,6 +539,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR validated event
         required: true
@@ -597,6 +632,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR integrated event
         required: true
@@ -656,6 +698,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the registration completed event
         required: true
@@ -710,6 +759,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the registration started event
         required: true
@@ -779,6 +835,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the migrate structured record request event
         required: true
@@ -839,6 +902,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the migrate structured record response event
         required: true
@@ -903,6 +973,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the migrate document request event
         required: true
@@ -971,6 +1048,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the migrate document response event
         required: true
@@ -1047,6 +1131,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR ready to integrate event
         required: true
@@ -1113,6 +1204,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the EHR integrated event
         required: true
@@ -1171,6 +1269,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the registration completed event
         required: true
@@ -1231,6 +1336,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the internal transfer event
         required: true
@@ -1293,6 +1405,13 @@ paths:
           }
         }
         ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
       requestBody:
         description: The request body required for the error event
         required: true
