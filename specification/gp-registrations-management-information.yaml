@@ -334,7 +334,7 @@ paths:
                               description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
                               items:
                                 $ref: components/schemas/Placeholder.yaml
-                        unSupportedDataItem:
+                        unsupportedDataItem:
                           type: array
                           items:
                             $ref: components/schemas/UnsupportedDataItem.yaml
@@ -651,7 +651,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit registration event
+      summary: Submit registration started event
       operationId: registrationStartedGC
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
