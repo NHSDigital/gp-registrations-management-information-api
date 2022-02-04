@@ -75,7 +75,7 @@ info:
     This API uses HTTP POST to submit data.
 
     ## Network access
-    This API is only available on the internet.
+    This API is available on the internet.
 
     For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis#internet-only-apis).
 
@@ -101,13 +101,14 @@ info:
 
     ## Onboarding
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
-    Please contact gp-registrations-data@nhs.net to onboard.
+
+    Contact [gp-registrations-data@nhs.net](gp-registrations-data@nhs.net) to onboard.
 
   license:
     name: MIT
   contact:
     url: 'https://nhsconnect.github.io/prm-external-developer-website/rfcs/'
-    email: ian.griffiths12@nhs.net
+    email: gp-registrations-data@nhs.net
 
 tags:
   - name: GP Connect
