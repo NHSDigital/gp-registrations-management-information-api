@@ -43,16 +43,16 @@ info:
     You cannot:
     * read any management information data submitted to us
 
-    This API replaces the existing weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
+    This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
     ## Who can use this API
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development.
     You must do this before you can go live (see ‘Onboarding’ below). 
 
     ## Related APIs
-    Use [GP2GP - HL7 API](https://digital.nhs.uk/developer/api-catalogue/gp2gp) to learn more the existing GP2GP protocol.
+    Use [GP2GP - HL7 API](https://digital.nhs.uk/developer/api-catalogue/gp2gp) to learn more the GP2GP protocol.
 
-    Use the following to learn more about the newer GP Connect protocol:
+    Use the following to learn more about the GP Connect protocol:
     * [GP Connect Access Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-document-fhir)
     * [GP Connect Access Record: HTML - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-html-fhir)
     * [GP Connect Access Record: Structured - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir)
@@ -89,7 +89,6 @@ info:
     ### Integration testing
     Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
     * is for formal integration testing or early developer testing
-    * is for receiving data quality reports of test data
     * includes authorisation
 
     ## Onboarding
