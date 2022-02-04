@@ -58,8 +58,13 @@ info:
     * [GP Connect Access Record: Structured - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-access-record-structured-fhir)
     * [GP Connect Send Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-send-document-fhir)
 
-    ## API status
+    ## API status and roadmap
     This API is in [alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#api-status)
+
+    ### Roadmap
+    To see our roadmap, or to suggest, comment or vote on features for this API, see our [interactive product backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/199324/gp-registrations-management-information-api).
+
+    If you have any other queries, please [contact us](https://digital.nhs.uk/developer/help-and-support).
 
     ## Service level
     This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
