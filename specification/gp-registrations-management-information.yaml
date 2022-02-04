@@ -63,13 +63,16 @@ info:
 
     ## Service level
     This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
+
     For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
     ## Technology
     This API uses HTTP POST to submit data.
 
     ## Network access
-    This API is only available on the internet. For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis#internet-only-apis).
+    This API is only available on the internet.
+
+    For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis#internet-only-apis).
 
     ## Security and authorisation
 
