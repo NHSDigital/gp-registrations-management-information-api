@@ -80,10 +80,11 @@ info:
 
     ## Environments and testing
 
-    | Environment       | Base URL                                                     |
-    | ----------------- | -------------------------------------------------------------|
-    | Integration test  | `https://int.api.service.nhs.uk/gp-registrations-mi/`        |
-    | Production        | `https://api.service.nhs.uk/gp-registrations-mi/`            |
+    | Environment       | Base URL                                                               |
+    | ----------------- | ---------------------------------------------------------------------- |
+    | Integration test  | `https://int.api.service.nhs.uk/gp-registrations-mi/`                  |
+    | Production        | `https://api.service.nhs.uk/gp-registrations-mi/`                      |
+
 
     ### Integration testing
     Our [integration test environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#integration-testing):
