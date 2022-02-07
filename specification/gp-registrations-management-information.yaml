@@ -198,34 +198,32 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            type: object
-                            description: An object that contains information about the registration process
-                            properties:
-                              registrationType:
-                                type: string
-                                description: The type of this registration (newRegistrant, etc...)
-                                example: newRegistrant
-                              registrationStartedDateTime:
-                                type: string
-                                description: The ISO 8601 Date time in UTC of when the registration started
-                                example: 2020-02-08T08:30:26Z
-                              requestingPracticeOdsCode:
-                                type: string
-                                description: The ODS code of the practice requesting the EHR
-                                example: ABC1234
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          type: object
+                          description: An object that contains information about the registration process
+                          properties:
+                            registrationType:
+                              type: string
+                              description: The type of this registration (newRegistrant, etc...)
+                              example: newRegistrant
+                            registrationStartedDateTime:
+                              type: string
+                              description: The ISO 8601 Date time in UTC of when the registration started
+                              example: 2020-02-08T08:30:26Z
+                            requestingPracticeOdsCode:
+                              type: string
+                              description: The ODS code of the practice requesting the EHR
+                              example: ABC1234
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -276,22 +274,20 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -375,46 +371,44 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          ehr:
-                            properties:
-                              ehrTotalSizeBytes:
-                                type: integer
-                                description: The total size in bytes of the GP2GP message BEFORE it is split for transfer including all attachments
-                                example: 5699433
-                              ehrStructuredSizeBytes:
-                                type: integer
-                                description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included)
-                                example: 4096
-                              attachment:
-                                type: array
-                                description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
-                                items:
-                                  $ref: components/schemas/Attachment.yaml
-                              placeholder:
-                                type: array
-                                description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
-                                items:
-                                  $ref: components/schemas/Placeholder.yaml
-                          unsupportedDataItem:
-                            type: array
-                            items:
-                              $ref: components/schemas/UnsupportedDataItem.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        ehr:
+                          properties:
+                            ehrTotalSizeBytes:
+                              type: integer
+                              description: The total size in bytes of the GP2GP message BEFORE it is split for transfer including all attachments
+                              example: 5699433
+                            ehrStructuredSizeBytes:
+                              type: integer
+                              description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included)
+                              example: 4096
+                            attachment:
+                              type: array
+                              description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
+                              items:
+                                $ref: components/schemas/Attachment.yaml
+                            placeholder:
+                              type: array
+                              description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
+                              items:
+                                $ref: components/schemas/Placeholder.yaml
+                        unsupportedDataItem:
+                          type: array
+                          items:
+                            $ref: components/schemas/UnsupportedDataItem.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -465,22 +459,20 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -573,47 +565,45 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          ehr:
-                            properties:
-                              ehrTotalSizeBytes:
-                                type: integer
-                                description: The total size in bytes of the GP2GP message as reconstituted by the receiving system including all attachments received
-                                example: 5699433
-                              ehrStructuredSizeBytes:
-                                type: integer
-                                description: The total size in bytes of structured part of the GP2GP message as received by the receiving system (attachments are NOT to be included)
-                                example: 4096
-                              attachment:
-                                type: array
-                                description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
-                                items:
-                                  $ref: components/schemas/Attachment.yaml
-                              placeholder:
-                                type: array
-                                description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
-                                items:
-                                  $ref: components/schemas/Placeholder.yaml
-                              degrade:
-                                type: array
-                                description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
-                                items:
-                                  $ref: components/schemas/Degrade.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        ehr:
+                          properties:
+                            ehrTotalSizeBytes:
+                              type: integer
+                              description: The total size in bytes of the GP2GP message as reconstituted by the receiving system including all attachments received
+                              example: 5699433
+                            ehrStructuredSizeBytes:
+                              type: integer
+                              description: The total size in bytes of structured part of the GP2GP message as received by the receiving system (attachments are NOT to be included)
+                              example: 4096
+                            attachment:
+                              type: array
+                              description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
+                              items:
+                                $ref: components/schemas/Attachment.yaml
+                            placeholder:
+                              type: array
+                              description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
+                              items:
+                                $ref: components/schemas/Placeholder.yaml
+                            degrade:
+                              type: array
+                              description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
+                              items:
+                                $ref: components/schemas/Degrade.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -668,24 +658,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          integration:
-                            $ref: components/schemas/Integration.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        integration:
+                          $ref: components/schemas/Integration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -736,22 +724,20 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -799,34 +785,32 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            type: object
-                            description: An object that contains information about the registration process
-                            properties:
-                              registrationType:
-                                type: string
-                                description: The type of this registration (newRegistrant, etc...)
-                                example: newRegistrant
-                              registrationStartedDateTime:
-                                type: string
-                                description: The ISO 8601 Date time in UTC of when the registration started
-                                example: 2020-02-08T08:30:26Z
-                              requestingPracticeOdsCode:
-                                type: string
-                                description: The ODS code of the practice requesting the EHR
-                                example: ABC1234
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          type: object
+                          description: An object that contains information about the registration process
+                          properties:
+                            registrationType:
+                              type: string
+                              description: The type of this registration (newRegistrant, etc...)
+                              example: newRegistrant
+                            registrationStartedDateTime:
+                              type: string
+                              description: The ISO 8601 Date time in UTC of when the registration started
+                              example: 2020-02-08T08:30:26Z
+                            requestingPracticeOdsCode:
+                              type: string
+                              description: The ODS code of the practice requesting the EHR
+                              example: ABC1234
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -877,22 +861,20 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -946,24 +928,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          structuredRecordMigration:
-                            $ref: components/schemas/Migration.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        structuredRecordMigration:
+                          $ref: components/schemas/Migration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1019,24 +999,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          attachment:
-                            $ref: components/schemas/Attachment.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        attachment:
+                          $ref: components/schemas/Attachment.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1096,26 +1074,24 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          attachment:
-                            $ref: components/schemas/Attachment.yaml
-                          documentMigration:
-                            $ref: components/schemas/Migration.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        attachment:
+                          $ref: components/schemas/Attachment.yaml
+                        documentMigration:
+                          $ref: components/schemas/Migration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1181,28 +1157,26 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          ehr:
-                            type: object
-                            description: An object that contains information about the EHR used in the record transfer
-                            properties:
-                              degrade:
-                                $ref: components/schemas/Degrade.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        ehr:
+                          type: object
+                          description: An object that contains information about the EHR used in the record transfer
+                          properties:
+                            degrade:
+                              $ref: components/schemas/Degrade.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1256,24 +1230,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          integration:
-                            $ref: components/schemas/Integration.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        integration:
+                          $ref: components/schemas/Integration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1323,22 +1295,20 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1392,24 +1362,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          integration:
-                            $ref: components/schemas/Integration.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        integration:
+                          $ref: components/schemas/Integration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1463,24 +1431,22 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                allOf:
-                  - $ref: ./components/schemas/BaseEvent.yaml
-                  - type: object
-                    required:
-                      - payload
-                    properties:
-                      payload:
-                        description: An object that contains the detailed payload of the event
-                        type: object
-                        properties:
-                          registration:
-                            $ref: components/schemas/Registration.yaml
-                          gpTransferMetadata:
-                            $ref: components/schemas/GPTransferMetadata.yaml
-                          error:
-                            $ref: components/schemas/Error.yaml
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        gpTransferMetadata:
+                          $ref: components/schemas/GPTransferMetadata.yaml
+                        error:
+                          $ref: components/schemas/Error.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
