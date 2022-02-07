@@ -198,6 +198,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -274,6 +275,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -371,6 +373,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -459,6 +462,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -565,6 +569,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -658,6 +663,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -724,6 +730,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -785,6 +792,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -861,6 +869,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -928,6 +937,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -999,6 +1009,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1074,6 +1085,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1157,6 +1169,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1230,6 +1243,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1295,6 +1309,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1362,6 +1377,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
@@ -1431,6 +1447,7 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
                 - type: object
