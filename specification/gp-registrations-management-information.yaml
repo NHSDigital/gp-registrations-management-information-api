@@ -208,10 +208,16 @@ paths:
                     payload:
                       description: An object that contains the detailed payload of the event
                       type: object
+                      required:
+                        - registration
                       properties:
                         registration:
                           type: object
                           description: An object that contains information about the registration process
+                          required:
+                            - registrationType
+                            - registrationStartedDateTime
+                            - requestingPracticeOdsCode
                           properties:
                             registrationType:
                               type: string
@@ -802,10 +808,16 @@ paths:
                     payload:
                       description: An object that contains the detailed payload of the event
                       type: object
+                      required:
+                        - registration
                       properties:
                         registration:
                           type: object
                           description: An object that contains information about the registration process
+                          required:
+                            - registrationType
+                            - registrationStartedDateTime
+                            - requestingPracticeOdsCode
                           properties:
                             registrationType:
                               type: string
