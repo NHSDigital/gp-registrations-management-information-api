@@ -4,12 +4,12 @@ required:
 properties:
   status:
     type: string
-    description: The status of this structured record migration (SUCCESS/FAILURE)
+    description: The status
     example: FAILURE
     enum:
       - SUCCESS
       - FAILURE
   reason:
     type: string
-    description: The reason for the status of this structured record migration
+    description: The reason for the status
     example: Could not retrieve record

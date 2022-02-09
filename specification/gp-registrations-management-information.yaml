@@ -965,7 +965,7 @@ paths:
                         gpTransferMetadata:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         structuredRecordMigration:
-                          $ref: components/schemas/Migration.yaml
+                          $ref: components/schemas/StatusDetails.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1115,7 +1115,7 @@ paths:
                         attachment:
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
-                          $ref: components/schemas/Migration.yaml
+                          $ref: components/schemas/StatusDetails.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
