@@ -15,6 +15,13 @@ info:
     Use this API to send real-time management information about GP registrations to us at NHS Digital.
     This API can receive Management Information from GP practices using either the GP2GP or GP Connect protocols.
 
+    ### Pre Transfer
+
+    Before a patient record transfer is in progress you can send us information about the following type of events:
+    * when a patient is being registered and a practice searches for and selects the patient from PDS
+    * when PDS has been updated with the new practice information
+    * when the SDS lookup is performed to identify whether the previous practice is GP2GP compatible
+
     ### GP2GP
 
     Using this protocol you can send us information about the following type of events:
