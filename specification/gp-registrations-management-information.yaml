@@ -120,6 +120,14 @@ tags:
 
 x-spec-publication:
   operation-order:
+    - group: Pre Transfer
+      operations:
+        - method: POST
+          path: /preTransfer/pdsAdvancedTrace
+        - method: POST
+          path: /preTransfer/pdsGeneralUpdate
+        - method: POST
+          path: /preTransfer/sdsLookup
     - group: GP2GP
       operations:
         - method: POST
