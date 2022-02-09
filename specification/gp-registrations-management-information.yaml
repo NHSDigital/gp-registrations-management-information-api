@@ -290,6 +290,67 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
+  /preTransfer/sdsLookup:
+    post:
+      tags:
+        - Pre Transfer
+      summary: Submit SDS Lookup event
+      operationId: sdsLookup
+      description: |
+        Once the PDS update is successful, an SDS lookup is performed to identify whether the previous practice is GP2GP compatible. This event should be triggered once the SDS lookup is done
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "demographicTraceStatus": {
+              "status": "SUCCESS",
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the SDS Lookup event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      required:
+                        - demographicTraceStatus
+                      properties:
+                        demographicTraceStatus:
+                          $ref: components/schemas/StatusDetails.yaml
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
   /gp2gp/registrationStarted:
     post:
       tags:
