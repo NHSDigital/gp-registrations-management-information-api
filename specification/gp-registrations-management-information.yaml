@@ -13,9 +13,11 @@ info:
   description: |
     ## Overview
     Use this API to send real-time management information about GP registrations to us at NHS Digital.
-    This API can receive Management Information from GP practices using either the GP2GP or GP Connect protocols.
+    * You can send us Management Information using the Pre-transfer API.
+    * If your practice uses the GP2GP protocol you can send us Management Information using the GP2GP API.
+    * If your practice uses the GP Connect protocol you can send us Management Information using the GP Connect API.
 
-    ### Pre Transfer
+    ### Pre-transfer
 
     Before a patient record transfer is in progress you can send us information about the following type of events:
     * when a patient is being registered and a practice searches for and selects the patient from PDS
@@ -32,6 +34,8 @@ info:
     * when the requesting practice validates an EHR
     * when the requesting practice integrates an EHR
     * when the requesting practice has completed the GP2GP registration
+
+    This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
     ### GP Connect
 
@@ -50,8 +54,6 @@ info:
     You cannot:
     * read any management information data submitted to us
 
-    This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
-
     ## Who can use this API
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development.
     You must do this before you can go live (see ‘Onboarding’ below). 
@@ -66,7 +68,9 @@ info:
     * [GP Connect Send Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-send-document-fhir)
 
     ## API status and roadmap
-    This API is in [alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#api-status)
+    This API is in [alpha](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#api-status), meaning:
+    - it is available for testing in the integration environment, but not for production use
+    - we might make breaking changes, but only if we cannot avoid it, and we will give advance notice
 
     ### Roadmap
     To see our roadmap, or to suggest, comment or vote on features for this API, see our [interactive product backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/199324/gp-registrations-management-information-api).
@@ -74,7 +78,7 @@ info:
     If you have any other queries, please [contact us](https://digital.nhs.uk/developer/help-and-support).
 
     ## Service level
-    This API is a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
+    This plan is for this API to be a silver service, meaning it is operational 24 x 7 x 365 but only supported during business hours (8am to 6pm), Monday to Friday excluding bank holidays.
 
     For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
@@ -82,13 +86,13 @@ info:
     This API uses HTTP POST to submit data.
 
     ## Network access
-    This API is available on the internet.
+    This API is available on the internet and, indirectly, on the [Health and Social Care Network (HSCN)](https://digital.nhs.uk/services/health-and-social-care-network).
 
     For more details, see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis#internet-only-apis).
 
     ## Security and authorisation
 
-    The access mode is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis),
+    This API is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis),
     meaning we authenticate the calling application but not the end user.
     To use this access mode, use the following security pattern:
     * [Application-restricted RESTful APIs - API key authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-api-key-authentication)
@@ -127,7 +131,7 @@ tags:
 
 x-spec-publication:
   operation-order:
-    - group: Pre Transfer
+    - group: Pre-transfer
       operations:
         - method: POST
           path: /preTransfer/pdsAdvancedTrace
@@ -370,7 +374,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit registration started event
+      summary: Submit Registration Started event
       operationId: registrationStarted
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
@@ -451,7 +455,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit EHR requested event
+      summary: Submit EHR Requested event
       operationId: ehrRequested
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested:
@@ -516,7 +520,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit EHR generated event
+      summary: Submit EHR Generated event
       operationId: ehrGenerated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is generated.
@@ -638,7 +642,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit EHR sent event
+      summary: Submit EHR Sent event
       operationId: ehrSent
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is sent.
@@ -703,7 +707,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit EHR validated event
+      summary: Submit EHR Validated event
       operationId: ehrValidated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is validated.
@@ -835,7 +839,7 @@ paths:
     post:
       tags:
         - GP2GP
-      summary: Submit EHR integrated event
+      summary: Submit EHR Integrated event
       operationId: ehrIntegrated
       description: |
         Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is integrated.
@@ -971,7 +975,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit registration started event
+      summary: Submit Registration Started event
       operationId: registrationStartedGC
       description: |
         Use this endpoint to submit GP registration management information for when a registration is started.
@@ -1116,7 +1120,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit Migrate Structured Record response event
+      summary: Submit Migrate Structured Record Response event
       operationId: migrateStructuredRecordResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System has received a response from the request made via GP Connect using the ‘Migrate Structured Record’ end point. In a happy-path scenario, the response should contain the "Migrate Patient Record Bundle"
@@ -1186,7 +1190,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit Migrate document request event
+      summary: Submit Migrate Document Request event
       operationId: migrateDocumentRequest
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System makes an individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
@@ -1258,7 +1262,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit Migrate document response event
+      summary: Submit Migrate Document Response event
       operationId: migrateDocumentResponse
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System receives a response on every individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
@@ -1336,7 +1340,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit EHR ready to integrate event
+      summary: Submit EHR Ready To Integrate event
       operationId: ehrReadyToIntegrateGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the Requesting System allows the user to see a pre-processed view of the Record Bundle and all associated documents so they can determine whether to integrate
@@ -1422,7 +1426,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit EHR integrated event
+      summary: Submit EHR Integrated event
       operationId: ehrIntegratedGC
       description: |
         Use this endpoint to submit GP registration management information immediately after the clinical staff member has chosen to integrate the Patient record into the system.
@@ -1556,7 +1560,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit internal transfer event
+      summary: Submit Internal Transfer event
       operationId: internalTransfer
       description: |
         Use this endpoint to submit GP registration management information immediately after a patient transfer has occurred between two practices using the same Supplier System.
@@ -1626,7 +1630,7 @@ paths:
     post:
       tags:
         - GP Connect
-      summary: Submit error event
+      summary: Submit Error event
       operationId: errorGC
       description: |
         Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
