@@ -20,34 +20,31 @@ info:
     ### Pre-transfer
 
     Before a patient record transfer is in progress you can send us information about the following type of events:
+    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP or GP Connect protocol
     * when a patient is being registered and a practice searches for and selects the patient from PDS
+    * when the SDS lookup is performed to identify whether the previous practice is GP2GP or GP Connect compatible
     * when PDS has been updated with the new practice information
-    * when the SDS lookup is performed to identify whether the previous practice is GP2GP compatible
 
     ### GP2GP
 
     Using this protocol you can send us information about the following type of events:
-    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP protocol
     * when the sending practice generates the electronic health record
     * when the requesting practice requests an EHR
     * when the sending practice sends an EHR
     * when the requesting practice validates an EHR
     * when the requesting practice integrates an EHR
-    * when the requesting practice has completed the GP2GP registration
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
     ### GP Connect
 
     Using this protocol you can send us information about the following type of events:
-    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP Connect protocol
     * when the request is sent to migrate the structured record
     * when the response has been received from migrating the structured record
     * when a request is sent to migrate a document
     * when a response has been received from migrating a document
     * when the EHR is ready to integrate
     * when the EHR has been integrated
-    * when the registration has been completed
     * when an internal transfer of an EHR has been completed between two GP practices using the same software supplier system
     * when an error occurs
 
@@ -134,15 +131,15 @@ x-spec-publication:
     - group: Pre-transfer
       operations:
         - method: POST
-          path: /preTransfer/pdsAdvancedTrace
+          path: /preTransfer/registrationStarted
         - method: POST
-          path: /preTransfer/pdsGeneralUpdate
+          path: /preTransfer/pdsTrace
         - method: POST
           path: /preTransfer/sdsLookup
+        - method: POST
+          path: /preTransfer/pdsGeneralUpdate
     - group: GP2GP
       operations:
-        - method: POST
-          path: /gp2gp/registrationStarted
         - method: POST
           path: /gp2gp/ehrRequested
         - method: POST
@@ -153,12 +150,8 @@ x-spec-publication:
           path: /gp2gp/ehrValidated
         - method: POST
           path: /gp2gp/ehrIntegrated
-        - method: POST
-          path: /gp2gp/registrationCompleted
     - group: GP Connect
       operations:
-        - method: POST
-          path: /gpconnect/registrationStarted
         - method: POST
           path: /gpconnect/migrateStructuredRecordRequest
         - method: POST
@@ -172,208 +165,15 @@ x-spec-publication:
         - method: POST
           path: /gpconnect/ehrIntegrated
         - method: POST
-          path: /gpconnect/registrationCompleted
-        - method: POST
           path: /gpconnect/internalTransfer
         - method: POST
           path: /gpconnect/error
 
 paths:
-  /preTransfer/pdsAdvancedTrace:
+  /preTransfer/registrationStarted:
     post:
       tags:
         - Pre Transfer
-      summary: Submit PDS Advanced Trace event
-      operationId: pdsAdvancedTrace
-      description: |
-        When a patient is being registered, the new practice performs a search in PDS to find the patient that matches their personal information. 
-        This event should be sent when the practice has selected a match
-
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-123456-1234-123454",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "smartcardPresent": true,
-            "demographicTraceStatus": {
-              "status": "FAILURE",
-              "reason": "patient not found"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the PDS Advanced Trace event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - smartcardPresent
-                        - demographicTraceStatus
-                      properties:
-                        smartcardPresent:
-                          type: boolean
-                          description: Denotes whether a smartcard has been used to perform the PDS advanced trace
-                          example: true
-                        demographicTraceStatus:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /preTransfer/pdsGeneralUpdate:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit PDS General Update event
-      operationId: pdsGeneralUpdate
-      description: |
-        Once a patient is found and linked, PDS should be updated to the new practice’s information. This event should be sent once the the update has been triggered
-
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-123456-1234-123454",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "demographicTraceStatus": {
-              "status": "SUCCESS",
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the PDS General Update event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - demographicTraceStatus
-                      properties:
-                        demographicTraceStatus:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /preTransfer/sdsLookup:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit SDS Lookup event
-      operationId: sdsLookup
-      description: |
-        Once the PDS update is successful, an SDS lookup is performed to identify whether the previous practice is GP2GP compatible. This event should be triggered once the SDS lookup is done
-
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-123456-1234-123454",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "demographicTraceStatus": {
-              "status": "SUCCESS",
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the SDS Lookup event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - demographicTraceStatus
-                      properties:
-                        demographicTraceStatus:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gp2gp/registrationStarted:
-    post:
-      tags:
-        - GP2GP
       summary: Submit Registration Started event
       operationId: registrationStarted
       description: |
@@ -443,6 +243,197 @@ paths:
                               type: string
                               description: The ODS code of the practice requesting the EHR
                               example: ABC1234
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /preTransfer/pdsTrace:
+    post:
+      tags:
+        - Pre Transfer
+      summary: Submit PDS Trace event
+      operationId: pdsTrace
+      description: |
+        When a patient is being registered, the new practice performs a search in PDS to find the patient that matches their personal information. 
+        This event should be sent when the practice has selected a match
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "smartcardPresent": true,
+            "demographicTraceStatus": {
+              "status": "FAILURE",
+              "reason": "patient not found"
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the PDS Trace event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      required:
+                        - smartcardPresent
+                        - demographicTraceStatus
+                      properties:
+                        smartcardPresent:
+                          type: boolean
+                          description: Denotes whether a smartcard has been used to perform the PDS trace
+                          example: true
+                        demographicTraceStatus:
+                          $ref: components/schemas/StatusDetails.yaml
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /preTransfer/sdsLookup:
+    post:
+      tags:
+        - Pre Transfer
+      summary: Submit SDS Lookup event
+      operationId: sdsLookup
+      description: |
+        Once the PDS trace has happened, an SDS lookup is performed to identify whether the previous practice is GP2GP compatible. This event should be triggered once the SDS lookup is done
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "transferCompatibilityStatus": {
+              "status": "SUCCESS",
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the SDS Lookup event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      required:
+                        - transferCompatibilityStatus
+                      properties:
+                        transferCompatibilityStatus:
+                          $ref: components/schemas/StatusDetails.yaml
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /preTransfer/pdsGeneralUpdate:
+    post:
+      tags:
+        - Pre Transfer
+      summary: Submit PDS General Update event
+      operationId: pdsGeneralUpdate
+      description: |
+        Once a patient is found and linked, PDS should be updated to the new practice’s information. This event should be sent once the the update has been triggered
+
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "registrationId": "9087-978098-9087-978098",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "demographicTraceStatus": {
+              "status": "SUCCESS",
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the PDS General Update event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      required:
+                        - demographicTraceStatus
+                      properties:
+                        demographicTraceStatus:
+                          $ref: components/schemas/StatusDetails.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -906,151 +897,6 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp2gp/registrationCompleted:
-    post:
-      tags:
-        - GP2GP
-      summary: Submit Registration Completed event
-      operationId: registrationCompleted
-      description: |
-        Use this endpoint to submit GP registration management information for when a GP2GP registration is complete.
-
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-1234-1234-1234",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "supplierOne",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T08:30:25Z"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the registration completed event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/registrationStarted:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Registration Started event
-      operationId: registrationStartedGC
-      description: |
-        Use this endpoint to submit GP registration management information for when a registration is started.
-
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-123456-1234-123454",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "registrationStartedDateTime": "2020-02-08T09:30:26Z",
-              "requestingPracticeOdsCode": "ABC1234",
-              "registrationType": "newRegistrant"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the registration started event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - registration
-                      properties:
-                        registration:
-                          type: object
-                          description: An object that contains information about the registration process
-                          required:
-                            - registrationType
-                            - registrationStartedDateTime
-                            - requestingPracticeOdsCode
-                          properties:
-                            registrationType:
-                              type: string
-                              description: The type of this registration (newRegistrant, etc...)
-                              example: newRegistrant
-                            registrationStartedDateTime:
-                              type: string
-                              description: The ISO 8601 Date time in UTC of when the registration started
-                              example: 2020-02-08T08:30:26Z
-                            requestingPracticeOdsCode:
-                              type: string
-                              description: The ODS code of the practice requesting the EHR
-                              example: ABC1234
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
   /gpconnect/migrateStructuredRecordRequest:
     post:
       tags:
@@ -1484,70 +1330,6 @@ paths:
                           $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/registrationCompleted:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Registration Completed event
-      operationId: registrationCompletedGC
-      description: |
-        Use this endpoint to submit GP registration management information once a receiving practice has successfully registered a patient. This should be sent after the EHR integrated event.
-        ### Request Body example:
-        ```json
-        {
-          "eventId": "1234-1234-1234-1234",
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
-          "reportingSystemSupplier": "supplierOne",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T08:30:25Z"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the registration completed event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
