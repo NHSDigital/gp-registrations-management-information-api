@@ -110,7 +110,7 @@ info:
     ## Onboarding
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
 
-    Contact [gp-registrations-data@nhs.net](gp-registrations-data@nhs.net) to onboard.
+    Contact [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net) to onboard.
 
   license:
     name: MIT
