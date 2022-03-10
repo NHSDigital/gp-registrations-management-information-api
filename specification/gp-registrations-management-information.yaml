@@ -184,7 +184,8 @@ paths:
         {
           "eventId": "1234-1234-1234-1234",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "6235-123456-8947-127834",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "supplierOne",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -266,7 +267,8 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -334,7 +336,8 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -395,7 +398,8 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -456,18 +460,15 @@ paths:
         {
           "eventId": "1234-1234-1234-1234",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
           "reportingSystemSupplier": "supplierOne",
           "reportingPracticeOdsCode": "ABC1234",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
             },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T08:30:25Z"
-            }
           }
         }
         ```
@@ -497,8 +498,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -521,17 +520,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123451",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "XYZ4567",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T09:30:26Z",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "ehr": {
               "ehrTotalSizeBytes": 5699433,
@@ -595,8 +591,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -643,7 +637,8 @@ paths:
         {
           "eventId": "1234-1234-1234-1234",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "supplierOne",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -651,10 +646,6 @@ paths:
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
             },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T08:30:25Z"
-            }
           }
         }
         ```
@@ -684,8 +675,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -708,17 +697,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123451",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "XYZ4567",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "ehr": {
               "ehrTotalSizeBytes": 5699433,
@@ -791,8 +777,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           properties:
                             ehrTotalSizeBytes:
@@ -840,17 +824,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123451",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "XYZ4567",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "integration": {
               "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
@@ -885,8 +866,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
       responses:
@@ -911,7 +890,8 @@ paths:
         {
           "eventId": "1234-1234-1234-1234",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "supplierOne",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
@@ -919,10 +899,6 @@ paths:
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
             },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T08:30:25Z"
-            }
           }
         }
         ```
@@ -952,8 +928,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -975,17 +949,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "structuredRecordMigration": {
               "status": "SUCCESS",
@@ -1020,8 +991,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         structuredRecordMigration:
                           $ref: components/schemas/StatusDetails.yaml
       responses:
@@ -1045,17 +1014,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "attachment": {
               "attachmentId": "3424-342456-3424-342456",
@@ -1092,8 +1058,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         attachment:
                           $ref: components/schemas/Attachment.yaml
       responses:
@@ -1117,17 +1081,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "attachment": {
               "attachmentId": "3424-342456-3424-342456",
@@ -1168,8 +1129,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         attachment:
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
@@ -1195,17 +1154,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "ehr": {
               "degrade": [
@@ -1252,8 +1208,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         ehr:
                           type: object
                           description: An object that contains information about the EHR used in the record transfer
@@ -1281,17 +1235,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123451",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "integration": {
               "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
@@ -1326,8 +1277,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
       responses:
@@ -1351,17 +1300,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123451",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "integration": {
               "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
@@ -1396,8 +1342,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
       responses:
@@ -1421,17 +1365,14 @@ paths:
         {
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "registrationId": "9087-978098-9087-978098",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "gpTransferMetadata": {
-              "conversationId": "4345-986959-4930-684038",
-              "transferEventDateTime": "2020-02-08T09:30:26Z"
             },
             "error": {
               "errorCode": "",
@@ -1466,8 +1407,6 @@ paths:
                       properties:
                         registration:
                           $ref: components/schemas/Registration.yaml
-                        gpTransferMetadata:
-                          $ref: components/schemas/GPTransferMetadata.yaml
                         error:
                           $ref: components/schemas/Error.yaml
       responses:
