@@ -33,6 +33,7 @@ info:
     * when the sending practice sends an EHR
     * when the requesting practice validates an EHR
     * when the requesting practice integrates an EHR
+    * when an error occurs
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
@@ -150,6 +151,8 @@ x-spec-publication:
           path: /gp2gp/ehrValidated
         - method: POST
           path: /gp2gp/ehrIntegrated
+        - method: POST
+          path: /gp2gp/error
     - group: GP Connect
       operations:
         - method: POST
@@ -868,6 +871,71 @@ paths:
                           $ref: components/schemas/Registration.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /gp2gp/error:
+    post:
+      tags:
+        - GP2GP
+      summary: Submit Error event
+      operationId: errorGP2GP
+      description: |
+        Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
+        ### Request Body example:
+        ```json
+        {
+          "eventId": "1234-123456-1234-123454",
+          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "conversationId": "4345-986959-4930-684038",
+          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "XYZ4567"
+            },
+            "error": {
+              "errorCode": "ABC",
+              "errorDescription": "stacktrace? detailed error message?"
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: The request body required for the error event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      properties:
+                        registration:
+                          $ref: components/schemas/Registration.yaml
+                        error:
+                          $ref: components/schemas/Error.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
