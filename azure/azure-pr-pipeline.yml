@@ -35,6 +35,8 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
+    jinja_templates:
+      TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
     apigee_deployments:
       - environment: internal-dev
         make_spec_visible: true
