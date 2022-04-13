@@ -1434,7 +1434,7 @@ paths:
           "eventId": "1234-123456-1234-123454",
           "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "transferEventDateTime": "2020-02-08T08:30:26Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
