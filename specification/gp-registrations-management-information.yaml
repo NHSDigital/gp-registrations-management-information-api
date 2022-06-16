@@ -193,7 +193,6 @@ paths:
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
-              "registrationStartedDateTime": "2020-02-08T08:30:26Z",
               "registrationType": "newRegistrant",
               "requestingPracticeOdsCode": "ABC1234"
             }
@@ -232,17 +231,12 @@ paths:
                           description: An object that contains information about the registration process
                           required:
                             - registrationType
-                            - registrationStartedDateTime
                             - requestingPracticeOdsCode
                           properties:
                             registrationType:
                               type: string
                               description: The type of this registration (newRegistrant, etc...)
                               example: newRegistrant
-                            registrationStartedDateTime:
-                              type: string
-                              description: The ISO 8601 Date time in UTC of when the registration started
-                              example: 2020-02-08T08:30:26Z
                             requestingPracticeOdsCode:
                               type: string
                               description: The ODS code of the practice requesting the EHR
