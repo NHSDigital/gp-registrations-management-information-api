@@ -124,6 +124,8 @@ tags:
     description: Endpoints to submit events for the GP Connect protocol
   - name: GP2GP
     description: Endpoints to submit events for the GP2GP protocol
+  - name: Other
+    description: Endpoints to submit events that don't use either the GP2GP or GP Connect protocols
   - name: Pre Transfer
     description: Endpoints to submit events for pre-transfer stages of the patient registration
 
@@ -168,9 +170,11 @@ x-spec-publication:
         - method: POST
           path: /gpconnect/ehrIntegrated
         - method: POST
-          path: /gpconnect/internalTransfer
-        - method: POST
           path: /gpconnect/error
+    - group: Other
+      operations:
+        - method: POST
+          path: /internalTransfer
 
 paths:
   /preTransfer/registrationStarted:
@@ -193,7 +197,6 @@ paths:
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
-              "registrationStartedDateTime": "2020-02-08T08:30:26Z",
               "registrationType": "newRegistrant",
               "requestingPracticeOdsCode": "ABC1234"
             }
@@ -232,17 +235,12 @@ paths:
                           description: An object that contains information about the registration process
                           required:
                             - registrationType
-                            - registrationStartedDateTime
                             - requestingPracticeOdsCode
                           properties:
                             registrationType:
                               type: string
                               description: The type of this registration (newRegistrant, etc...)
                               example: newRegistrant
-                            registrationStartedDateTime:
-                              type: string
-                              description: The ISO 8601 Date time in UTC of when the registration started
-                              example: 2020-02-08T08:30:26Z
                             requestingPracticeOdsCode:
                               type: string
                               description: The ODS code of the practice requesting the EHR
@@ -471,7 +469,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
@@ -648,7 +646,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
@@ -966,7 +964,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
@@ -1355,10 +1353,10 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gpconnect/internalTransfer:
+  /internalTransfer:
     post:
       tags:
-        - GP Connect
+        - Other
       summary: Submit Internal Transfer event
       operationId: internalTransfer
       description: |
