@@ -469,7 +469,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
@@ -646,7 +646,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
@@ -964,7 +964,7 @@ paths:
             "registration": {
               "requestingPracticeOdsCode": "ABC1234",
               "sendingPracticeOdsCode": "XYZ4567"
-            },
+            }
           }
         }
         ```
