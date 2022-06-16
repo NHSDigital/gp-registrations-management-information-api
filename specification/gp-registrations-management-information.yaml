@@ -124,6 +124,8 @@ tags:
     description: Endpoints to submit events for the GP Connect protocol
   - name: GP2GP
     description: Endpoints to submit events for the GP2GP protocol
+  - name: Other
+    description: Endpoints to submit events that don't use either the GP2GP or GP Connect protocols
   - name: Pre Transfer
     description: Endpoints to submit events for pre-transfer stages of the patient registration
 
@@ -168,9 +170,11 @@ x-spec-publication:
         - method: POST
           path: /gpconnect/ehrIntegrated
         - method: POST
-          path: /gpconnect/internalTransfer
-        - method: POST
           path: /gpconnect/error
+    - group: Other
+      operations:
+        - method: POST
+          path: /internalTransfer
 
 paths:
   /preTransfer/registrationStarted:
@@ -1349,10 +1353,10 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gpconnect/internalTransfer:
+  /internalTransfer:
     post:
       tags:
-        - GP Connect
+        - Other
       summary: Submit Internal Transfer event
       operationId: internalTransfer
       description: |
