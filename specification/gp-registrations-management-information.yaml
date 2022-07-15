@@ -46,8 +46,12 @@ info:
     * when a response has been received from migrating a document
     * when the EHR is ready to integrate
     * when the EHR has been integrated
-    * when an internal transfer of an EHR has been completed between two GP practices using the same software supplier system
     * when an error occurs
+    
+    ### Other
+    
+    This section contains events that don't use the GP2GP or GP Connect protocols:
+    * when an internal transfer of an EHR has been completed between two GP practices using the same software supplier system
 
     You cannot:
     * read any management information data submitted to us
