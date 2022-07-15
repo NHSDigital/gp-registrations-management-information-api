@@ -264,7 +264,8 @@ paths:
       operationId: pdsTrace
       description: |
         When a patient is being registered, the new practice performs a search in PDS to find the patient that matches their personal information. 
-        This event should be sent when the practice has selected a match
+        This event should be sent with a demographic trace status of SUCCESS when the practice has found and selected a match. 
+        If no match is found and a new patient is created within the system, this event should be sent with a demographic trace status of FAILURE as well as the reason for this trace failure.
 
         ### Request Body example:
         ```json
