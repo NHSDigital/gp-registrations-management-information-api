@@ -407,6 +407,12 @@ paths:
           "payload": {
             "demographicTraceStatus": {
               "status": "SUCCESS",
+            },
+            "gpLinks": {
+              "type": "NO_PREVIOUS_NHS_REGISTRATION",
+              "hasGMS1Form": true,
+              "hasNHSNumber": false,
+              "otherType": "if OTHER is selected for type, detail here what that type is"
             }
           }
         }
@@ -437,9 +443,12 @@ paths:
                       type: object
                       required:
                         - demographicTraceStatus
+                        - gpLinks
                       properties:
                         demographicTraceStatus:
                           $ref: components/schemas/StatusDetails.yaml
+                        gpLinks:
+                          $ref: components/schemas/GPLinks.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
