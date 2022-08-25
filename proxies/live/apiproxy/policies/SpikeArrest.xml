@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <SpikeArrest name="SpikeArrest">
   <DisplayName>SpikeArrest</DisplayName>
-  <Rate ref="apiproduct.ratelimit">83ps</Rate>
+  <Rate ref="apiproduct.ratelimit">166ps</Rate>
 </SpikeArrest>
 
