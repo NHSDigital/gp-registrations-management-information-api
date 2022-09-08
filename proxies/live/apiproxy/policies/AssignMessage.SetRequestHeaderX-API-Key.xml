@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AssignMessage.SetRequestHeaderX-API-Key" async="false">
+  <Set>
+    <Headers>
+      <Header name="X-API-Key">{private.environment_kvm_data.apikey}</Header>
+    </Headers>
+  </Set>
+  <AssignTo createNew="false" transport="http" type="request"/>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>
