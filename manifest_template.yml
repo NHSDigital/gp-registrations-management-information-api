@@ -19,7 +19,7 @@ APIGEE_ENVIRONMENTS:
     display_name: Integration Testing
   - name: prod
     approval_type: manual
-    portal_visibility: false
+    portal_visibility: true
     display_name: Production
 ---
 meta:
