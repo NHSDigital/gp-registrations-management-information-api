@@ -1,0 +1,29 @@
+type: object
+required:
+  - matched
+  - multifactorAuthenticationPresent
+properties:
+  matched:
+    type: boolean
+    description: |
+      **true** - a match was selected by the user
+      **false** - a match was **not** selected by the user or a PDS trace was not performed, and a new patient record was created
+    example: true
+  reason:
+    type: string
+    description: |
+      Required if matched = false
+
+      Examples
+      **No PDS trace results returned** - if no results were returned from the PDS trace
+      **Matches returned, not selected** - if one or more result were returned from the PDS trace, but the user did not select a match
+      **No PDS trace** - if no PDS trace was performed
+
+      If a technical error or negative acknowledgment occurs during the PDS trace an Error event must be submitted, including the response code if applicable
+    example: No PDS trace results returned
+  multifactorAuthenticationPresent:
+    type: boolean
+    description: |
+      **true** - a smartcard or other multifactor authentication method was present during the PDS trace
+      **false** - a smartcard or other multifactor authentication method was not present during the PDS trace
+    example: true
