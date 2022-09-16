@@ -132,6 +132,8 @@ tags:
     description: Endpoints to submit events that don't use either the GP2GP or GP Connect protocols
   - name: Pre Transfer
     description: Endpoints to submit events for pre-transfer stages of the patient registration
+  - name: Registration
+    description: Endpoints to submit events for all stages of the patient registration
 
 x-spec-publication:
   operation-order:
@@ -179,8 +181,135 @@ x-spec-publication:
       operations:
         - method: POST
           path: /internalTransfer
+    - group: Registration
+      operations:
+        - method: POST
+          path: /gp-registration-events/registrations
+        - method: POST
+          path: /gp-registration-events/transfer-compatibility-statuses
+        - method: POST
+          path: /gp-registration-events/ehr-requests
+        - method: POST
+          path: /gp-registration-events/ehr-responses
+        - method: POST
+          path: /gp-registration-events/document-responses
+        - method: POST
+          path: /gp-registration-events/ready-to-integrate-statuses
+        - method: POST
+          path: /gp-registration-events/ehr-degrades
+        - method: POST
+          path: /gp-registration-events/ehr-integrations
+        - method: POST
+          path: /gp-registration-events/errors
 
 paths:
+  /###/#####:
+    post:
+      tags:
+        - Registration
+      summary: Submit Registrations event
+      operationId: registrations
+      description: |
+        This event captures the details of the registration before the electronic transfer is initiated. 
+
+        It includes information about the 
+        - status of the PDS trace
+        - type of registration
+        - GPLinks information
+        - sending practice
+
+        Submitted by: Requesting practice
+
+        When to send: When the user completes the registration. This event should be submitted for every regular patient registration.
+        
+        Including, but not limited to, the following scenarios:
+
+        - The patient is new to the practice
+        - The patient is returning to the practice,
+        - The patient is already registered as a non-regular patient type (e.g. temporary, private etc) and is changing to a regular patient status (e.g. from temporary to regular patient)
+        - Registrations that will not trigger an electronic transfer of the EHR (e.g. the patient does not have a previous practice, or the previous practice is in Scotland)
+        - Registrations when a PDS trace is not performed
+
+        Notes: If a technical error or negative acknowledgment occurs at any point during the registration a ‘Submit Errors’ event must be sent, including the response code if applicable.
+
+        ### Request Body example:
+        ```json
+        {
+          "conversationId": "4345-986959-4930-684038",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "payload": {
+            "registration": {
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "ABC1234",
+              "type": "newGPRegistration",
+              "returningPatient": false,
+              "multifactorAuthenticationPresent": true
+            },
+            "demographicTraceStatus": {
+              "matched": false,
+              "reason": "no PDS trace results returned",
+              "multifactorAuthenticationPresent": true
+            },
+            "gpLinks": {
+              "gpLinksComplete": true
+            }
+          }
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the registrations event
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+                - type: object
+                  required:
+                    - payload
+                  properties:
+                    payload:
+                      description: An object that contains the detailed payload of the event
+                      type: object
+                      required:
+                        - registration
+                      properties:
+                        registration:
+                          type: object
+                          description: An object that contains information about the registration process
+                          required:
+                            - registrationType
+                            - requestingPracticeOdsCode
+                          properties:
+                            registrationType:
+                              type: string
+                              description: The type of this registration (newRegistrant, etc...)
+                              example: newRegistrant
+                            requestingPracticeOdsCode:
+                              type: string
+                              description: The ODS code of the practice requesting the EHR
+                              example: ABC1234
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+
+
   /preTransfer/registrationStarted:
     post:
       tags:
@@ -394,7 +523,8 @@ paths:
       summary: Submit PDS General Update event
       operationId: pdsGeneralUpdate
       description: |
-        Once a patient is found and linked, PDS should be updated to the new practice’s information. This event should be sent once the the update has been triggered
+        xxx
+
 
         ### Request Body example:
         ```json

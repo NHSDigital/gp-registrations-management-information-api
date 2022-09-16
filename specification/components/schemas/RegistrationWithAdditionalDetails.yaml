@@ -1,0 +1,35 @@
+type: object
+required:
+  - requestingPracticeOdsCode
+  - type
+  - returningPatient
+  - multifactorAuthenticationPresent
+properties:
+  requestingPracticeOdsCode:
+    type: string
+    description: The ODS code of the practice requesting the EHR
+    example: A12345
+  sendingPracticeOdsCode:
+    type: string 
+    description: The ODS code of the practice sending the EHR (the previous practice). **This is required if present**.
+    example: X12345
+  type:
+    type: string
+    description: |
+      The type of registration. 
+      Examples
+      **changePatientType** - if the registration is for a patient that is already registered at the practice as a non-regular patient type (e.g. temporary, private) and is changing to a 'Regular' patient type.
+      **newGPRegistration** - if the registration is for a new or returning patient registrations where the patient is not currently registered as a non-regular patient (e.g. temporary, private etc)
+    example: newGPRegistration
+  returningPatient:
+    type: boolean
+    description: |
+      **true** - the patient is in the local list for previously Regular registered patients, but is not currently registered as a Regular patient
+      **false** - the patient is not in the local list for previously Regular registered patients
+    example: true
+  multifactorAuthenticationPresent:
+    type: boolean
+    description: |
+      **true** - a smartcard or other multifactor authentication method was present during registration
+      **false** - a smartcard or other multifactor authentication method was not present during registration
+    example: true
