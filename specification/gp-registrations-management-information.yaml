@@ -230,7 +230,7 @@ paths:
                         registration:
                           $ref: components/schemas/RegistrationWithAdditionalDetails.yaml
                         demographicTraceStatus:
-                          $ref: components/schemas/DemographicTraceStatus.yaml
+                          $ref: components/schemas/demographicTraceStatus.yaml
                         gpLinks:
                           $ref: components/schemas/GPLinks.yaml
       responses:
