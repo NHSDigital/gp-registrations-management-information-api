@@ -29,5 +29,5 @@ properties:
     example: A12345
   sendingPracticeOdsCode:
     type: string
-    description: The ODS code of the sending practice.
+    description: The ODS code of the sending practice. This is optional as there may not be a previous practice.
     example: X54321
