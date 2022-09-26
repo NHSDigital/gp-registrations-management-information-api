@@ -17,7 +17,9 @@ update-npm:
 .git/hooks/pre-commit:
 	cp scripts/pre-commit .git/hooks/pre-commit
 
-install: install-node install-python .git/hooks/pre-commit
+install: install-npm install-python .git/hooks/pre-commit
+
+update: update-npm update-python
 
 lint:
 	npm run lint
