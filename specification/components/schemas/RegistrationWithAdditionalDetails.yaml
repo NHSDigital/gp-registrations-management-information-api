@@ -7,20 +7,23 @@ properties:
   type:
     type: string
     description: |
-      The type of registration. 
-      Examples
-      **changePatientType** - if the registration is for a patient that is already registered at the practice as a non-regular patient type (e.g. temporary, private) and is changing to a 'Regular' patient type.
-      **newGPRegistration** - if the registration is for a new or returning patient registrations where the patient is not currently registered as a non-regular patient (e.g. temporary, private etc)
-    example: newGPRegistration
+      The type of registration.
+
+      **CHANGE_PATIENT_TYPE** - if the registration is for a patient that is already registered at the practice as a non-regular patient type (e.g. temporary, private) and is changing to a 'Regular' patient type  
+      **NEW_GP_REGISTRATION** - if the registration is for a new or returning patient registrations where the patient is not currently registered as a non-regular patient (e.g. temporary, private etc)  
+    example: NEW_GP_REGISTRATION
+    enum: 
+     - CHANGE_PATIENT_TYPE
+     - NEW_GP_REGISTRATION
   returningPatient:
     type: boolean
     description: |
-      **true** - the patient is in the local list for previously Regular registered patients, but is not currently registered as a Regular patient
+      **true** - the patient is in the local list for previously Regular registered patients, but is not currently registered as a Regular patient  
       **false** - the patient is not in the local list for previously Regular registered patients
     example: true
   multifactorAuthenticationPresent:
     type: boolean
     description: |
-      **true** - a smartcard or other multifactor authentication method was present during registration
+      **true** - a smartcard or other multifactor authentication method was present during registration  
       **false** - a smartcard or other multifactor authentication method was not present during registration
     example: true

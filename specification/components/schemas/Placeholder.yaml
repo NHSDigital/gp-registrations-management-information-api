@@ -1,28 +1,49 @@
 type: object
 required:
-  - placeholderId
-  - attachmentId
+  - clinicalType
   - generatedBy
   - reason
   - originalMimeType
 properties:
-  placeholderId:
+  clinicalType:
     type: string
-    description: A unique id for the placeholder that can be resolved in the clinical system
-    example: 9876-987654-9876-987654
-  attachmentId:
-    type: string
-    description: A reference to the attachment that the placeholder replaces (should be contained in the list of attachments)
-    example: 1323-132345-1323-132345
+    description: The text value corresponding to the value used in EhrAttachmentCode in the code element of ExternalDocument as defined in the MIM.
+    example: SCANNED_DOCUMENT
+    enum: 
+     - SCANNED_DOCUMENT
+     - ORIGINAL_TEXT_DOCUMENT
+     - OCR_TEXT_DOCUMENT
+     - IMAGE
+     - AUDIO_DICTATION
+     - OTHER_AUDIO
+     - OTHER_DIGITAL_SIGNAL
+     - EDI_MESSAGE
+     - NOT_AVAILABLE
+     - OTHER
   generatedBy:
     type: string
-    description: The ODS code of the practice that generated the placeholder
-    example: XYZ4567
+    description: Whether the sending practice generated the placeholder, or it already existed in the EHR.
+    example: SENDER
+    enum: 
+     - SENDER
+     - PRE_EXISTING
   reason:
-    type: integer
-    description: The reason the placeholder was generated. These codes should match the values described in [NPFIT-PC-BLD-0099.04 GP2GP Handling Missing Attachments](https://nhsconnect.github.io/prm-external-developer-website/NPFIT-PC-BLD-0099.04%20GP2GP%20Handling%20Missing%20Attachments.pdf)
-    example: 1
+    type: string
+    description: The reason the placeholder was generated. These codes should match the values described in [NPFIT-PC-BLD-0099.04 GP2GP Handling Missing Attachments](https://nhsconnect.github.io/prm-external-developer-website/NPFIT-PC-BLD-0099.04%20GP2GP%20Handling%20Missing%20Attachments.pdf).
+    example: FILE_TYPE_UNSUPPORTED
+    enum:
+     - FILE_TYPE_UNSUPPORTED
+     - FILE_DELETED
+     - FILE_NOT_FOUND
+     - FILE_LOCKED
+     - UNABLE_TO_DETERMINE_PROBLEM
   originalMimeType:
     type: string
-    description: The original mime type of the attachment this placeholder is for
+    description: |
+     The original mime type of the attachment this placeholder is for. 
+
+     Examples:
+      - audio/mpeg
+      - image/jpeg
+      - application/pdf
     example: audio/mpeg

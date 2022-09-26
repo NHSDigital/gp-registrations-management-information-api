@@ -1,17 +1,25 @@
 type: object
 required:
-  - integrationStatus
+  - outcome
 properties:
-  integrationStatus:
+  outcome:
     type: string
-    description: The status of this integration, (filed as attachment/ suppressed/ merged/ rejected)
+    description: |
+     The outcome of this integration. 
+
+      **INTEGRATED** - Integrate incoming record for non-returning patients OR merge incoming record with existing record for returning patients  
+      **INTEGRATED_AND_SUPPRESSED** - Integrate incoming record and suppress existing record, only use this status for returning patients  
+      **SUPPRESSED_AND_REACTIVATED** - Integrate and suppress incoming record and reactivate old record, only use this status for returning patients  
+      **FILED_AS_ATTACHMENT** - For GP2GP 1.1a only  
+      **REJECTED** - Reject record  
+      **INTERNAL_TRANSFER** - When the EHR transfer between the practices is internal within a single system and will not use GP2GP or GP Connect  
+      **FAILED_TO_INTEGRATE** - Use this if the EHR failed to integrate. If there is an error at this point an Error event must be sent
     enum:
-      - FILED_AS_ATTACHMENT
-      - SUPPRESSED
-      - MERGED
-      - REJECTED
-    example: REJECTED
-  reason:
-    type: string
-    description: The reason for this integration status
-    example: Could not find EHR
+     - INTEGRATED
+     - INTEGRATED_AND_SUPPRESSED
+     - SUPPRESSED_AND_REACTIVATED
+     - FILED_AS_ATTACHMENT
+     - REJECTED
+     - INTERNAL_TRANSFER
+     - FAILED_TO_INTEGRATE
+    example: INTEGRATED

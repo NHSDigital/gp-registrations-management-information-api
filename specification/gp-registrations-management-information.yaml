@@ -13,47 +13,25 @@ info:
   description: |
     ## Overview
     Use this API to send real-time management information about GP registrations to us at NHS Digital.
-    * You can send us Management Information using the Pre-transfer API.
-    * If your practice uses the GP2GP protocol you can send us Management Information using the GP2GP API.
-    * If your practice uses the GP Connect protocol you can send us Management Information using the GP Connect API.
-
-    ### Pre-transfer
-
-    Before a patient record transfer is in progress you can send us information about the following type of events:
-    * when the requesting practice starts the GP2GP registration - the first message initiated as part of the GP2GP or GP Connect protocol
-    * when a patient is being registered and a practice searches for and selects the patient from PDS
-    * when the SDS lookup is performed to identify whether the previous practice is GP2GP or GP Connect compatible
-    * when PDS has been updated with the new practice information
-
-    ### GP2GP
-
-    Using this protocol you can send us information about the following type of events:
-    * when the sending practice generates the electronic health record
-    * when the requesting practice requests an EHR
-    * when the sending practice sends an EHR
-    * when the requesting practice validates an EHR
-    * when the requesting practice integrates an EHR
-    * when an error occurs
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
-    ### GP Connect
+    You can send us Management Information for registrations regardless of the transfer protocol used (GP2GP or GP Connect).
 
-    Using this protocol you can send us information about the following type of events:
-    * when the request is sent to migrate the structured record
-    * when the response has been received from migrating the structured record
-    * when a request is sent to migrate a document
-    * when a response has been received from migrating a document
-    * when the EHR is ready to integrate
-    * when the EHR has been integrated
-    * when an error occurs
-    
-    ### Other
-    
-    This section contains events that don't use the GP2GP or GP Connect protocols:
-    * when an internal transfer of an EHR has been completed between two GP practices using the same software supplier system
+    Using the API, you can send us information about the following:
+
+    * when a requesting practice completes a registration
+    * the compatibility of that registration with an electronic transfer
+    * when the requesting practice requests an EHR
+    * when the sending practice sends an EHR
+    * when the requesting practice received attachments/documents
+    * when the requesting practice is ready for the user to integrate the transfer
+    * when the requesting practice has integrated the EHR received
+    * when an error, or negative acknowledgement occurs
+    * degrades
 
     You cannot:
+
     * read any management information data submitted to us
 
     ## Who can use this API
@@ -117,110 +95,72 @@ info:
 
     Contact [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net) to onboard.
 
+    ## Troubleshooting
+    The API uses the conventional HTTP response codes to indicate the success or failure of an API request.
+
+    When something goes wrong when making a request, please see the table below for troubleshooting help.
+
+
+    | Status Code                        | Reason                                                                                 | Comments                                                                                                                                                                                                                                 |
+    | ---------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | 400 - Bad request                  | The request was invalid, often due to missing a required parameter or an invalid type. | See the API catalogue and ensure the request conforms to the endpoint structure.                                                                                                                                                         |
+    | 401 - Unauthorised                 | No valid API key provided.                                                             | Ensure the "apikey" header is present and valid.                                                                                                                                                                                         |
+    | 403 - Forbidden                    | The API key doesn't have permissions to perform the request.                           | The endpoint is not available to this user.                                                                                                                                                                                              | 
+    | 404 - Not found                    | The requested resource doesn't exist.                                                  | Ensure the request matches the endpoint found in the API catalogue and uses the correct Base URL. All the events sent are POST requests.                                                                                                 |
+    | 500, 502, 503, 504 - Server errors | Something went wrong on the API server.                                                | In the rare occurrence of a 5xx  response, try to send the request again with an exponential backoff. A failure of sending an event to the API should not impact the EHR Transfer itself and the other systems should proceed as normal. |
+
+
   license:
     name: MIT
   contact:
-    url: 'https://nhsconnect.github.io/prm-external-developer-website/rfcs/'
     email: gp-registrations-data@nhs.net
 
 tags:
-  - name: GP Connect
-    description: Endpoints to submit events for the GP Connect protocol
-  - name: GP2GP
-    description: Endpoints to submit events for the GP2GP protocol
-  - name: Other
-    description: Endpoints to submit events that don't use either the GP2GP or GP Connect protocols
-  - name: Pre Transfer
-    description: Endpoints to submit events for pre-transfer stages of the patient registration
   - name: Registration
-    description: Endpoints to submit events for all stages of the patient registration
+    description: Endpoints to submit events for all stages of the patient registration.
 
 x-spec-publication:
   operation-order:
-    - group: Pre-transfer
-      operations:
-        - method: POST
-          path: /preTransfer/registrationStarted
-        - method: POST
-          path: /preTransfer/pdsTrace
-        - method: POST
-          path: /preTransfer/sdsLookup
-        - method: POST
-          path: /preTransfer/pdsGeneralUpdate
-    - group: GP2GP
-      operations:
-        - method: POST
-          path: /gp2gp/ehrRequested
-        - method: POST
-          path: /gp2gp/ehrGenerated
-        - method: POST
-          path: /gp2gp/ehrSent
-        - method: POST
-          path: /gp2gp/ehrValidated
-        - method: POST
-          path: /gp2gp/ehrIntegrated
-        - method: POST
-          path: /gp2gp/error
-    - group: GP Connect
-      operations:
-        - method: POST
-          path: /gpconnect/migrateStructuredRecordRequest
-        - method: POST
-          path: /gpconnect/migrateStructuredRecordResponse
-        - method: POST
-          path: /gpconnect/migrateDocumentRequest
-        - method: POST
-          path: /gpconnect/migrateDocumentResponse
-        - method: POST
-          path: /gpconnect/ehrReadyToIntegrate
-        - method: POST
-          path: /gpconnect/ehrIntegrated
-        - method: POST
-          path: /gpconnect/error
-    - group: Other
-      operations:
-        - method: POST
-          path: /internalTransfer
     - group: Registration
       operations:
         - method: POST
-          path: /gp-registration-events/registrations
+          path: /gp-registration-mi/registrations
         - method: POST
-          path: /gp-registration-events/transfer-compatibility-statuses
+          path: /gp-registration-mi/transfer-compatibility-statuses
         - method: POST
-          path: /gp-registration-events/ehr-requests
+          path: /gp-registration-mi/ehr-requests
         - method: POST
-          path: /gp-registration-events/ehr-responses
+          path: /gp-registration-mi/ehr-responses
         - method: POST
-          path: /gp-registration-events/document-responses
+          path: /gp-registration-mi/document-responses
         - method: POST
-          path: /gp-registration-events/ready-to-integrate-statuses
+          path: /gp-registration-mi/ready-to-integrate-statuses
         - method: POST
-          path: /gp-registration-events/ehr-degrades
+          path: /gp-registration-mi/ehr-degrades
         - method: POST
-          path: /gp-registration-events/ehr-integrations
+          path: /gp-registration-mi/ehr-integrations
         - method: POST
-          path: /gp-registration-events/errors
+          path: /gp-registration-mi/errors
 
 paths:
-  /###/#####:
+  /gp-registration-mi/registrations:
     post:
       tags:
         - Registration
       summary: Submit Registrations event
       operationId: registrations
       description: |
-        This event captures the details of the registration before the electronic transfer is initiated. 
+        This event captures the details of the registration before the electronic transfer is initiated.
 
-        It includes information about the 
+        It includes information about the:
+        - sending practice 
         - status of the PDS trace
         - type of registration
         - GPLinks information
-        - sending practice
 
-        Submitted by: Requesting practice
+        **Submitted by:** Requesting practice
 
-        When to send: When the user completes the registration. This event should be submitted for every regular patient registration.
+        **When to send:** When the user completes the registration. This event should be submitted for every regular patient registration.
         
         Including, but not limited to, the following scenarios:
 
@@ -230,7 +170,7 @@ paths:
         - Registrations that will not trigger an electronic transfer of the EHR (e.g. the patient does not have a previous practice, or the previous practice is in Scotland)
         - Registrations when a PDS trace is not performed
 
-        Notes: If a technical error or negative acknowledgment occurs at any point during the registration a ‘Submit Errors’ event must be sent, including the response code if applicable.
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
         ### Request Body example:
         ```json
@@ -267,20 +207,20 @@ paths:
           required: true
       requestBody:
         description: |
-          The request body required for the registrations event
+          The request body required for the Registrations event.
         required: true
         content:
           application/json:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEventWithOptionalSendingPractice.yaml
+                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
                 - type: object
                   required:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
                       required:
                         - registration
@@ -290,286 +230,7 @@ paths:
                         registration:
                           $ref: components/schemas/RegistrationWithAdditionalDetails.yaml
                         demographicTraceStatus:
-                          $ref: components/schemas/demographicTraceStatus.yaml
-                        gpLinks:
-                          $ref: components/schemas/gpLinks.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-
-
-  /preTransfer/registrationStarted:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit Registration Started event
-      operationId: registrationStarted
-      description: |
-        Use this endpoint to submit GP registration management information for when a registration is started.
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "supplierOne",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "registrationType": "newRegistrant",
-              "requestingPracticeOdsCode": "ABC1234"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the registration started event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - registration
-                      properties:
-                        registration:
-                          type: object
-                          description: An object that contains information about the registration process
-                          required:
-                            - registrationType
-                            - requestingPracticeOdsCode
-                          properties:
-                            registrationType:
-                              type: string
-                              description: The type of this registration (newRegistrant, etc...)
-                              example: newRegistrant
-                            requestingPracticeOdsCode:
-                              type: string
-                              description: The ODS code of the practice requesting the EHR
-                              example: ABC1234
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /preTransfer/pdsTrace:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit PDS Trace event
-      operationId: pdsTrace
-      description: |
-        When a patient is being registered, the new practice performs a search in PDS to find the patient that matches their personal information. 
-        This event should be sent with a demographic trace status of SUCCESS when the practice has found and selected a match. 
-        If no match is found and a new patient is created within the system, this event should be sent with a demographic trace status of FAILURE as well as the reason for this trace failure.
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "smartcardPresent": true,
-            "demographicTraceStatus": {
-              "status": "FAILURE",
-              "reason": "patient not found"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the PDS Trace event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - smartcardPresent
-                        - demographicTraceStatus
-                      properties:
-                        smartcardPresent:
-                          type: boolean
-                          description: Denotes whether a smartcard has been used to perform the PDS trace
-                          example: true
-                        demographicTraceStatus:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /preTransfer/sdsLookup:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit SDS Lookup event
-      operationId: sdsLookup
-      description: |
-        Once the PDS trace has happened, an SDS lookup is performed to identify whether the previous practice is GP2GP compatible. This event should be triggered once the SDS lookup is done
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "transferCompatibilityStatus": {
-              "status": "SUCCESS",
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the SDS Lookup event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - transferCompatibilityStatus
-                      properties:
-                        transferCompatibilityStatus:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /preTransfer/pdsGeneralUpdate:
-    post:
-      tags:
-        - Pre Transfer
-      summary: Submit PDS General Update event
-      operationId: pdsGeneralUpdate
-      description: |
-        xxx
-
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "demographicTraceStatus": {
-              "status": "SUCCESS",
-            },
-            "gpLinks": {
-              "type": "NO_PREVIOUS_NHS_REGISTRATION",
-              "hasGMS1Form": true,
-              "hasNHSNumber": false,
-              "otherType": "if OTHER is selected for type, detail here what that type is"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: |
-          The request body required for the PDS General Update event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      required:
-                        - demographicTraceStatus
-                        - gpLinks
-                      properties:
-                        demographicTraceStatus:
-                          $ref: components/schemas/StatusDetails.yaml
+                          $ref: components/schemas/DemographicTraceStatus.yaml
                         gpLinks:
                           $ref: components/schemas/GPLinks.yaml
       responses:
@@ -579,28 +240,37 @@ paths:
           $ref: components/responses/BadRequest.yaml
         '500':
           $ref: components/responses/InternalServerError.yaml
-
-  /gp2gp/ehrRequested:
+  
+  /gp-registration-mi/transfer-compatibility-statuses: 
     post:
       tags:
-        - GP2GP
-      summary: Submit EHR Requested event
-      operationId: ehrRequested
+        - Registration
+      summary: Submit Transfer Compatility Statuses
+      operationId: transfer-compatibility-statuses
       description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is requested:
+        This event captures whether or not the registration is compatible with an electronic transfer of the patient’s record.  
+        This event should be submitted for all registrations where a sending (previous) practice ODS code is present.
+
+        **Submitted by:** Requesting practice
+
+        **When to send:** When it is determined that an electronic transfer will or will not be triggered. 
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "reportingSystemSupplier": "supplierOne",
-          "reportingPracticeOdsCode": "ABC1234",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "ABC1234",
           "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
+            "transferCompatibilityStatus": {
+              "internalTransfer": false,
+              "transferCompatible": false,
+              "reason": "Previous practice not eligible for transfer"
             }
           }
         }
@@ -613,7 +283,8 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the EHR requested event
+        description: |
+          The request body required for the Transfer Compatability Statuses event.
         required: true
         content:
           application/json:
@@ -626,11 +297,14 @@ paths:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
+                      required:
+                        - transferCompatibilityStatus
                       properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
+                        transferCompatibilityStatus:
+                          description: Information about the type of transfer and whether or not an electronic transfer will be triggered. 
+                          $ref: components/schemas/TransferCompatibilityStatus.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -639,145 +313,30 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp2gp/ehrGenerated:
+  /gp-registration-mi/ehr-requests: 
     post:
       tags:
-        - GP2GP
-      summary: Submit EHR Generated event
-      operationId: ehrGenerated
+        - Registration
+      summary: Submit EHR Requests
+      operationId: ehr-requests
       description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is generated.
+        This event logs when the EHR request has been sent to the sending practice.
+
+        **Submitted by:** Requesting practice
+
+        **When to send:** When the EHR request has been sent to the sending practice.
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
+          "conversationId": "4345-986959-4930-684038",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "XYZ4567",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T09:30:26Z",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "ehr": {
-              "ehrTotalSizeBytes": 5699433,
-              "ehrStructuredSizeBytes": 4096,
-              "attachment": [
-                {
-                  "attachmentId": "3424-342456-3424-342456",
-                  "clinicalType": "Scanned document",
-                  "mimeType": "application/pdf",
-                  "sizeBytes": 3084322
-                },
-                {
-                  "attachmentId": "1323-132345-1323-132345",
-                  "mimeType": "audio/mpeg",
-                  "sizeBytes": 24352346
-                }
-              ],
-              "placeholder": [
-                {
-                  "placeholderId": "9876-987654-9876-987654",
-                  "attachmentId": "1323-132345-1323-132345",
-                  "generatedBy": "XYZ4567",
-                  "reason": 1,
-                  "originalMimeType": "audio/mpeg"
-                }
-              ]
-            },
-            "unsupportedDataItem": [
-              {
-                "type": "allergy/flag",
-                "uniqueIdentifier": "1323-132345-1323-132345",
-                "reason": "reason for being unsupported / why is it unsupported in gp2gp / what would have to change in gp2gp to express this"
-              }
-            ]
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the EHR generated event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        ehr:
-                          properties:
-                            ehrTotalSizeBytes:
-                              type: integer
-                              description: The total size in bytes of the GP2GP message BEFORE it is split for transfer including all attachments
-                              example: 5699433
-                            ehrStructuredSizeBytes:
-                              type: integer
-                              description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included)
-                              example: 4096
-                            attachment:
-                              type: array
-                              description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
-                              items:
-                                $ref: components/schemas/Attachment.yaml
-                            placeholder:
-                              type: array
-                              description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
-                              items:
-                                $ref: components/schemas/Placeholder.yaml
-                        unsupportedDataItem:
-                          type: array
-                          items:
-                            $ref: components/schemas/UnsupportedDataItem.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gp2gp/ehrSent:
-    post:
-      tags:
-        - GP2GP
-      summary: Submit EHR Sent event
-      operationId: ehrSent
-      description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is sent.
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "supplierOne",
           "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            }
-          }
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567"
         }
         ```
       parameters:
@@ -788,7 +347,8 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the EHR sent event
+        description: |
+          The request body required for the EHR Requests event.
         required: true
         content:
           application/json:
@@ -796,16 +356,6 @@ paths:
               type: object
               allOf:
                 - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -814,66 +364,44 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp2gp/ehrValidated:
+  /gp-registration-mi/ehr-responses: 
     post:
       tags:
-        - GP2GP
-      summary: Submit EHR Validated event
-      operationId: ehrValidated
+        - Registration
+      summary: Submit EHR Responses
+      operationId: ehr-responses
       description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is validated.
+        This event logs when a response to the EHR request has been sent. It contains details of the EHR and attachment placeholders.
+
+        **Submitted by:** Sending practice
+
+        **When to send:** When the EHR response has been sent by the sending practice.
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "XYZ4567",
+          "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
             "ehr": {
-              "ehrTotalSizeBytes": 5699433,
-              "ehrStructuredSizeBytes": 4096,
-              "degrade": [
+            "ehrStructuredSizeBytes": 4096,
+            "placeholders": [
                 {
-                  "type": "core_ehr / attachment",
-                  "metadata": "other degrades metadata",
-                  "code": {
-                    "coding": [
-                      {
-                        "code": "886721000000107",
-                        "system": "http://snomed.info/sct"
-                      }
-                    ]
-                  }
-                }
-              ],
-              "attachment": [
-                {
-                  "attachmentId": "3424-342456-3424-342456",
-                  "clinicalType": "Scanned document",
-                  "mimeType": "application/pdf",
-                  "sizeBytes": 3084322
-                }
-              ],
-              "placeholder": [
-                {
-                  "placeholderId": "9876-987654-9876-987654",
-                  "attachmentId": "1323-132345-1323-132345",
-                  "generatedBy": "XYZ4567",
-                  "reason": 1,
-                  "originalMimeType": "audio/mpeg"
+                  "generatedBy": "PRE_EXISTING",
+                  "clinicalType": "SCANNED_DOCUMENT",
+                  "reason": "FILE_NOT_FOUND",
+                  "originalMimeType": "application/pdf"
                 },
                 {
-                  "placeholderId": "4354-435467-4354-435467",
-                  "attachmentId": "3424-342456-3424-342456",
-                  "generatedBy": "ABC1234",
-                  "reason": 2,
+                  "generatedBy": "SENDER",
+                  "clinicalType": "AUDIO_DICTATION",
+                  "reason": "FILE_DELETED",
                   "originalMimeType": "audio/mpeg"
                 }
               ]
@@ -889,7 +417,8 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the EHR validated event
+        description: |
+          The request body required for the EHR Responses event.
         required: true
         content:
           application/json:
@@ -902,36 +431,25 @@ paths:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
+                      required:
+                        - ehr
                       properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
                         ehr:
                           properties:
-                            ehrTotalSizeBytes:
-                              type: integer
-                              description: The total size in bytes of the GP2GP message as reconstituted by the receiving system including all attachments received
-                              example: 5699433
                             ehrStructuredSizeBytes:
                               type: integer
-                              description: The total size in bytes of structured part of the GP2GP message as received by the receiving system (attachments are NOT to be included)
-                              example: 4096
-                            attachment:
-                              type: array
-                              description: A list that contains information about ALL the attachments contained in the EHR. This should include all attachments that are either directly attached OR that are linked to from within the EHR
-                              items:
-                                $ref: components/schemas/Attachment.yaml
-                            placeholder:
-                              type: array
-                              description: A list that contains information about the attachments that were in the EHR but not contained in the GP2GP message
-                              items:
-                                $ref: components/schemas/Placeholder.yaml
-                            degrade:
-                              type: array
-                              description: A list that contains information about ALL the degrades contained in the EHR that occurred due to the gp2gp transfer
-                              items:
-                                $ref: components/schemas/Degrade.yaml
+                              description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included).
+                              example: 4956
+                        placeholders:
+                          description: |
+                            Required when placeholders are present. 
+
+                            A list that contains information about the attachments that were in the record but not contained in the electronic transfer or were unable to be ingested into the requesting system.
+                            
+                            An individual entry must be added for each placeholder in the transfer.
+                          $ref: components/schemas/Placeholder.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -940,348 +458,37 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp2gp/ehrIntegrated:
+  /gp-registration-mi/document-responses: 
     post:
       tags:
-        - GP2GP
-      summary: Submit EHR Integrated event
-      operationId: ehrIntegrated
+        - Registration
+      summary: Submit Document Responses
+      operationId: document-responses
       description: |
-        Use this endpoint to submit GP registration management information for when an Electronic Health Record (EHR) is integrated.
+        This event records the addition of an attachment to the patient record.
+
+        **Submitted by:** Requesting practice
+
+        **When to send:** As each document is processed and saved into the clinical system.
+        
+        For HL7 v3 EHRs, this will be when the attachments are decoded from the message fragments.
+
+        For FHIR EHRs, this will be when the attachment transfer is complete.
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "XYZ4567",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "integration": {
-              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
-              "reason": "Reason for integration status"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the EHR integrated event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        integration:
-                          $ref: components/schemas/Integration.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gp2gp/error:
-    post:
-      tags:
-        - GP2GP
-      summary: Submit Error event
-      operationId: errorGP2GP
-      description: |
-        Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "error": {
-              "errorCode": "ABC",
-              "errorDescription": "stacktrace? detailed error message?"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the error event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        error:
-                          $ref: components/schemas/Error.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/migrateStructuredRecordRequest:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Migrate Structured Record Request event
-      operationId: migrateStructuredRecordRequest
-      description: |
-        Use this endpoint to submit GP registration management information immediately after the Requesting System will make a request via GP Connect using the ‘Migrate Structured Record’ end point using the previous Health Care Provider code that was cached
-
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "supplierOne",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the migrate structured record request event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/migrateStructuredRecordResponse:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Migrate Structured Record Response event
-      operationId: migrateStructuredRecordResponse
-      description: |
-        Use this endpoint to submit GP registration management information immediately after the Requesting System has received a response from the request made via GP Connect using the ‘Migrate Structured Record’ end point. In a happy-path scenario, the response should contain the "Migrate Patient Record Bundle"
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "structuredRecordMigration": {
-              "status": "SUCCESS",
-              "reason": ""
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the migrate structured record response event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        structuredRecordMigration:
-                          $ref: components/schemas/StatusDetails.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/migrateDocumentRequest:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Migrate Document Request event
-      operationId: migrateDocumentRequest
-      description: |
-        Use this endpoint to submit GP registration management information immediately after the Requesting System makes an individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
             "attachment": {
-              "attachmentId": "3424-342456-3424-342456",
-              "clinicalType": "Scanned document",
-              "mimeType": "application/pdf",
-              "sizeBytes": 3084322
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the migrate document request event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        attachment:
-                          $ref: components/schemas/Attachment.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
-
-  /gpconnect/migrateDocumentResponse:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Migrate Document Response event
-      operationId: migrateDocumentResponse
-      description: |
-        Use this endpoint to submit GP registration management information immediately after the Requesting System receives a response on every individual request to retrieve each document via GP Connect using the ‘Migrate Document’ end point
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "attachment": {
-              "attachmentId": "3424-342456-3424-342456",
-              "clinicalType": "Scanned document",
+              "clinicalType": "SCANNED_DOCUMENT",
               "mimeType": "application/pdf",
               "sizeBytes": 3084322
             },
@@ -1300,7 +507,8 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the migrate document response event
+        description: |
+          The request body required for the Document Responses event.
         required: true
         content:
           application/json:
@@ -1313,15 +521,21 @@ paths:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
+                      required:
+                        - attachment
                       properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
                         attachment:
+                          description: |
+                            Required when attachments are present in the transfer. 
+
+                            A list that contains information for each attachment in the transfer. 
+
+                            This list should not contain attachments that are converted to placeholders. 
+
+                            This should include all attachments that are either directly attached OR that are linked to from within the EHR.
                           $ref: components/schemas/Attachment.yaml
-                        documentMigration:
-                          $ref: components/schemas/StatusDetails.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -1330,110 +544,177 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gpconnect/ehrReadyToIntegrate:
+  /gp-registration-mi/ready-to-integrate-statuses: 
     post:
       tags:
-        - GP Connect
-      summary: Submit EHR Ready To Integrate event
-      operationId: ehrReadyToIntegrateGC
+        - Registration
+      summary: Submit Ready to Integrate Statuses
+      operationId: /gp-registration-mi/ready-to-integrate-statuses
       description: |
-        Use this endpoint to submit GP registration management information immediately after the Requesting System allows the user to see a pre-processed view of the Record Bundle and all associated documents so they can determine whether to integrate
+        This event logs when the EHR has been received and is awaiting the user in the receiving practice to integrate or reject.
+
+        **Submitted by:** Requesting practice
+
+        **When to send:** When the EHR has been received and has been make available for the user in the receiving practice to integrate or reject.
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
+
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "ehr": {
-              "degrade": [
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567"
+        }
+        ```
+      parameters:
+        - in: header
+          name: apikey
+          description: API key to authenticate with.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: |
+          The request body required for the Ready to Integrate Statuses event.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: ./components/schemas/BaseEvent.yaml
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /gp-registration-mi/ehr-degrades: 
+      post:
+        tags:
+          - Registration
+        summary: Submit EHR Degrades
+        operationId: ehr-degrades
+        description: |
+          This event gathers information about the degraded data within an EHR once it has been received.
+
+          The following information **MUST NOT** be sent:
+            - conversationID
+            - registrationEventDateTime
+            - reportingPracticeODSCode
+            - requestingPracticeODSCode
+            - sendingPracticeODSCode
+
+          **Submitted by:** Requesting practice
+
+          **When to send:** When the degrades for the EHR have been identified.
+
+          **Notes:** Submit Errors events **MUST NOT** be sent in relation to degrades.
+
+          **No information that relates the degrade to a particular transfer may be sent.**
+
+          ### Request Body example:
+          ```json
+          {
+            "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+            "payload": {
+              "degrades": [
                 {
-                  "type": "core_ehr / attachment",
-                  "metadata": "other degrades metadata",
-                  "code": {
-                    "coding": [
-                      {
-                        "code": "886721000000107",
-                        "system": "http://snomed.info/sct"
-                      }
-                    ]
-                  }
+                  "type": "RECORD_ENTRY",
+                  "reason": "CODE",
+                  "coding": [
+                    {
+                      "code": "1676331000000110",
+                      "system": "http://snomed.info/sct"
+                    }
+                  ]
                 }
               ]
             }
           }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the EHR ready to integrate event
-        required: true
-        content:
-          application/json:
+          ```
+        parameters:
+          - in: header
+            name: apikey
+            description: API key to authenticate with.
             schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        ehr:
-                          type: object
-                          description: An object that contains information about the EHR used in the record transfer
-                          properties:
-                            degrade:
-                              $ref: components/schemas/Degrade.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
+              type: string
+            required: true
+        requestBody:
+          description: |
+            The request body required for the EHR Degrades event.
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - type: object
+                    required:
+                      - reportingSystemSupplier
+                      - payload
+                    properties:
+                      reportingSystemSupplier:
+                        type: string
+                        description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
+                        example: SupplierName
+                      payload:
+                        description: An object that contains the detailed payload of the event.
+                        type: object
+                        required:
+                          - degrades
+                        properties:
+                          degrades:
+                            description: |
+                              A list that contains information about the degrades that were in the EHR.
 
-  /gpconnect/ehrIntegrated:
+                              An individual entry must be added for each degrade.
+                            $ref: components/schemas/Degrade.yaml
+        responses:
+          '200':
+            $ref: components/responses/OK.yaml
+          '400':
+            $ref: components/responses/BadRequest.yaml
+          '500':
+            $ref: components/responses/InternalServerError.yaml
+
+  /gp-registration-mi/ehr-integrations: 
     post:
       tags:
-        - GP Connect
-      summary: Submit EHR Integrated event
-      operationId: ehrIntegratedGC
+        - Registration
+      summary: Submit EHR Integrations
+      operationId: ehr-integrations
       description: |
-        Use this endpoint to submit GP registration management information immediately after the clinical staff member has chosen to integrate the Patient record into the system.
+        This event gathers information about the success or failure of the integration of the record into the requesting practice clinical system.
+
+        **Submitted by:** Requesting practice
+
+        **When to send:** When the EHR has been integrated by the user at the requesting practice.
+        
+        For HL7 v3 EHRs, this will be when the attachments are decoded from the message fragments.
+
+        For FHIR EHRs, this will be when the attachment transfer is complete.
+
+        **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
+
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
+          "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "integration": {
-              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
-              "reason": "Reason for integration status"
+            "integration": {  
+              "outcome": "INTEGRATED"
             }
           }
         }
@@ -1446,7 +727,8 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the EHR integrated event
+        description: |
+          The request body required for the EHR Integrations event.
         required: true
         content:
           application/json:
@@ -1459,11 +741,11 @@ paths:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
+                      required:
+                        - integration
                       properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
                         integration:
                           $ref: components/schemas/Integration.yaml
       responses:
@@ -1474,94 +756,41 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /internalTransfer:
+  /gp-registration-mi/errors: 
     post:
       tags:
-        - Other
-      summary: Submit Internal Transfer event
-      operationId: internalTransfer
+        - Registration
+      summary: Submit Errors
+      operationId: errors
       description: |
-        Use this endpoint to submit GP registration management information immediately after a patient transfer has occurred between two practices using the same Supplier System.
-        ### Request Body example:
-        ```json
-        {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
-          "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-          "reportingPracticeOdsCode": "ABC1234",
-          "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
-            "integration": {
-              "integrationStatus": "filed as attachment/ suppressed/ merged/ rejected",
-              "reason": "Reason for integration status"
-            }
-          }
-        }
-        ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
-      requestBody:
-        description: The request body required for the internal transfer event
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
-                - type: object
-                  required:
-                    - payload
-                  properties:
-                    payload:
-                      description: An object that contains the detailed payload of the event
-                      type: object
-                      properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
-                        integration:
-                          $ref: components/schemas/Integration.yaml
-      responses:
-        '200':
-          $ref: components/responses/OK.yaml
-        '400':
-          $ref: components/responses/BadRequest.yaml
-        '500':
-          $ref: components/responses/InternalServerError.yaml
+        This event gathers information about all errors and events that trigger the sending of a negative acknowledgement that occur during a registration.
 
-  /gpconnect/error:
-    post:
-      tags:
-        - GP Connect
-      summary: Submit Error event
-      operationId: errorGC
-      description: |
-        Use this endpoint to submit GP registration management information immediately after an error has occurred, or has been detected by the Supplier System.
+        This is used to understand errors and prioritise their resolution to support the successful transfer of patient EHRs.
+
+        **Submitted by:** Requesting practice or Sending practice, whichever encounters the issue
+
+        **When to send:** When an issue occurs that prevents the successful processing of the patient EHR (or a component of the EHR) then this endpoint should be called.
+
+        **Notes:** All negative acknowledgement defined in the specification must be reported as errors. However, this endpoint is not limited to negative acknowledgements.
+
+          Anytime a technical error occurs that prevents the transfers from starting or completing, this must be reported using this endpoint.
+          
+          Error events **MUST NOT** be submitted for failures or errors relating to Degrades.
+
         ### Request Body example:
         ```json
         {
-          "eventGeneratedDateTime": "2020-02-08T09:30:26Z",
           "conversationId": "4345-986959-4930-684038",
-          "transferEventDateTime": "2020-02-08T08:30:26Z",
+          "registrationEventDateTime": "2020-02-08T08:30:26Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
-            "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "XYZ4567"
-            },
             "error": {
-              "errorCode": "",
-              "errorDescription": "stacktrace? detailed error message?"
+              "errorCode": "99",
+              "errorDescription": "unexpected error",
+              "failurePoint": "EHR_RESPONSE"
             }
           }
         }
@@ -1574,24 +803,25 @@ paths:
             type: string
           required: true
       requestBody:
-        description: The request body required for the error event
+        description: |
+          The request body required for the Errors event.
         required: true
         content:
           application/json:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
                 - type: object
                   required:
                     - payload
                   properties:
                     payload:
-                      description: An object that contains the detailed payload of the event
+                      description: An object that contains the detailed payload of the event.
                       type: object
+                      required:
+                        - error
                       properties:
-                        registration:
-                          $ref: components/schemas/Registration.yaml
                         error:
                           $ref: components/schemas/Error.yaml
       responses:

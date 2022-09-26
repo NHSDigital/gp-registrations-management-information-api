@@ -1,0 +1,26 @@
+type: object
+required:
+  - internalTransfer
+  - transferCompatible
+properties:
+  internalTransfer:
+    type: boolean
+    description: | 
+     **true**  - if EHR transfer is internal within a single system and will not use GP2GP or GP Connect  
+     **false**
+    example: false
+  transferCompatible:
+    type: boolean
+    description: |
+     **true** - if the registration **will initiate** electronic transfer of the record (either internally, or via GP2GP or GP Connect)  
+     **false** - if the registration **will not initiate** an electronic transfer (either interally, GP2GP or GP Connect)
+    example: false
+  reason:
+    type: string
+    description: |
+      Required if transferCompatible = false  
+
+      **Examples**  
+      - Previous practice is not eligible for electronic transfer
+      - Sending practice is the same as requesting practice
+    example: "Previous practice is not eligible for electronic transfer"

@@ -4,6 +4,8 @@ required:
   - registrationEventDateTime
   - reportingSystemSupplier
   - reportingPracticeOdsCode
+  - requestingPracticeOdsCode
+  - sendingPracticeOdsCode
 properties:
   conversationId:
     type: string
@@ -22,3 +24,11 @@ properties:
     type: string
     description: The ODS code of the practice generating this event. This could be the sending or requesting practice depending on who is submiting this event.
     example: A12345
+  requestingPracticeOdsCode:
+    type: string
+    description: The ODS code of the requesting practice.
+    example: A12345
+  sendingPracticeOdsCode:
+    type: string
+    description: The ODS code of the sending practice.
+    example: X12345

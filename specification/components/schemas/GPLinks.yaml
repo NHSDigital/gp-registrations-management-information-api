@@ -5,6 +5,6 @@ properties:
   gpLinksComplete:
     type: boolean
     description: |
-      **true** - If the required GP Links information has been completed for this registration
+      **true** - If the required GP Links information has been completed for this registration  
       **false** - If the required GP Links information has not been completed for this registration
     example: true

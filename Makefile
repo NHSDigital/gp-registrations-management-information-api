@@ -3,9 +3,16 @@ SHELL=/bin/bash -euo pipefail
 install-python:
 	poetry install
 
-install-node:
+update-python:
+	poetry update
+
+install-npm:
 	npm install
 	cd sandbox && npm install
+
+update-npm:
+	npm update
+	cd sandbox && npm update
 
 .git/hooks/pre-commit:
 	cp scripts/pre-commit .git/hooks/pre-commit
