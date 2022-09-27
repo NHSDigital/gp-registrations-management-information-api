@@ -12,7 +12,7 @@ info:
   title: GP Registrations Management Information API
   description: |
     ## Overview
-    Use this API to send real-time management information about GP registrations to us at NHS Digital.
+    Use this API to send real-time GP registrations metrics to NHS for service monitoring of patient EHR transfers between GP Practices.
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
@@ -181,9 +181,7 @@ paths:
           "reportingPracticeOdsCode": "ABC1234",
           "payload": {
             "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "ABC1234",
-              "type": "newGPRegistration",
+              "type": "NEW_GP_REGISTRATION",
               "returningPatient": false,
               "multifactorAuthenticationPresent": true
             },
@@ -390,8 +388,8 @@ paths:
           "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "ehr": {
-            "ehrStructuredSizeBytes": 4096,
-            "placeholders": [
+              "ehrStructuredSizeBytes": 4096,
+              "placeholders": [
                 {
                   "generatedBy": "PRE_EXISTING",
                   "clinicalType": "SCANNED_DOCUMENT",
@@ -671,6 +669,7 @@ paths:
                           - degrades
                         properties:
                           degrades:
+                            type: array
                             description: |
                               A list that contains information about the degrades that were in the EHR.
 
