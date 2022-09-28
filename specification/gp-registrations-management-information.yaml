@@ -179,6 +179,8 @@ paths:
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "registration": {
               "type": "NEW_GP_REGISTRATION",
@@ -263,7 +265,7 @@ paths:
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
-          "sendingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "transferCompatibilityStatus": {
               "internalTransfer": false,
@@ -669,7 +671,6 @@ paths:
                           - degrades
                         properties:
                           degrades:
-                            type: array
                             description: |
                               A list that contains information about the degrades that were in the EHR.
 
