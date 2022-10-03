@@ -1,14 +1,11 @@
 type: object
 required:
-  - status
+  - successful
 properties:
-  status:
-    type: string
+  successful:
+    type: boolean
     description: Whether the migration or transfer of the document was successful.
-    example: FAILURE
-    enum:
-     - SUCCESS
-     - FAILURE
+    example: false
   reason:
     type: string
     description: If the addition of the attachment to the patient records fails, then this field must be populated with an error code and/or description.
