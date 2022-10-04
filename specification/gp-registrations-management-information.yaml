@@ -811,7 +811,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
+                - $ref: '#/components/schemas/BaseEventWithOptionalSendingPracticeOdsCode'
                 - type: object
                   required:
                     - payload
@@ -823,7 +823,7 @@ paths:
                         - error
                       properties:
                         error:
-                          $ref: components/schemas/Error.yaml
+                          $ref: '#/components/schemas/Error'
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -831,3 +831,10 @@ paths:
           $ref: components/responses/BadRequest.yaml
         '500':
           $ref: components/responses/InternalServerError.yaml
+# components object must be present for spec rendering to work in Bloomreach, even if the spec has no components
+components:
+  schemas:
+    BaseEventWithOptionalSendingPracticeOdsCode:
+      $ref: components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
+    Error:
+      $ref: components/schemas/Error.yaml 
