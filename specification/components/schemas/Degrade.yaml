@@ -1,51 +1,34 @@
-type: array
-items: 
-  required:
-    - type
-    - reason
-    - coding
-  properties:
-    type:
-      type: string
-      description: The type/category of this degrade. As per the degraded entry terms in NPFIT-PC-BLD-0132.03 GP2GP Supplementary Specification on Structured Degrade Handling.pdf.
-      example: RECORD_ENTRY
-      enum:
-       - MEDICATION
-       - NON_DRUG_ALLERGY
-       - DRUG_ALLERGY
-       - REFERRAL
-       - PLAN
-       - REQUEST
-       - RECORD_ENTRY
-       - OTHER
-    reason:
-      type: string
-      description: |
-       The reason for the degrade.  
-       
-        **CODE** - code cannot be mapped  
-        **NUMERIC_VALUE** - numerical value has been degraded to text  
-        **DRUG_NAME** - drug name has been made textual  
-        **OTHER** - any other reason  
-      example: CODE
-      enum:
-       - CODE
-       - NUMERIC_VALUE
-       - DRUG_NAME
-       - OTHER
-    coding:
-      type: array
-      description: Add the original code(s) that has degraded and the coding system the original code is from.
-      items:
-        required:
-          - code
-          - system
-        properties:     
-          code:
-            type: string
-            description: The designated code for this particular degrade.
-            example: 1676331000000110
-          system:        
-            type: string
-            description: The system in which this degrade occurred.
-            example: http://snomed.info/sct
+type: object
+required:
+  - type
+  - metadata
+  - code
+properties:
+  type:
+    type: string
+    description: The type/category of this degrade
+    example: core_ehr / attachment
+  metadata:
+    type: string
+    description: Any additional metadata that provides valuable intel on this degrade
+    example: other degrades metadata
+  code:
+    type: object
+    required:
+      - coding
+    properties:
+      coding:
+        type: array
+        items:
+          properties:
+            code:
+              type: string
+              description: The designated code for this particular degrade
+              example: 886721000000107
+            system:
+              type: string
+              description: The system in which this degrade occurred
+              example: http://snomed.info/sct
+          required:
+            - code
+            - system
