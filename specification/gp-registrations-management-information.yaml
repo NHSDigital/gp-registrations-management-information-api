@@ -846,7 +846,7 @@ components:
         type: string
         example: "DUMMY"
   schemas:
-    Attachement:
+    Attachment:
       $ref: ./components/schemas/Attachment.yaml
     DocumentMigration:
       $ref: ./components/schemas/DocumentMigration.yaml
