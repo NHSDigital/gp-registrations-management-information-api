@@ -538,7 +538,7 @@ paths:
                             This should include all attachments that are either directly attached OR that are linked to from within the EHR.
                           $ref: '#/components/schemas/Attachment.yaml'
                         documentMigration:
-                          $ref: '#/components/schemas/DocumentMigration.yaml'                          
+                          $ref: components/schemas/DocumentMigration.yaml                      
       responses:
         '200':
           $ref: '#/components/responses/OK.yaml'
