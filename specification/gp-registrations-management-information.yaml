@@ -807,7 +807,7 @@ paths:
           The request body required for the Errors event.
         required: true
         content:
-          application/fhir+json:
+          application/json:
             schema:
               type: object
               allOf:
