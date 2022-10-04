@@ -807,11 +807,11 @@ paths:
           The request body required for the Errors event.
         required: true
         content:
-          application/json:
+          application/fhir+json:
             schema:
               type: object
               allOf:
-                - $ref: '#/components/schemas/BaseEventWithOptionalSendingPracticeOdsCode'
+                - $ref: "#/components/schemas/BaseEventWithOptionalSendingPracticeOdsCode"
                 - type: object
                   required:
                     - payload
