@@ -834,3 +834,31 @@ paths:
           $ref: components/responses/BadRequest.yaml
         '500':
           $ref: components/responses/InternalServerError.yaml
+# components object must be present for spec rendering to work in Bloomreach, even if the spec has no components
+components:
+  parameters:
+    Dummy:
+      name: dummy
+      in: path
+      description: Dummy.
+      required: true
+      schema:
+        type: string
+        example: "DUMMY"
+  schemas:
+    Patient:
+      $ref: components/schemas/Patient.yaml
+  examples:
+    Dummy:
+      summary: Dummy example
+      value:
+        resourceType: Dummy
+        issue:
+          - severity: error
+            code: value
+            details:
+              coding:
+                - system: 'https://fhir.nhs.uk/R4/CodeSystem/Spine-ErrorOrWarningCode'
+                  version: '1'
+                  code: INVALID_RESOURCE_ID
+                  display: Resource Id is invalid
