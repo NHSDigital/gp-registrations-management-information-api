@@ -514,8 +514,7 @@ paths:
           application/json:
             schema:
               type: object
-              allOf:
-                - $ref: './components/schemas/BaseEvent.yaml'
+              $ref: './components/schemas/BaseEvent.yaml'
                 - type: object
                   required:
                     - payload
