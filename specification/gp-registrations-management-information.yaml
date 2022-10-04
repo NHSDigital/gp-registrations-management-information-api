@@ -536,16 +536,16 @@ paths:
                             This list should not contain attachments that are converted to placeholders. 
 
                             This should include all attachments that are either directly attached OR that are linked to from within the EHR.
-                          $ref: '#/components/schemas/Attachment.yaml'
+                          $ref: '#/components/schemas/Attachment'
                         documentMigration:
-                          $ref: components/schemas/DocumentMigration.yaml                      
+                          $ref: '#/components/schemas/DocumentMigration'                  
       responses:
         '200':
-          $ref: '#/components/responses/OK.yaml'
+          $ref: './components/responses/OK.yaml'
         '400':
-          $ref: '#/components/responses/BadRequest.yaml'
+          $ref: './components/responses/BadRequest.yaml'
         '500':
-          $ref: '#/components/responses/InternalServerError.yaml'
+          $ref: './components/responses/InternalServerError.yaml'
 
   /gp-registration-mi/ready-to-integrate-statuses: 
     post:
@@ -814,7 +814,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: '#/components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml'
+                - $ref: './components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml'
                 - type: object
                   required:
                     - payload
@@ -829,11 +829,11 @@ paths:
                           $ref: '#/components/schemas/Error.yaml'
       responses:
         '200':
-          $ref: '#/components/responses/OK.yaml'
+          $ref: './components/responses/OK.yaml'
         '400':
-          $ref: '#/components/responses/BadRequest.yaml'
+          $ref: './components/responses/BadRequest.yaml'
         '500':
-          $ref: '#/components/responses/InternalServerError.yaml'
+          $ref: './components/responses/InternalServerError.yaml'
 # components object must be present for spec rendering to work in Bloomreach, even if the spec has no components
 components:
   parameters:
@@ -845,11 +845,11 @@ components:
       schema:
         type: string
         example: "DUMMY"
-  # schemas:
-  #   Attachement:
-  #     $ref: components/schemas/Attachment.yaml
-  #   DocumentMigration:
-  #     $ref: componments/schemas/DocumentMigration.yaml
+  schemas:
+    Attachement:
+      $ref: components/schemas/Attachment.yaml
+    DocumentMigration:
+      $ref: components/schemas/DocumentMigration.yaml
   examples:
     Dummy:
       summary: Dummy example
