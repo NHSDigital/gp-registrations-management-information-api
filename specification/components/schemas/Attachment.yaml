@@ -1,35 +1,22 @@
 type: object
 required:
-  - clinicalType
+  - attachmentId
   - mimeType
   - sizeBytes
 properties:
+  attachmentId:
+    type: string
+    description: A unique id for the attachment that can be resolved in the clinical system
+    example: 3424-342456-3424-342456
   clinicalType:
     type: string
-    description: The text value corresponding to the value used in EhrAttachmentCode in the code element of ExternalDocument as defined in the MIM.
-    example: SCANNED_DOCUMENT
-    enum: 
-     - SCANNED_DOCUMENT
-     - ORIGINAL_TEXT_DOCUMENT
-     - OCR_TEXT_DOCUMENT
-     - IMAGE
-     - AUDIO_DICTATION
-     - OTHER_AUDIO
-     - OTHER_DIGITAL_SIGNAL
-     - EDI_MESSAGE
-     - NOT_AVAILABLE
-     - OTHER
-  MimeType:
+    description: The text value corresponding to the value used in EhrAttachmentCode in the code element of ExternalDocument as defined in the MIM
+    example: Scanned document
+  mimeType:
     type: string
-    description: |
-     The original mime type of the attachment this placeholder is for. 
-
-     Examples:
-      - audio/mpeg
-      - image/jpeg
-      - application/pdf
-    example: audio/mpeg
+    description: The mime type of the attachment as used as part of the text element in ExternalDocument as defined in the MIM
+    example: application/pdf
   sizeBytes:
     type: integer
-    description: The size in bytes of the attachment.
+    description: The size in bytes of the attachment
     example: 3084322

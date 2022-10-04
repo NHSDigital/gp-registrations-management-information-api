@@ -1,10 +1,29 @@
 type: object
 required:
-  - gpLinksComplete
+  - type
+  - hasGMS1Form
+  - hasNHSNumber
 properties:
-  gpLinksComplete:
+  type:
+    type: string
+    description: The presentation or acceptance registration type for this patient
+    example: NO_PREVIOUS_NHS_REGISTRATION
+    enum:
+      - PREVIOUS_NHS_REGISTRATION
+      - NO_PREVIOUS_NHS_REGISTRATION
+      - MEDICAL_CARD
+      - EX_SERVICE_FORM
+      - BABY_CARD
+      - OTHER
+  hasGMS1Form:
     type: boolean
-    description: |
-      **true** - If the required GP Links information has been completed for this registration  
-      **false** - If the required GP Links information has not been completed for this registration
+    description: Indicates if the patient registered with a GMS1 form
     example: true
+  hasNHSNumber:
+    type: boolean
+    description: Indicates if the patient registered with an NHS number
+    example: true
+  otherType:
+    type: string
+    description: If OTHER is selected for type, detail here what that type is
+    example: HOME_NATIONS_TRANSFER
