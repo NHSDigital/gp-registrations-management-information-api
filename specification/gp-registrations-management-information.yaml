@@ -515,7 +515,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: '#/components/schemas/BaseEvent.yaml'
+                - $ref: './components/schemas/BaseEvent.yaml'
                 - type: object
                   required:
                     - payload
@@ -826,7 +826,7 @@ paths:
                         - error
                       properties:
                         error:
-                          $ref: '#/components/schemas/Error.yaml'
+                          $ref: './components/schemas/Error.yaml'
       responses:
         '200':
           $ref: './components/responses/OK.yaml'
@@ -847,9 +847,9 @@ components:
         example: "DUMMY"
   schemas:
     Attachement:
-      $ref: components/schemas/Attachment.yaml
+      $ref: ./components/schemas/Attachment.yaml
     DocumentMigration:
-      $ref: components/schemas/DocumentMigration.yaml
+      $ref: ./components/schemas/DocumentMigration.yaml
   examples:
     Dummy:
       summary: Dummy example
