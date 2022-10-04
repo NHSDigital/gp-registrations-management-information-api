@@ -515,7 +515,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: '#/components/schemas/BaseEvent.yaml'
                 - type: object
                   required:
                     - payload
@@ -536,9 +536,9 @@ paths:
                             This list should not contain attachments that are converted to placeholders. 
 
                             This should include all attachments that are either directly attached OR that are linked to from within the EHR.
-                          $ref: components/schemas/Attachment.yaml
+                          $ref: '#/components/schemas/Attachment.yaml'
                         documentMigration:
-                          $ref: components/schemas/DocumentMigration.yaml                          
+                          $ref: '#/components/schemas/DocumentMigration.yaml'                          
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -846,8 +846,10 @@ components:
         type: string
         example: "DUMMY"
   schemas:
-    Patient:
+    Attachement:
       $ref: components/schemas/Attachment.yaml
+    DocumentMigration:
+      $ref: componments/schemas/DocumentMigration.yaml
   examples:
     Dummy:
       summary: Dummy example
