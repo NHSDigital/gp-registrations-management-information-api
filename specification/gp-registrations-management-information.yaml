@@ -847,7 +847,7 @@ components:
         example: "DUMMY"
   schemas:
     Patient:
-      $ref: components/schemas/Patient.yaml
+      $ref: components/schemas/Attachment.yaml
   examples:
     Dummy:
       summary: Dummy example
