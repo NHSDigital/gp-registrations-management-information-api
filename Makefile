@@ -19,8 +19,6 @@ update-npm:
 
 install: install-npm install-python .git/hooks/pre-commit
 
-update: update-npm update-python
-
 lint:
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
