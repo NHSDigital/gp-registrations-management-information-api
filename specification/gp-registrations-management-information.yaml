@@ -214,7 +214,39 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
+                - type: object
+                  required:
+                    - conversationId
+                    - registrationEventDateTime
+                    - reportingSystemSupplier
+                    - reportingPracticeOdsCode
+                    - requestingPracticeOdsCode
+                  properties:
+                    conversationId:
+                      type: string
+                      description: An uniqueID that is used throughout the registration including during the GP2GP or GP Connect transfer. This should be generated at the point of registration.
+                      example: A1234BC5-6789-123D-EFGH-I45678910JK1A
+                    registrationEventDateTime:
+                      type: string
+                      description: The ISO 8601 Date time in UTC that this event occurred.
+                      format: date-time
+                      example: 2020-02-08T08:30:27Z
+                    reportingSystemSupplier:
+                      type: string
+                      description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
+                      example: supplierName
+                    reportingPracticeOdsCode:
+                      type: string
+                      description: The ODS code of the practice generating this event. This could be the sending or requesting practice depending on who is submiting this event.
+                      example: A12345
+                    requestingPracticeOdsCode:
+                      type: string
+                      description: The ODS code of the requesting practice.
+                      example: A12345
+                    sendingPracticeOdsCode:
+                      type: string
+                      description: The ODS code of the sending practice. This is optional as there may not be a previous practice.
+                      example: X54321
                 - type: object
                   required:
                     - payload
