@@ -12,7 +12,7 @@ info:
   title: GP Registrations Management Information API
   description: |
     ## Overview
-    Use this API to send real-time GP registrations metrics to NHS for service monitoring of patient EHR transfers between GP Practices.
+    Use this API to send real-time management information about GP registrations to us at NHS Digital.
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
@@ -179,11 +179,11 @@ paths:
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
-          "requestingPracticeOdsCode": "ABC1234",
-          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "registration": {
-              "type": "NEW_GP_REGISTRATION",
+              "requestingPracticeOdsCode": "ABC1234",
+              "sendingPracticeOdsCode": "ABC1234",
+              "type": "newGPRegistration",
               "returningPatient": false,
               "multifactorAuthenticationPresent": true
             },
@@ -214,39 +214,7 @@ paths:
             schema:
               type: object
               allOf:
-                - type: object
-                  required:
-                    - conversationId
-                    - registrationEventDateTime
-                    - reportingSystemSupplier
-                    - reportingPracticeOdsCode
-                    - requestingPracticeOdsCode
-                  properties:
-                    conversationId:
-                      type: string
-                      description: An uniqueID that is used throughout the registration including during the GP2GP or GP Connect transfer. This should be generated at the point of registration.
-                      example: A1234BC5-6789-123D-EFGH-I45678910JK1A
-                    registrationEventDateTime:
-                      type: string
-                      description: The ISO 8601 Date time in UTC that this event occurred.
-                      format: date-time
-                      example: 2020-02-08T08:30:27Z
-                    reportingSystemSupplier:
-                      type: string
-                      description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
-                      example: supplierName
-                    reportingPracticeOdsCode:
-                      type: string
-                      description: The ODS code of the practice generating this event. This could be the sending or requesting practice depending on who is submiting this event.
-                      example: A12345
-                    requestingPracticeOdsCode:
-                      type: string
-                      description: The ODS code of the requesting practice.
-                      example: A12345
-                    sendingPracticeOdsCode:
-                      type: string
-                      description: The ODS code of the sending practice. This is optional as there may not be a previous practice.
-                      example: X54321
+                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
                 - type: object
                   required:
                     - payload
@@ -262,7 +230,7 @@ paths:
                         registration:
                           $ref: components/schemas/RegistrationWithAdditionalDetails.yaml
                         demographicTraceStatus:
-                          $ref: components/schemas/demographicTraceStatus.yaml
+                          $ref: components/schemas/DemographicTraceStatus.yaml
                         gpLinks:
                           $ref: components/schemas/GPLinks.yaml
       responses:
@@ -297,7 +265,7 @@ paths:
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
-          "sendingPracticeOdsCode": "XYZ4567",
+          "sendingPracticeOdsCode": "ABC1234",
           "payload": {
             "transferCompatibilityStatus": {
               "internalTransfer": false,
@@ -422,8 +390,8 @@ paths:
           "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "ehr": {
-              "ehrStructuredSizeBytes": 4096,
-              "placeholders": [
+            "ehrStructuredSizeBytes": 4096,
+            "placeholders": [
                 {
                   "generatedBy": "PRE_EXISTING",
                   "clinicalType": "SCANNED_DOCUMENT",
@@ -525,7 +493,7 @@ paths:
               "sizeBytes": 3084322
             },
             "documentMigration": {
-              "successful": false,
+              "status": "FAILURE",
               "reason": "Large file size"
             }
           }
@@ -557,7 +525,6 @@ paths:
                       type: object
                       required:
                         - attachment
-                        - documentMigration
                       properties:
                         attachment:
                           description: |
@@ -569,8 +536,6 @@ paths:
 
                             This should include all attachments that are either directly attached OR that are linked to from within the EHR.
                           $ref: components/schemas/Attachment.yaml
-                        documentMigration:
-                          $ref: components/schemas/DocumentMigration.yaml                          
       responses:
         '200':
           $ref: components/responses/OK.yaml
