@@ -22,4 +22,4 @@ content:
         status: INTERNAL_SERVER_ERROR
         message: Something went wrong
         errors:
-          - aws is down
+          - Internal Server Error

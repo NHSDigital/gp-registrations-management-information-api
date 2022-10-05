@@ -2,12 +2,39 @@ type: object
 required:
   - errorCode
   - errorDescription
+  - failurePoint
 properties:
   errorCode:
     type: string
-    description: The error code associated with this error
+    description: |
+      The code associated with the error. All negative acknowledgements should have this populated with the acknowledgement response code.
+
+      Other errors should have a code assigned that is understood by the reporting system supplier.
     example: FD34
   errorDescription:
     type: string
-    description: The description of the error that has occurred
-    example: Could not connect to sending practice
+    description: Human readable description of the error
+    example: unexpected error
+  failurePoint:
+    type: string
+    description: |
+      **PATIENT_TRACE** - currently PDS update  
+      **ENDPOINT_LOOKUP** - i.e. SDS  
+      **PATIENT_GENERAL_UPDATE** - currently PDS update  
+      **EHR_REQUESTED** - errors with requesting the EHR  
+      **EHR_RESPONSE** -  errors with generating and sending the EHR  
+      **EHR_READY_TO_INTEGRATE** - errors in making EHR available to integrate  
+      **EHR_INTEGRATION** - errors on integration  
+      **OTHER** - errors at any other point not specified above
+    enum:
+     - PATIENT_TRACE
+     - ENDPOINT_LOOKUP
+     - PATIENT_GENERAL_UPDATE
+     - EHR_REQUESTED
+     - EHR_RESPONSE
+     - EHR_READY_TO_INTEGRATE
+     - EHR_INTEGRATION
+     - OTHER
+  otherFailurePoint:
+    type: string
+    description: Complete if "OTHER" selected and the failure point is known. A description of the workflow failure location.
