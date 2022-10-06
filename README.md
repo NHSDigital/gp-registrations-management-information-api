@@ -1,6 +1,6 @@
 # GP Registrations Management Information API
 
-![Build](https://github.com/NHSDigital/gp-registrations-management-information/workflows/Build/badge.svg?branch=master)
+![Build](https://github.com/NHSDigital/gp-registrations-management-information-api/workflows/Build/badge.svg?branch=master)
 [![Build Status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status/GP-Registrations-Management-Information/GP-Registrations-Management-Information-Build?branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=332&branchName=master)
 [![Build Status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status/GP-Registrations-Management-Information/GP-Registrations-Management-Information-Release?branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=334&branchName=master)
 
@@ -66,15 +66,14 @@ Each API and team is unique. We encourage you to use a `test/` folder in the roo
 
  * [**openapi-yaml-mode**](https://github.com/esc-emacs/openapi-yaml-mode) provides syntax highlighting, completion, and path help
 
-### Speccy
+### OpenAPI Generator
 
-> [Speccy](http://speccy.io/) *A handy toolkit for OpenAPI, with a linter to enforce quality rules, documentation rendering, and resolution.*
+> [OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator-cli) *OpenAPI Generator allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically given an OpenAPI Spec*
 
-Speccy does the lifting for the following npm scripts:
+OpenAPI Generator does the lifting for the following npm scripts:
 
- * `test` -- Lints the definition
- * `publish` -- Outputs the specification as a **single file** into the `build/` directory
- * `serve` -- Serves a preview of the specification in human-readable format
+ * `lint` -- Lints the definition
+ * `publish` -- Outputs the specification as a **single file** into the `dist/` directory
 
 (Workflow detailed in a [post](https://developerjack.com/blog/2018/maintaining-large-design-first-api-specs/) on the *developerjack* blog.)
 
