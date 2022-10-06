@@ -12,7 +12,7 @@ info:
   title: GP Registrations Management Information API
   description: |
     ## Overview
-    Use this API to send real-time management information about GP registrations to us at NHS Digital.
+    Use this API to send real-time GP registrations metrics to NHS for service monitoring of patient EHR transfers between GP Practices.
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
@@ -179,11 +179,11 @@ paths:
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
+          "requestingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "registration": {
-              "requestingPracticeOdsCode": "ABC1234",
-              "sendingPracticeOdsCode": "ABC1234",
-              "type": "newGPRegistration",
+              "type": "NEW_GP_REGISTRATION",
               "returningPatient": false,
               "multifactorAuthenticationPresent": true
             },
@@ -265,7 +265,7 @@ paths:
           "reportingSystemSupplier": "SYSTEM_SUPPLIER",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
-          "sendingPracticeOdsCode": "ABC1234",
+          "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "transferCompatibilityStatus": {
               "internalTransfer": false,
@@ -390,8 +390,8 @@ paths:
           "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
             "ehr": {
-            "ehrStructuredSizeBytes": 4096,
-            "placeholders": [
+              "ehrStructuredSizeBytes": 4096,
+              "placeholders": [
                 {
                   "generatedBy": "PRE_EXISTING",
                   "clinicalType": "SCANNED_DOCUMENT",
@@ -493,7 +493,7 @@ paths:
               "sizeBytes": 3084322
             },
             "documentMigration": {
-              "status": "FAILURE",
+              "successful": false,
               "reason": "Large file size"
             }
           }
@@ -525,6 +525,7 @@ paths:
                       type: object
                       required:
                         - attachment
+                        - documentMigration
                       properties:
                         attachment:
                           description: |
@@ -536,6 +537,8 @@ paths:
 
                             This should include all attachments that are either directly attached OR that are linked to from within the EHR.
                           $ref: components/schemas/Attachment.yaml
+                        documentMigration:
+                          $ref: components/schemas/DocumentMigration.yaml                          
       responses:
         '200':
           $ref: components/responses/OK.yaml
