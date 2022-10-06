@@ -214,7 +214,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
+                - $ref: components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
                 - type: object
                   required:
                     - payload
@@ -291,7 +291,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
                 - type: object
                   required:
                     - payload
@@ -355,7 +355,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -425,7 +425,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
                 - type: object
                   required:
                     - payload
@@ -515,7 +515,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
                 - type: object
                   required:
                     - payload
@@ -586,7 +586,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -735,7 +735,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEvent.yaml
+                - $ref: components/schemas/BaseEvent.yaml
                 - type: object
                   required:
                     - payload
@@ -811,7 +811,7 @@ paths:
             schema:
               type: object
               allOf:
-                - $ref: ./components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
+                - $ref: components/schemas/BaseEventWithOptionalSendingPracticeOdsCode.yaml
                 - type: object
                   required:
                     - payload
