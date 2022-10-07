@@ -1,3 +1,9 @@
+description: |
+  Required when placeholders are present. 
+  
+  A list that contains information about the attachments that were in the record but not contained in the electronic transfer or were unable to be ingested into the requesting system.
+ 
+  An individual entry must be added for each placeholder in the transfer.
 type: array
 items:
   required:

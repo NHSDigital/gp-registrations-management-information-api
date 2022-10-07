@@ -1,3 +1,5 @@
+description: |
+  Information about the type of transfer and whether or not an electronic transfer will be triggered.
 type: object
 required:
   - internalTransfer

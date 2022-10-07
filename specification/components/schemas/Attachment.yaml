@@ -1,3 +1,4 @@
+description: This describes the attributes of the document.
 type: object
 required:
   - clinicalType

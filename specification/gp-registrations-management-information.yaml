@@ -302,8 +302,7 @@ paths:
                       required:
                         - transferCompatibilityStatus
                       properties:
-                        transferCompatibilityStatus:
-                          description: Information about the type of transfer and whether or not an electronic transfer will be triggered. 
+                        transferCompatibilityStatus: 
                           $ref: components/schemas/TransferCompatibilityStatus.yaml
       responses:
         '200':
@@ -443,12 +442,6 @@ paths:
                               description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included).
                               example: 4956
                         placeholders:
-                          description: |
-                            Required when placeholders are present. 
-
-                            A list that contains information about the attachments that were in the record but not contained in the electronic transfer or were unable to be ingested into the requesting system.
-                            
-                            An individual entry must be added for each placeholder in the transfer.
                           $ref: components/schemas/Placeholder.yaml
       responses:
         '200':
@@ -528,14 +521,6 @@ paths:
                         - documentMigration
                       properties:
                         attachment:
-                          description: |
-                            Required when attachments are present in the transfer. 
-
-                            A list that contains information for each attachment in the transfer. 
-
-                            This list should not contain attachments that are converted to placeholders. 
-
-                            This should include all attachments that are either directly attached OR that are linked to from within the EHR.
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
                           $ref: components/schemas/DocumentMigration.yaml                          
@@ -674,11 +659,8 @@ paths:
                           - degrades
                         properties:
                           degrades:
-                            description: |
-                              A list that contains information about the degrades that were in the EHR.
-
-                              An individual entry must be added for each degrade.
                             $ref: components/schemas/Degrade.yaml
+                            
         responses:
           '200':
             $ref: components/responses/OK.yaml
