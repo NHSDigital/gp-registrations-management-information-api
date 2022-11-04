@@ -90,7 +90,11 @@ info:
     ## Onboarding
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
 
-    Contact [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net) to onboard.
+    This API uses our digital onboarding process.
+    
+    As part of this process, you need to demonstrate your technical conformance to the requirements for this API.
+    
+    To get started, contact us at [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net).
 
     ## Troubleshooting
     The API uses the conventional HTTP response codes to indicate the success or failure of an API request.
