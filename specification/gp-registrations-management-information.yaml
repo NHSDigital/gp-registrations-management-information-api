@@ -96,19 +96,14 @@ info:
     
     To get started, contact us at [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net).
 
-    ## Troubleshooting
-    The API uses the conventional HTTP response codes to indicate the success or failure of an API request.
+    ## Errors
+    We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
 
-    When something goes wrong when making a request, please see the table below for troubleshooting help.
-
-
-    | Status Code                        | Reason                                                                                 | Comments                                                                                                                                                                                                                                 |
-    | ---------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | 400 - Bad request                  | The request was invalid, often due to missing a required parameter or an invalid type. | See the API catalogue and ensure the request conforms to the endpoint structure.                                                                                                                                                         |
-    | 401 - Unauthorised                 | No valid API key provided.                                                             | Ensure the "apikey" header is present and valid.                                                                                                                                                                                         |
-    | 403 - Forbidden                    | The API key doesn't have permissions to perform the request.                           | The endpoint is not available to this user.                                                                                                                                                                                              | 
-    | 404 - Not found                    | The requested resource doesn't exist.                                                  | Ensure the request matches the endpoint found in the API catalogue and uses the correct Base URL. All the events sent are POST requests.                                                                                                 |
-    | 500, 502, 503, 504 - Server errors | Something went wrong on the API server.                                                | In the rare occurrence of a 5xx  response, try to send the request again with an exponential backoff. A failure of sending an event to the API should not impact the EHR Transfer itself and the other systems should proceed as normal. |
+    * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
+    * 400 to 499 if it failed because of a client error by your application
+    * 500 to 599 if it failed because of an error on our server
+    
+    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
 
   license:
