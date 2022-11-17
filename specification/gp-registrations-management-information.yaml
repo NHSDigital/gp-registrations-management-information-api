@@ -437,8 +437,8 @@ paths:
                               type: integer
                               description: The total size in bytes of structured part of the GP2GP message (attachments are NOT to be included).
                               example: 4956
-                        placeholders:
-                          $ref: components/schemas/Placeholder.yaml
+                            placeholders:
+                              $ref: components/schemas/Placeholder.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
