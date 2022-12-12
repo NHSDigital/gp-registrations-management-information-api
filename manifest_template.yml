@@ -50,6 +50,7 @@ apigee:
           - {{ SERVICE_NAME }}-{{ ENV.name }}
           - identity-service-{{ ENV.name }}
         scopes:
+          - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}' 
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
           - 'urn:nhsd:apim:user-nhs-id:aal3:{{ SERVICE_NAME }}'
         quota: '10000'
