@@ -120,30 +120,30 @@ x-spec-publication:
     - group: Registration
       operations:
         - method: POST
-          path: /gp-registration-mi/registrations
+          path: /gp-registrations-mi/registrations
         - method: POST
-          path: /gp-registration-mi/transfer-compatibility-statuses
+          path: /gp-registrations-mi/transfer-compatibility-statuses
         - method: POST
-          path: /gp-registration-mi/ehr-requests
+          path: /gp-registrations-mi/ehr-requests
         - method: POST
-          path: /gp-registration-mi/ehr-responses
+          path: /gp-registrations-mi/ehr-responses
         - method: POST
-          path: /gp-registration-mi/document-responses
+          path: /gp-registrations-mi/document-responses
         - method: POST
-          path: /gp-registration-mi/ready-to-integrate-statuses
+          path: /gp-registrations-mi/ready-to-integrate-statuses
         - method: POST
-          path: /gp-registration-mi/ehr-degrades
+          path: /gp-registrations-mi/ehr-degrades
         - method: POST
-          path: /gp-registration-mi/ehr-integrations
+          path: /gp-registrations-mi/ehr-integrations
         - method: POST
-          path: /gp-registration-mi/errors
+          path: /gp-registrations-mi/errors
 servers:
   - url: 'https://int.api.service.nhs.uk'
     description: Integration test environment.
   - url: 'https://api.service.nhs.uk'
     description: Production environment.
 paths:
-  /gp-registration-mi/registrations:
+  /gp-registrations-mi/registrations:
     post:
       tags:
         - Registration
@@ -241,7 +241,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
   
-  /gp-registration-mi/transfer-compatibility-statuses: 
+  /gp-registrations-mi/transfer-compatibility-statuses: 
     post:
       tags:
         - Registration
@@ -312,7 +312,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/ehr-requests: 
+  /gp-registrations-mi/ehr-requests: 
     post:
       tags:
         - Registration
@@ -363,7 +363,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/ehr-responses: 
+  /gp-registrations-mi/ehr-responses: 
     post:
       tags:
         - Registration
@@ -451,7 +451,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/document-responses: 
+  /gp-registrations-mi/document-responses: 
     post:
       tags:
         - Registration
@@ -532,12 +532,12 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/ready-to-integrate-statuses: 
+  /gp-registrations-mi/ready-to-integrate-statuses: 
     post:
       tags:
         - Registration
       summary: Submit Ready to Integrate Statuses
-      operationId: /gp-registration-mi/ready-to-integrate-statuses
+      operationId: /gp-registrations-mi/ready-to-integrate-statuses
       description: |
         This event logs when the EHR has been received and is awaiting the user in the receiving practice to integrate or reject.
 
@@ -583,7 +583,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/ehr-degrades: 
+  /gp-registrations-mi/ehr-degrades: 
       post:
         tags:
           - Registration
@@ -669,7 +669,7 @@ paths:
           '500':
             $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/ehr-integrations: 
+  /gp-registrations-mi/ehr-integrations: 
     post:
       tags:
         - Registration
@@ -741,7 +741,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registration-mi/errors: 
+  /gp-registrations-mi/errors: 
     post:
       tags:
         - Registration
