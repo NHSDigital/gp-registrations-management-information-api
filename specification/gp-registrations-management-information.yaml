@@ -137,11 +137,8 @@ x-spec-publication:
           path: /gp-registrations-mi/ehr-integrations
         - method: POST
           path: /gp-registrations-mi/errors
-servers:
-  - url: 'https://int.api.service.nhs.uk'
-    description: Integration test environment.
-  - url: 'https://api.service.nhs.uk'
-    description: Production environment.
+  try-this-api: 
+    disabled: true
 paths:
   /gp-registrations-mi/registrations:
     post:
