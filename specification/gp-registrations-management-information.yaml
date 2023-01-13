@@ -242,7 +242,7 @@ paths:
     post:
       tags:
         - Registration
-      summary: Submit Transfer Compatility Statuses
+      summary: Submit Transfer Compatibility Statuses
       operationId: transfer-compatibility-statuses
       description: |
         This event captures whether or not the registration is compatible with an electronic transfer of the patient’s record.  
