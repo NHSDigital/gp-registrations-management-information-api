@@ -1,0 +1,30 @@
+steps:
+  - template: azure/components/aws-assume-role.yml@common
+    parameters:
+      role: "auto-ops"
+      profile: "apm_ptl"
+  
+  - template: azure/components/get-aws-secrets-and-ssm-params.yml@common
+    parameters:
+      secret_file_ids:
+        - ptl/keycloak/paas/gp-registrations-management-information-client/private_key.pem
+  
+  - bash: |
+      set -e
+      poetry install
+    displayName: Install proxygen-cli
+  
+  - bash: |
+      set -euo pipefail
+      mkdir -p ~/.proxygen
+      mv ../secrets/.private_key.pem ~/.proxygen/private_key.pem
+  
+      # Need to set port to 9005 as *.prod.api.platform.nhs.uk
+      # resolves to internal-nlb w/ x-account conection to
+      # prod
+      poetry run proxygen settings set endpoint_url 'https://proxygen.prod.api.platform.nhs.uk:9005'
+      poetry run proxygen credentials set client_id gp-registrations-management-information-client
+      poetry run proxygen credentials set private_key_path private_key.pem
+      poetry run proxygen settings set api gp-registrations-management-information
+    displayName: Configure proxygen-cli
+  

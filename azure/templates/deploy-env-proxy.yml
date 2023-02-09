@@ -1,0 +1,82 @@
+parameters:
+  - name: api_name
+    default: gp-registrations-management-information
+  - name: apim_env
+    values:
+      - internal-dev
+      - internal-dev-sandbox
+      - internal-qa
+      - internal-qa-sandbox
+      - ref
+      - dev
+      - int
+      - sandbox
+      - prod
+      - manual-approval
+
+  - name: base_path
+
+  - name: depends_on
+    type: object
+
+  - name: target_env
+    values:
+      - dev
+      - sandbox
+      - prod
+
+  - name: is_pr
+    type: boolean
+    default: false
+
+stages:
+  - stage: ${{ replace(parameters.apim_env, '-', '_') }}
+    dependsOn: ${{ parameters.depends_on }}
+    jobs:
+      - deployment: deploy
+        environment: ${{ parameters.apim_env }}
+        pool:
+          name: 'AWS-ECS'
+        workspace:
+          clean: all
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: none
+
+                - task: DownloadPipelineArtifact@2
+                  inputs:
+                    source: "specific"
+                    project: $(resources.pipeline.build_pipeline.projectID)
+                    pipeline: $(resources.pipeline.build_pipeline.pipelineID)
+                    preferTriggeringPipeline: true
+                    runVersion: "latestFromBranch"
+                    runBranch: $(Build.SourceBranch)
+                    path: "$(Pipeline.Workspace)/s/"
+
+                - bash: |
+                    set -e
+                    mv package/* .
+                    ls -ltrhR
+                    rm -r package
+                  displayName: Move artifact package files to current working directory
+
+                - template: ./setup-proxygen-cli.yml
+
+                - bash: |
+                    set -e
+                    cd specification/x-nhsd-apim
+                    mv -f ${{ parameters.target_env }}.yaml env-specific-config.yaml
+                  displayName: Set environment specific config in x-nhsd-apim
+
+                - ${{ if parameters.is_pr }}:
+                    - bash: |
+                        set -e
+                        echo "##vso[task.setvariable variable=BASE_PATH_SUFFIX]-${{ replace(replace(replace(variables['Build.SourceBranch'], '/merge', ''), 'refs/pull/', ''), '/', '_') }}"
+                      displayName: Set instance name suffix
+
+                - bash: |
+                    set -e
+                    poetry run proxygen instance deploy --no-confirm ${{ parameters.apim_env }} ${{ parameters.base_path }}$(BASE_PATH_SUFFIX) specification/${{ parameters.api_name }}.yaml
+                  displayName: Deploy proxy
