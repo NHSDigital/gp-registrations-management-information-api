@@ -12,6 +12,15 @@ pr:
   branches:
     include: ['*']
 
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge
+      endpoint: NHSDigital
+
+
 stages:
   - stage: build
     displayName: Build
@@ -30,6 +39,71 @@ stages:
           - checkout: self
             persistCredentials: true
 
+          - template: azure/components/aws-assume-role.yml@common
+            parameters:
+              role: "auto-ops"
+              profile: "apm_ptl"
+
+          - template: azure/components/get-aws-secrets-and-ssm-params.yml@common
+            parameters:
+              secret_file_ids:
+                - ptl/keycloak/paas/gp-registrations-management-information-client/private_key.pem
+
           - bash: |
-              echo hello
-            displayName: Docker build
+              set -e
+              poetry install
+            displayName: Install proxygen-cli
+
+          - bash: |
+              set -euo pipefail
+              mkdir -p ~/.proxygen
+              mv ../secrets/.private_key.pem ~/.proxygen/private_key.pem
+
+              # Need to set port to 9005 as *.prod.api.platform.nhs.uk
+              # resolves to internal-nlb w/ x-account conection to
+              # prod
+              poetry run proxygen settings set endpoint_url 'https://proxygen.prod.api.platform.nhs.uk:9005'
+              poetry run proxygen credentials set client_id gp-registrations-management-information-client
+              poetry run proxygen credentials set private_key_path private_key.pem
+              poetry run proxygen settings set api gp-registrations-management-information
+            displayName: Configure proxygen-cli
+
+          - bash: |
+              set -euo pipefail
+              poetry run proxygen docker get-login | bash
+            displayName: Docker login
+
+          - bash: |
+              export commit_hash="$(git rev-parse --short HEAD)"
+              export build_label="$(Build.BuildId)-sha${commit_hash}"
+
+              cd sandbox
+              DOCKER_REGISTRY=$(poetry run proxygen docker registry)
+              docker build . -t ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
+              docker push ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
+
+              cd ..
+              ls -ltrha
+              echo '' > specification/x-nhsd-apim/image.yml
+              echo "name: gp-registrations-management-information" >> specification/x-nhsd-apim/image.yml
+              echo "tag: ${build_label}" >> specification/x-nhsd-apim/image.yml
+
+              cat specification/x-nhsd-apim/image.yml
+            displayName: Build and push docker image
+
+          - bash: |
+              set -e
+              mkdir -p dist
+              cp -r pyproject.toml poetry.toml poetry.lock specification dist
+            displayName: Build release package
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(System.DefaultWorkingDirectory)/dist
+              artifactName: package
+
+          - bash: |
+              set -e
+              rm -rf ~/.proxygen
+            displayName: Clear proxygen credentials
+            condition: always()

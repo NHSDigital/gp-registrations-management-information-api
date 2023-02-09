@@ -87,7 +87,7 @@ source = ["Cython (>=0.29.7)"]
 
 [[package]]
 name = "proxygen-cli"
-version = "2.0.8"
+version = "2.0.9"
 description = "CLI for interacting with NHSD APIM's proxygen service"
 category = "dev"
 optional = false
@@ -507,8 +507,8 @@ lxml = [
     {file = "lxml-4.9.2.tar.gz", hash = "sha256:2455cfaeb7ac70338b3257f41e21f0724f4b5b0c0e7702da67ee6c3640835b67"},
 ]
 proxygen-cli = [
-    {file = "proxygen_cli-2.0.8-py3-none-any.whl", hash = "sha256:654bc7c29dc935023961a76c300c324913dbc4dc3966d33965d8b876e739cead"},
-    {file = "proxygen_cli-2.0.8.tar.gz", hash = "sha256:3d9359ff29aa177288aef9fd3129e4d6d4aa3b3b6bb1dfea3fc69cfa9d968872"},
+    {file = "proxygen_cli-2.0.9-py3-none-any.whl", hash = "sha256:868ca1d73a3da8c21e569b504ff883d5ce148e6fa1b817cca15a1dbc94561577"},
+    {file = "proxygen_cli-2.0.9.tar.gz", hash = "sha256:c4f5fae592bd24122043ffb6e73ea5312951bb86d2eff99a60bdf89f11c68cd7"},
 ]
 pycparser = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
