@@ -12,18 +12,24 @@ pr:
   branches:
     include: ['*']
 
-resources:
-  repositories:
-    - repository: common
-      type: github
-      name: NHSDigital/api-management-utils
-      ref: refs/heads/edge
-      endpoint: NHSDigital
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: build
+        displayName: Build And Create Artifact
+        timeoutInMinutes: 40
 
-variables:
-  - template: project.yml
-extends:
-  template: azure/common/apigee-build.yml@common
-  parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
+        pool:
+          name: 'AWS-ECS'
+
+        workspace:
+          clean: all
+
+        steps:
+          - checkout: self
+            persistCredentials: true
+
+          - bash: |
+              echo hello
+            displayName: Docker build

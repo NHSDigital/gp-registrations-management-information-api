@@ -1,62 +1,62 @@
-name: "$(SourceBranchName)+$(BuildID)"
+# name: "$(SourceBranchName)+$(BuildID)" 
 
-trigger: none
-pr: none
+# trigger: none
+# pr: none
 
-resources:
-  repositories:
-    - repository: common
-      type: github
-      name: NHSDigital/api-management-utils
-      ref: refs/heads/edge
-      endpoint: NHSDigital
-  pipelines:
-  - pipeline: build_pipeline
-    source: "GP-Registrations-Management-Information-Build"
-    trigger:
-      branches:
-        include:
-          - refs/tags/v*
+# resources:
+#   repositories:
+#     - repository: common
+#       type: github
+#       name: NHSDigital/api-management-utils
+#       ref: refs/heads/edge
+#       endpoint: NHSDigital
+#   pipelines:
+#   - pipeline: build_pipeline
+#     source: "GP-Registrations-Management-Information-Build"
+#     trigger:
+#       branches:
+#         include:
+#           - refs/tags/v*
 
-pool:
-  name: 'AWS-ECS'
+# pool:
+#   name: 'AWS-ECS'
 
-variables:
-  - template: project.yml
+# variables:
+#   - template: project.yml
 
-extends:
-  template: azure/common/apigee-deployment.yml@common
-  parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
-    service_base_path: ${{ variables.service_base_path }}
-    jinja_templates:
-      TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
-    apigee_deployments:
-      - environment: internal-dev
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: internal-qa
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: internal-qa-sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-    # (App subscription make sense for most sandbox implementations)
-      - environment: sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: int
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: prod
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
-        jinja_templates:
-          TARGET_URL: https://u0r7aqgvvj.execute-api.eu-west-2.amazonaws.com/prod-env
+# extends:
+#   template: azure/common/apigee-deployment.yml@common
+#   parameters:
+#     service_name: ${{ variables.service_name }}
+#     short_service_name: ${{ variables.short_service_name }}
+#     service_base_path: ${{ variables.service_base_path }}
+#     jinja_templates:
+#       TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
+#     apigee_deployments:
+#       - environment: internal-dev
+#         post_deploy:
+#           - template: ./templates/run-smoke-tests.yml
+#       - environment: internal-qa
+#         post_deploy:
+#           - template: ./templates/run-smoke-tests.yml
+#       - environment: internal-qa-sandbox
+#         proxy_path: sandbox
+#         post_deploy:
+#           - template: ./templates/run-smoke-tests.yml
+#     # (App subscription make sense for most sandbox implementations)
+#       - environment: sandbox
+#         proxy_path: sandbox
+#         post_deploy:
+#           - template: ./templates/run-smoke-tests.yml
+#       - environment: int
+#         depends_on:
+#           - internal_qa
+#           - internal_qa_sandbox
+#         post_deploy:
+#           - template: ./templates/run-smoke-tests.yml
+#       - environment: prod
+#         depends_on:
+#           - internal_qa
+#           - internal_qa_sandbox
+#         jinja_templates:
+#           TARGET_URL: https://u0r7aqgvvj.execute-api.eu-west-2.amazonaws.com/prod-env
