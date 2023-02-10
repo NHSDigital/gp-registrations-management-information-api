@@ -67,7 +67,7 @@ stages:
           - bash: |
               set -e
               mkdir -p dist
-              cp -r pyproject.toml poetry.toml poetry.lock specification dist
+              cp -r test pyproject.toml poetry.toml poetry.lock specification dist
             displayName: Build release package
 
           - task: PublishPipelineArtifact@1

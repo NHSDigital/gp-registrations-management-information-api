@@ -16,6 +16,10 @@ parameters:
 
   - name: base_path
 
+  - name: post_deploy
+    type: stepList
+    default: []
+
   - name: depends_on
     type: object
 
@@ -80,3 +84,7 @@ stages:
                     set -e
                     poetry run proxygen instance deploy --no-confirm ${{ parameters.apim_env }} ${{ parameters.base_path }}$(BASE_PATH_SUFFIX) specification/${{ parameters.api_name }}.yaml
                   displayName: Deploy proxy
+
+                - ${{ each post_deploy_step in parameters.post_deploy }}:
+                    - ${{ post_deploy_step }}
+
