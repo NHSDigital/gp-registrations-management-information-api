@@ -83,8 +83,8 @@ stages:
           runOnce:
             deploy:
               steps:
-                - template: ./get-build-artifact.yml
-                - template: ./setup-proxygen-cli.yml
+                - template: ./templates/get-build-artifact.yml
+                - template: ./templates/setup-proxygen-cli.yml
                 - bash: |
                     set -e
                     poetry run proxygen spec publish --no-confirm specification/${{ parameters.api_name }}.yaml
