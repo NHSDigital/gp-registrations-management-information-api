@@ -1,0 +1,19 @@
+steps:
+  - download: none
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      source: "specific"
+      project: $(resources.pipeline.build_pipeline.projectID)
+      pipeline: $(resources.pipeline.build_pipeline.pipelineID)
+      preferTriggeringPipeline: true
+      runVersion: "latestFromBranch"
+      runBranch: $(Build.SourceBranch)
+      path: "$(Pipeline.Workspace)/s/"
+
+  - bash: |
+      set -e
+      mv package/* .
+      ls -ltrhR
+      rm -r package
+    displayName: Move artifact package files to current working directory
+

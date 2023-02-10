@@ -68,6 +68,28 @@ stages:
       base_path: gp-registrations-mi
       post_deploy: []
 
+  - stage: spec
+    dependsOn:
+      - internal_dev
+      - internal_dev_sandbox
+    jobs:
+      - deployment: deploy
+        environment: int
+        pool:
+          name: 'AWS-ECS'
+        workspace:
+          clean: all
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: ./get-build-artifact.yml
+                - template: ./setup-proxygen-cli.yml
+                - bash: |
+                    set -e
+                    poetry run proxygen spec publish --no-confirm specification/${{ parameters.api_name }}.yaml
+                  displayName: Publish spec
+
   # - template: azure/common/deploy-manual-approval.yml
   #   parameters:
   #     stage_name: manual_approval
