@@ -19,7 +19,7 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
-proxygen-cli = { git = "https://github.com/NHSDigital/proxygen-cli.git", branch = "APM-3954-relax-versions" }
+proxygen-cli = "^2.0.10"
 pytest-nhsd-apim = "^3.3.0"
 
 [tool.poetry.scripts]

@@ -11,6 +11,8 @@ steps:
   
   - bash: |
       set -e
+      echo layout pyenv 3.8.10 > .envrc
+      direnv allow
       poetry install
     displayName: Install proxygen-cli
   
