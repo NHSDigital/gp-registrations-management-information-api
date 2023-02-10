@@ -73,7 +73,7 @@ stages:
       - internal_dev
       - internal_dev_sandbox
     jobs:
-      - deployment: deploy
+      - deployment: publish
         environment: int
         pool:
           name: 'AWS-ECS'
@@ -90,19 +90,20 @@ stages:
                     poetry run proxygen spec publish --no-confirm specification/gp-registrations-management-information.yaml
                   displayName: Publish spec
 
-  # - template: azure/common/deploy-manual-approval.yml
-  #   parameters:
-  #     stage_name: manual_approval
-  #     depends_on:
-  #       - int
-  #       - sandbox
-  #     manual_approval_env: manual-approval-prod
+  - template: azure/common/deploy-manual-approval.yml
+    parameters:
+      stage_name: manual_approval
+      depends_on:
+        - int
+        - sandbox
+        - spec
+      manual_approval_env: manual-approval-prod
 
-  # - template: ./templates/deploy-env-proxy.yml
-  #   parameters:
-  #     apim_env: prod
-  #     target_env: prod
-  #     depends_on:
-  #       - manual_approval
-  #     base_path: gp-registrations-mi
-  #     post_deploy: []
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: prod
+      target_env: prod
+      depends_on:
+        - manual_approval
+      base_path: gp-registrations-mi
+      post_deploy: []
