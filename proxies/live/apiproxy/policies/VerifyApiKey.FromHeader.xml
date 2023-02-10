@@ -1,3 +1,0 @@
-<VerifyAPIKey async="false" continueOnError="false" enabled="true" name="VerifyApiKey.FromHeader">
-  <APIKey ref="request.header.apikey"/>
-</VerifyAPIKey>

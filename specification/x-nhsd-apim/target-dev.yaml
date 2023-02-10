@@ -1,0 +1,7 @@
+type: external
+url: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
+healthcheck: /_status
+security:
+  type: apikey
+  header: X-API-Key
+  secret: apikey

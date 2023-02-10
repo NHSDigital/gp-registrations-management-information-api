@@ -23,22 +23,33 @@ resources:
 pool:
   name: 'AWS-ECS'
 
-variables:
-  - template: project.yml
+stages:
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: internal-dev
+      target_env: dev
+      depends_on: []
+      base_path: gp-registrations-mi
+      is_pr: true
+      post_deploy:
+        - template: ./templates/run-smoke-tests.yml
+          parameters:
+            api_name: gp-registrations-management-information
+            apim_env: internal-dev
+            base_path: gp-registrations-mi
+            is_pr: true
 
-extends:
-  template: azure/common/apigee-deployment.yml@common
-  parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
-    service_base_path: ${{ variables.service_base_path }}
-    jinja_templates:
-      TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
-    apigee_deployments:
-      - environment: internal-dev
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: internal-dev-sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: internal-dev-sandbox
+      target_env: sandbox
+      depends_on: []
+      base_path: gp-registrations-mi
+      is_pr: true
+      post_deploy:
+        - template: ./templates/run-smoke-tests.yml
+          parameters:
+            api_name: gp-registrations-management-information
+            apim_env: internal-dev-sandbox
+            base_path: gp-registrations-mi
+            is_pr: true

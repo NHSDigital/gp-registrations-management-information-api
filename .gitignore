@@ -12,5 +12,7 @@ __pycache__/
 .envrc
 .idea/
 .venv/
+.direnv/
+.mypy_cache/
 
 smoketest-report.xml

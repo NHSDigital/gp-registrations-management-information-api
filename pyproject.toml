@@ -19,19 +19,15 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
-flake8 = "^3.7.9"
-black = "^20.8b1"
-pip-licenses = "^2.0.1"
-jinja2 = "^2.11.1"
-pyyaml = "^5.2"
-docopt = "^0.6.2"
-jsonpath-rw = "^1.4.0"
-semver = "^2.9.0"
-gitpython = "^3.1.30"
-pytest = "^6.1.2"
-coverage = "^5.5"
-aiohttp = "^3.7.3"
-pytest-asyncio = "^0.14.0"
-api-test-utils = {url = "https://github.com/NHSDigital/apim-test-utils/releases/download/v1.0.92-alpha/api_test_utils-1.0.92a0-py3-none-any.whl"}
+proxygen-cli = "^2.0.10"
+pytest-nhsd-apim = "^3.3.0"
 
 [tool.poetry.scripts]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s - %(name)s.%(module)s.%(funcName)s - %(levelname)s - %(message)s"
+log_file_level = "DEBUG"
+log_file_format = "%(asctime)s - %(name)s.%(module)s.%(funcName)s - %(levelname)s - %(message)s"
+log_file_date_format = "%Y-%m-%d %H:%M:%S"

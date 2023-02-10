@@ -1,7 +1,0 @@
-variables:
-  service_name: gp-registrations-management-information
-  short_service_name: gprmi
-  service_base_path: gp-registrations-mi
-  product_display_name: GP Registrations Management Information API
-  product_description: A new MI solution to be implemented by all suppliers
-  spec_file: gp-registrations-management-information.json

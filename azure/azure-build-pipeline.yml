@@ -20,10 +20,62 @@ resources:
       ref: refs/heads/edge
       endpoint: NHSDigital
 
-variables:
-  - template: project.yml
-extends:
-  template: azure/common/apigee-build.yml@common
-  parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
+
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: build
+        displayName: Build And Create Artifact
+        timeoutInMinutes: 40
+
+        pool:
+          name: 'AWS-ECS'
+
+        workspace:
+          clean: all
+
+        steps:
+          - checkout: self
+            persistCredentials: true
+
+          - template: ./templates/setup-proxygen-cli.yml
+
+          - bash: |
+              set -euo pipefail
+              poetry run proxygen docker get-login | bash
+            displayName: Docker login
+
+          - bash: |
+              export commit_hash="$(git rev-parse --short HEAD)"
+              export build_label="$(Build.BuildId)-sha${commit_hash}"
+
+              cd sandbox
+              DOCKER_REGISTRY=$(poetry run proxygen docker registry)
+              docker build . -t ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
+              docker push ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
+
+              cd ..
+              echo '' > specification/x-nhsd-apim/image.yaml
+              echo "name: gp-registrations-management-information" >> specification/x-nhsd-apim/image.yaml
+              echo "tag: ${build_label}" >> specification/x-nhsd-apim/image.yaml
+
+              cat specification/x-nhsd-apim/image.yml
+            displayName: Build and push docker image
+
+          - bash: |
+              set -e
+              mkdir -p dist
+              cp -r test pyproject.toml poetry.toml poetry.lock specification dist
+            displayName: Build release package
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(System.DefaultWorkingDirectory)/dist
+              artifactName: package
+
+          - bash: |
+              set -e
+              rm -rf ~/.proxygen
+            displayName: Clear proxygen credentials
+            condition: always()

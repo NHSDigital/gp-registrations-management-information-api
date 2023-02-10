@@ -1,12 +1,21 @@
-openapi: "3.0.0"
-x-nhs-api-spec-guid: 4631c387-3793-4413-8c61-395e014864b2
-x-meta:
-  service_name: "gp-registrations-management-information"
-  short_service_name: "gprmi"
-  product_display_name: "GP Registrations Management Information API"
-  service_base_path: "gp-registrations-mi"
-  product_description: "An API to capture GP Registrations management information (MI)"
-  pipeline_name_prefix: "GP-Registrations-Management-Information"
+openapi: "3.0.3"
+servers:
+  - url: 'https://int.api.service.nhs.uk/gp-registrations-mi'
+    description: Integration Environment
+  - url: 'https://api.service.nhs.uk/gp-registrations-mi'
+    description: Production Environment
+
+components:
+  securitySchemes:
+    app-level0:
+      $ref: https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/app-level0
+
+x-nhsd-apim:
+  access:
+    $ref: x-nhsd-apim/access.yaml
+  target:
+    $ref: x-nhsd-apim/target.yaml
+
 info:
   version: 0.0.1
   title: GP Registrations Management Information API
@@ -15,6 +24,7 @@ info:
     Use this API to send real-time GP registrations metrics to NHS for service monitoring of patient EHR transfers between GP Practices.
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
+
 
     You can send us Management Information for registrations regardless of the transfer protocol used (GP2GP or GP Connect).
 
@@ -36,7 +46,7 @@ info:
 
     ## Who can use this API
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development.
-    You must do this before you can go live (see ‘Onboarding’ below). 
+    You must do this before you can go live (see ‘Onboarding’ below).
 
     ## Related APIs
     Use [GP2GP - HL7 API](https://digital.nhs.uk/developer/api-catalogue/gp2gp) to learn more the GP2GP protocol.
@@ -91,9 +101,9 @@ info:
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
 
     This API uses our digital onboarding process.
-    
+
     As part of this process, you need to demonstrate your technical conformance to the requirements for this API.
-    
+
     To get started, contact us at [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net).
 
     ## Errors
@@ -102,7 +112,7 @@ info:
     * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
     * 400 to 499 if it failed because of a client error by your application
     * 500 to 599 if it failed because of an error on our server
-    
+
     Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
 
@@ -120,27 +130,27 @@ x-spec-publication:
     - group: Registration
       operations:
         - method: POST
-          path: /gp-registrations-mi/registrations
+          path: /registrations
         - method: POST
-          path: /gp-registrations-mi/transfer-compatibility-statuses
+          path: /transfer-compatibility-statuses
         - method: POST
-          path: /gp-registrations-mi/ehr-requests
+          path: /ehr-requests
         - method: POST
-          path: /gp-registrations-mi/ehr-responses
+          path: /ehr-responses
         - method: POST
-          path: /gp-registrations-mi/document-responses
+          path: /document-responses
         - method: POST
-          path: /gp-registrations-mi/ready-to-integrate-statuses
+          path: /ready-to-integrate-statuses
         - method: POST
-          path: /gp-registrations-mi/ehr-degrades
+          path: /ehr-degrades
         - method: POST
-          path: /gp-registrations-mi/ehr-integrations
+          path: /ehr-integrations
         - method: POST
-          path: /gp-registrations-mi/errors
-  try-this-api: 
+          path: /errors
+  try-this-api:
     disabled: true
 paths:
-  /gp-registrations-mi/registrations:
+  /registrations:
     post:
       tags:
         - Registration
@@ -150,7 +160,7 @@ paths:
         This event captures the details of the registration before the electronic transfer is initiated.
 
         It includes information about the:
-        - sending practice 
+        - sending practice
         - status of the PDS trace
         - type of registration
         - GPLinks information
@@ -158,7 +168,7 @@ paths:
         **Submitted by:** Requesting practice
 
         **When to send:** When the user completes the registration. This event should be submitted for every regular patient registration.
-        
+
         Including, but not limited to, the following scenarios:
 
         - The patient is new to the practice
@@ -195,13 +205,8 @@ paths:
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the Registrations event.
@@ -237,20 +242,20 @@ paths:
           $ref: components/responses/BadRequest.yaml
         '500':
           $ref: components/responses/InternalServerError.yaml
-  
-  /gp-registrations-mi/transfer-compatibility-statuses: 
+
+  /transfer-compatibility-statuses:
     post:
       tags:
         - Registration
       summary: Submit Transfer Compatibility Statuses
       operationId: transfer-compatibility-statuses
       description: |
-        This event captures whether or not the registration is compatible with an electronic transfer of the patient’s record.  
+        This event captures whether or not the registration is compatible with an electronic transfer of the patient’s record.
         This event should be submitted for all registrations where a sending (previous) practice ODS code is present.
 
         **Submitted by:** Requesting practice
 
-        **When to send:** When it is determined that an electronic transfer will or will not be triggered. 
+        **When to send:** When it is determined that an electronic transfer will or will not be triggered.
 
         **Notes:** If a technical error or negative acknowledgment occurs, an Error event must be submitted, including the response code if applicable.
 
@@ -272,13 +277,8 @@ paths:
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the Transfer Compatability Statuses event.
@@ -299,7 +299,7 @@ paths:
                       required:
                         - transferCompatibilityStatus
                       properties:
-                        transferCompatibilityStatus: 
+                        transferCompatibilityStatus:
                           $ref: components/schemas/TransferCompatibilityStatus.yaml
       responses:
         '200':
@@ -309,7 +309,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/ehr-requests: 
+  /ehr-requests:
     post:
       tags:
         - Registration
@@ -335,13 +335,8 @@ paths:
           "sendingPracticeOdsCode": "XYZ4567"
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the EHR Requests event.
@@ -360,7 +355,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/ehr-responses: 
+  /ehr-responses:
     post:
       tags:
         - Registration
@@ -405,13 +400,8 @@ paths:
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the EHR Responses event.
@@ -448,7 +438,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/document-responses: 
+  /document-responses:
     post:
       tags:
         - Registration
@@ -460,7 +450,7 @@ paths:
         **Submitted by:** Requesting practice
 
         **When to send:** As each document is processed and saved into the clinical system.
-        
+
         For HL7 v3 EHRs, this will be when the attachments are decoded from the message fragments.
 
         For FHIR EHRs, this will be when the attachment transfer is complete.
@@ -489,13 +479,8 @@ paths:
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the Document Responses event.
@@ -520,7 +505,7 @@ paths:
                         attachment:
                           $ref: components/schemas/Attachment.yaml
                         documentMigration:
-                          $ref: components/schemas/DocumentMigration.yaml                          
+                          $ref: components/schemas/DocumentMigration.yaml
       responses:
         '200':
           $ref: components/responses/OK.yaml
@@ -529,12 +514,12 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/ready-to-integrate-statuses: 
+  /ready-to-integrate-statuses:
     post:
       tags:
         - Registration
       summary: Submit Ready to Integrate Statuses
-      operationId: /gp-registrations-mi/ready-to-integrate-statuses
+      operationId: /ready-to-integrate-statuses
       description: |
         This event logs when the EHR has been received and is awaiting the user in the receiving practice to integrate or reject.
 
@@ -555,13 +540,8 @@ paths:
           "sendingPracticeOdsCode": "XYZ4567"
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the Ready to Integrate Statuses event.
@@ -580,93 +560,88 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/ehr-degrades: 
-      post:
-        tags:
-          - Registration
-        summary: Submit EHR Degrades
-        operationId: ehr-degrades
-        description: |
-          This event gathers information about the degraded data within an EHR once it has been received.
+  /ehr-degrades:
+    post:
+      tags:
+        - Registration
+      summary: Submit EHR Degrades
+      operationId: ehr-degrades
+      description: |
+        This event gathers information about the degraded data within an EHR once it has been received.
 
-          The following information **MUST NOT** be sent:
-            - conversationID
-            - registrationEventDateTime
-            - reportingPracticeODSCode
-            - requestingPracticeODSCode
-            - sendingPracticeODSCode
+        The following information **MUST NOT** be sent:
+          - conversationID
+          - registrationEventDateTime
+          - reportingPracticeODSCode
+          - requestingPracticeODSCode
+          - sendingPracticeODSCode
 
-          **Submitted by:** Requesting practice
+        **Submitted by:** Requesting practice
 
-          **When to send:** When the degrades for the EHR have been identified.
+        **When to send:** When the degrades for the EHR have been identified.
 
-          **Notes:** Submit Errors events **MUST NOT** be sent in relation to degrades.
+        **Notes:** Submit Errors events **MUST NOT** be sent in relation to degrades.
 
-          **No information that relates the degrade to a particular transfer may be sent.**
+        **No information that relates the degrade to a particular transfer may be sent.**
 
-          ### Request Body example:
-          ```json
-          {
-            "reportingSystemSupplier": "SYSTEM_SUPPLIER",
-            "payload": {
-              "degrades": [
-                {
-                  "type": "RECORD_ENTRY",
-                  "reason": "CODE",
-                  "coding": [
-                    {
-                      "code": "1676331000000110",
-                      "system": "http://snomed.info/sct"
-                    }
-                  ]
-                }
-              ]
-            }
+        ### Request Body example:
+        ```json
+        {
+          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "payload": {
+            "degrades": [
+              {
+                "type": "RECORD_ENTRY",
+                "reason": "CODE",
+                "coding": [
+                  {
+                    "code": "1676331000000110",
+                    "system": "http://snomed.info/sct"
+                  }
+                ]
+              }
+            ]
           }
-          ```
-        parameters:
-          - in: header
-            name: apikey
-            description: API key to authenticate with.
+        }
+        ```
+      security:
+        - app-level0: []
+      requestBody:
+        description: |
+          The request body required for the EHR Degrades event.
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-            required: true
-        requestBody:
-          description: |
-            The request body required for the EHR Degrades event.
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                allOf:
-                  - type: object
-                    required:
-                      - reportingSystemSupplier
-                      - payload
-                    properties:
-                      reportingSystemSupplier:
-                        type: string
-                        description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
-                        example: SupplierName
-                      payload:
-                        description: An object that contains the detailed payload of the event.
-                        type: object
-                        required:
-                          - degrades
-                        properties:
-                          degrades:
-                            $ref: components/schemas/Degrade.yaml
-                            
-        responses:
-          '200':
-            $ref: components/responses/OK.yaml
-          '400':
-            $ref: components/responses/BadRequest.yaml
-          '500':
-            $ref: components/responses/InternalServerError.yaml
+              type: object
+              allOf:
+                - type: object
+                  required:
+                    - reportingSystemSupplier
+                    - payload
+                  properties:
+                    reportingSystemSupplier:
+                      type: string
+                      description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
+                      example: SupplierName
+                    payload:
+                      description: An object that contains the detailed payload of the event.
+                      type: object
+                      required:
+                        - degrades
+                      properties:
+                        degrades:
+                          $ref: components/schemas/Degrade.yaml
 
-  /gp-registrations-mi/ehr-integrations: 
+      responses:
+        '200':
+          $ref: components/responses/OK.yaml
+        '400':
+          $ref: components/responses/BadRequest.yaml
+        '500':
+          $ref: components/responses/InternalServerError.yaml
+
+  /ehr-integrations:
     post:
       tags:
         - Registration
@@ -678,7 +653,7 @@ paths:
         **Submitted by:** Requesting practice
 
         **When to send:** When the EHR has been integrated by the user at the requesting practice.
-        
+
         For HL7 v3 EHRs, this will be when the attachments are decoded from the message fragments.
 
         For FHIR EHRs, this will be when the attachment transfer is complete.
@@ -695,19 +670,14 @@ paths:
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
           "payload": {
-            "integration": {  
+            "integration": {
               "outcome": "INTEGRATED"
             }
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the EHR Integrations event.
@@ -738,7 +708,7 @@ paths:
         '500':
           $ref: components/responses/InternalServerError.yaml
 
-  /gp-registrations-mi/errors: 
+  /errors:
     post:
       tags:
         - Registration
@@ -756,7 +726,7 @@ paths:
         **Notes:** All negative acknowledgement defined in the specification must be reported as errors. However, this endpoint is not limited to negative acknowledgements.
 
           Anytime a technical error occurs that prevents the transfers from starting or completing, this must be reported using this endpoint.
-          
+
           Error events **MUST NOT** be submitted for failures or errors relating to Degrades.
 
         ### Request Body example:
@@ -777,13 +747,8 @@ paths:
           }
         }
         ```
-      parameters:
-        - in: header
-          name: apikey
-          description: API key to authenticate with.
-          schema:
-            type: string
-          required: true
+      security:
+        - app-level0: []
       requestBody:
         description: |
           The request body required for the Errors event.

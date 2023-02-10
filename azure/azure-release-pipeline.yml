@@ -21,42 +21,66 @@ resources:
 pool:
   name: 'AWS-ECS'
 
-variables:
-  - template: project.yml
+stages:
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: internal-dev
+      target_env: dev
+      depends_on: []
+      base_path: gp-registrations-mi
+      post_deploy:
+        - template: ./templates/run-smoke-tests.yml
+          parameters:
+            api_name: gp-registrations-management-information
+            apim_env: internal-dev
+            base_path: gp-registrations-mi
 
-extends:
-  template: azure/common/apigee-deployment.yml@common
-  parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
-    service_base_path: ${{ variables.service_base_path }}
-    jinja_templates:
-      TARGET_URL: https://01ycrxiip2.execute-api.eu-west-2.amazonaws.com/dev-env
-    apigee_deployments:
-      - environment: internal-dev
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: internal-qa
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: internal-qa-sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-    # (App subscription make sense for most sandbox implementations)
-      - environment: sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: int
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: internal-dev-sandbox
+      target_env: sandbox
+      depends_on: []
+      base_path: gp-registrations-mi
+      post_deploy:
+        - template: ./templates/run-smoke-tests.yml
+          parameters:
+            api_name: gp-registrations-management-information
+            apim_env: internal-dev-sandbox
+            base_path: gp-registrations-mi
+
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: int
+      target_env: dev
+      depends_on:
+        - internal_dev
+        - internal_dev_sandbox
+      base_path: gp-registrations-mi
+      post_deploy: []
+
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: sandbox
+      target_env: sandbox
+      depends_on:
+        - internal_dev
+        - internal_dev_sandbox
+      base_path: gp-registrations-mi
+      post_deploy: []
+
+    - template: azure/common/deploy-manual-approval.yml
+      parameters:
+        stage_name: manual_approval
         depends_on:
-          - internal_qa
-          - internal_qa_sandbox
-        post_deploy:
-          - template: ./templates/run-smoke-tests.yml
-      - environment: prod
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
-        jinja_templates:
-          TARGET_URL: https://u0r7aqgvvj.execute-api.eu-west-2.amazonaws.com/prod-env
+          - int
+          - sandbox
+        manual_approval_env: manual-approval-prod
+
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: prod
+      target_env: prod
+      depends_on:
+        - manual_approval
+      base_path: gp-registrations-mi
+      post_deploy: []

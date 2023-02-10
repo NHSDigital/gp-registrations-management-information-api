@@ -1,4 +1,0 @@
-<APIProxy name="gprmi">
-  <!-- This is the root of the application -->
-  <Description>Proxy to GP Registrations Management Information API endpoints.</Description>
-</APIProxy>

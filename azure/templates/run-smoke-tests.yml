@@ -1,23 +1,81 @@
+parameters:
+  - name: is_pr
+    type: boolean
+    default: false
+  - name: api_name
+  - name: base_path
+  - name: apim_env
+    values:
+      - internal-dev
+      - internal-dev-sandbox
+      - internal-qa
+      - internal-qa-sandbox
+      - ref
+      - dev
+      - int
+      - sandbox
+      - prod
+
+  - name: _aws_account
+    type: object
+    default:
+      internal-dev: ptl
+      internal-dev-sandbox: ptl
+      internal-qa: ptl
+      internal-qa-sandbox: ptl
+      ref: ptl
+      dev: ptl
+      int: ptl
+      sandbox: ptl
+      prod: prod
+
+  - name: _apigee_org
+    type: object
+    default:
+      internal-dev: nonprod
+      internal-dev-sandbox: nonprod
+      internal-qa: nonprod
+      internal-qa-sandbox: nonprod
+      ref: nonprod
+      dev: prod
+      int: prod
+      sandbox: prod
+      prod: prod
+
 steps:
+  - template: azure/components/aws-assume-role.yml@common
+    parameters:
+      role: "auto-ops"
+      profile: "apm_${{ parameters._aws_account[parameters.apim_env] }}"
+      aws_account: "${{ parameters._aws_account[parameters.apim_env] }}"
+
+  - template: azure/components/get-aws-secrets-and-ssm-params.yml@common
+    parameters:
+      secret_file_ids: []
+      secret_ids:
+        - ${{ parameters._aws_account[parameters.apim_env] }}/azure-devops/apigee-${{ parameters._apigee_org[parameters.apim_env] }}/APIGEE_OTP_KEY
+        - ${{ parameters._aws_account[parameters.apim_env] }}/azure-devops/apigee-${{ parameters._apigee_org[parameters.apim_env] }}/APIGEE_PASSWORD
+      config_ids:
+        - /${{ parameters._aws_account[parameters.apim_env] }}/azure-devops/apigee-${{ parameters._apigee_org[parameters.apim_env] }}/APIGEE_USERNAME
+
+  - template: azure/components/get-mfa-code.yml@common
+    parameters:
+      apigee_otp_key: $(APIGEE_OTP_KEY)
+
+  - template: azure/components/get-access-token.yml@common
+    parameters:
+      apigee_username: $(APIGEE_USERNAME)
+      apigee_password: $(APIGEE_PASSWORD)
+      apigee_organization: ${{ parameters._apigee_org[parameters.apim_env] }}
+
+  - ${{ if parameters.is_pr }}:
+      - bash: |
+          set -e
+          echo "##vso[task.setvariable variable=BASE_PATH_SUFFIX]-${{ replace(replace(replace(variables['Build.SourceBranch'], '/merge', ''), 'refs/pull/', ''), '/', '_') }}"
+        displayName: Set instance name suffix
   - bash: |
-      make install-python
-    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-    displayName: Setup pytests
-
-  - bash: |
-      export RELEASE_RELEASEID=$(Build.BuildId)
-      export SOURCE_COMMIT_ID=$(Build.SourceVersion)
-      export APIGEE_ENVIRONMENT="$(ENVIRONMENT)"
-      export SERVICE_BASE_PATH="$(SERVICE_BASE_PATH)"
-      export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
-
-      make smoketest
-    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-    displayName: run smoketests
-
-  - task: PublishTestResults@2
-    displayName: 'Publish smoketest results'
-    condition: always()
-    inputs:
-      testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/smoketest-report.xml'
-      failTaskOnFailedTests: true
+      set -e
+      export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)
+      export PROXY_NAME=${{ parameters.api_name }}--${{ parameters.apim_env }}--${{ parameters.base_path }}$(BASE_PATH_SUFFIX)
+      poetry run pytest -s --proxy-name=${PROXY_NAME} --api-name=${{ parameters.api_name }}
+    displayName: Run tests

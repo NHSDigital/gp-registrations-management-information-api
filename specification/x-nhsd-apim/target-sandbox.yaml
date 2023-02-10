@@ -1,0 +1,10 @@
+type: hosted
+healthcheck: /_status
+containers:
+- name: gp-reg-mi
+  environment: 
+    LOG_LEVEL: info
+    NODE_ENV: production
+  image:
+    $ref: x-nhsd-apim/image.yaml
+
