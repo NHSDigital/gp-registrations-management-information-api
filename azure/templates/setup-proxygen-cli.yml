@@ -11,8 +11,8 @@ steps:
   
   - bash: |
       set -e
-      echo layout pyenv 3.8.10 > .envrc
-      direnv allow
+      poetry cache clear pytest-nhsd-apim --all
+      poetry cache clear proxygen-cli --all
       poetry install
     displayName: Install proxygen-cli
   
