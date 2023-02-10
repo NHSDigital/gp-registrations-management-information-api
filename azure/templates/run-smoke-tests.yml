@@ -73,6 +73,12 @@ steps:
           set -e
           echo "##vso[task.setvariable variable=BASE_PATH_SUFFIX]-${{ replace(replace(replace(variables['Build.SourceBranch'], '/merge', ''), 'refs/pull/', ''), '/', '_') }}"
         displayName: Set instance name suffix
+
+  - bash: |
+      set -e
+      poetry install --only test
+    displayName: Install test libraries
+
   - bash: |
       set -e
       export APIGEE_ACCESS_TOKEN=$(secret.AccessToken)

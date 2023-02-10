@@ -11,9 +11,7 @@ steps:
   
   - bash: |
       set -e
-      poetry cache clear pytest-nhsd-apim --all
-      poetry cache clear proxygen-cli --all
-      poetry install
+      poetry install --only deploy
     displayName: Install proxygen-cli
   
   - bash: |

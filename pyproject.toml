@@ -18,9 +18,15 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 [tool.poetry.dependencies]
 python = "^3.8"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.deploy.dependencies]
 proxygen-cli = "^2.0.10"
+
+[tool.poetry.group.test.dependencies]
 pytest-nhsd-apim = "^3.3.0"
+
+[tool.poetry.group.tag.dependencies]
+pygit = "^0.1"
+semver = "^2.13.0"
 
 [tool.poetry.scripts]
 
