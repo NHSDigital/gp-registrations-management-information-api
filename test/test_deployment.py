@@ -3,6 +3,7 @@ Example tests that show all the features of pytest_nhsd_apim.
 """
 import json
 from datetime import datetime, timedelta
+from time import sleep
 
 import pytest
 import requests
@@ -41,7 +42,7 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
             "healthcheck": {
                 "status": "fail",
                 "responseCode": 503,
-            }
+            },
         },
     }
     max_wait = timedelta(minutes=5)
@@ -53,5 +54,6 @@ def test_status_endpoint(nhsd_apim_proxy_url, status_endpoint_auth_headers):
             nhsd_apim_proxy_url + "/_status", headers=status_endpoint_auth_headers
         )
         status_json = resp.json()
+        sleep(5)
     assert resp.status_code == 200
     assert status_json["status"] == "pass"
