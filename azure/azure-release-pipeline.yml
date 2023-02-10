@@ -48,25 +48,25 @@ stages:
             apim_env: internal-dev-sandbox
             base_path: gp-registrations-mi
 
-  # - template: ./templates/deploy-env-proxy.yml
-  #   parameters:
-  #     apim_env: int
-  #     target_env: dev
-  #     depends_on:
-  #       - internal_dev
-  #       - internal_dev_sandbox
-  #     base_path: gp-registrations-mi
-  #     post_deploy: []
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: int
+      target_env: dev
+      depends_on:
+        - internal_dev
+        - internal_dev_sandbox
+      base_path: gp-registrations-mi
+      post_deploy: []
 
-  # - template: ./templates/deploy-env-proxy.yml
-  #   parameters:
-  #     apim_env: sandbox
-  #     target_env: sandbox
-  #     depends_on:
-  #       - internal_dev
-  #       - internal_dev_sandbox
-  #     base_path: gp-registrations-mi
-  #     post_deploy: []
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: sandbox
+      target_env: sandbox
+      depends_on:
+        - internal_dev
+        - internal_dev_sandbox
+      base_path: gp-registrations-mi
+      post_deploy: []
 
   # - template: azure/common/deploy-manual-approval.yml
   #   parameters:
