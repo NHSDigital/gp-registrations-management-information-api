@@ -11,7 +11,10 @@ components:
       $ref: https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/app-level0
 
 x-nhsd-apim:
-  $ref: x-nhsd-apim/env-specific-config.yaml
+  access:
+    $ref: x-nhsd-apim/access.yaml
+  target:
+    $ref: x-nhsd-apim/target.yaml
 
 info:
   version: 0.0.1

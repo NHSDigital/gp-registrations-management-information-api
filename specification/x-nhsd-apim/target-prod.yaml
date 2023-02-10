@@ -1,0 +1,7 @@
+type: external
+url: https://u0r7aqgvvj.execute-api.eu-west-2.amazonaws.com/prod-env
+healthcheck: /_status
+security:
+  type: apikey
+  header: X-API-Key
+  secret: apikey

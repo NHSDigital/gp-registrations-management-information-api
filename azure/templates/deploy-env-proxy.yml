@@ -71,7 +71,8 @@ stages:
                 - bash: |
                     set -e
                     cd specification/x-nhsd-apim
-                    mv -f ${{ parameters.target_env }}.yaml env-specific-config.yaml
+                    mv -f target-${{ parameters.target_env }}.yaml target.yaml
+                    mv -f access-${{ parameters.apim_env }}.yaml access.yaml
                   displayName: Set environment specific config in x-nhsd-apim
 
                 - ${{ if parameters.is_pr }}:

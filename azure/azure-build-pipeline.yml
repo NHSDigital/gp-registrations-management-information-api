@@ -56,10 +56,9 @@ stages:
               docker push ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
 
               cd ..
-              ls -ltrha
-              echo '' > specification/x-nhsd-apim/image.yml
-              echo "name: gp-registrations-management-information" >> specification/x-nhsd-apim/image.yml
-              echo "tag: ${build_label}" >> specification/x-nhsd-apim/image.yml
+              echo '' > specification/x-nhsd-apim/image.yaml
+              echo "name: gp-registrations-management-information" >> specification/x-nhsd-apim/image.yaml
+              echo "tag: ${build_label}" >> specification/x-nhsd-apim/image.yaml
 
               cat specification/x-nhsd-apim/image.yml
             displayName: Build and push docker image
