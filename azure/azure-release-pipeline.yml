@@ -90,7 +90,7 @@ stages:
                     poetry run proxygen spec publish --no-confirm specification/gp-registrations-management-information.yaml
                   displayName: Publish spec
 
-  - template: azure/common/deploy-manual-approval.yml
+  - template: azure/common/deploy-manual-approval.yml@common
     parameters:
       stage_name: manual_approval
       depends_on:
