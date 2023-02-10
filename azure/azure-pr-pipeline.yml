@@ -38,3 +38,18 @@ stages:
             apim_env: internal-dev
             base_path: gp-registrations-mi
             is_pr: true
+
+  - template: ./templates/deploy-env-proxy.yml
+    parameters:
+      apim_env: internal-dev-sandbox
+      target_env: sandbox
+      depends_on: []
+      base_path: gp-registrations-mi
+      is_pr: true
+      post_deploy:
+        - template: ./templates/run-smoke-tests.yml
+          parameters:
+            api_name: gp-registrations-management-information
+            apim_env: internal-dev-sandbox
+            base_path: gp-registrations-mi
+            is_pr: true
