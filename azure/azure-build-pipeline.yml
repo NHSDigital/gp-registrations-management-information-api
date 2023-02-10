@@ -60,7 +60,7 @@ stages:
               echo "name: gp-registrations-management-information" >> specification/x-nhsd-apim/image.yaml
               echo "tag: ${build_label}" >> specification/x-nhsd-apim/image.yaml
 
-              cat specification/x-nhsd-apim/image.yml
+              cat specification/x-nhsd-apim/image.yaml
             displayName: Build and push docker image
 
           - bash: |
