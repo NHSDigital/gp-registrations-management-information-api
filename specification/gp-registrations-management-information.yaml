@@ -25,7 +25,6 @@ info:
 
     This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
 
-
     You can send us Management Information for registrations regardless of the transfer protocol used (GP2GP or GP Connect).
 
     Using the API, you can send us information about the following:
@@ -100,11 +99,9 @@ info:
     ## Onboarding
     You need to get your software approved by us before it can go live with this API. We call this onboarding. The onboarding process can sometimes be quite long, so it’s worth planning well ahead.
 
-    This API uses our digital onboarding process.
-
     As part of this process, you need to demonstrate your technical conformance to the requirements for this API.
-
-    To get started, contact us at [gp-registrations-data@nhs.net](mailto:gp-registrations-data@nhs.net).
+    
+    To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
