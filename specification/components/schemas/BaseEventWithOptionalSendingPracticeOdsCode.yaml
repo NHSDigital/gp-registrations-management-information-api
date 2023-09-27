@@ -17,7 +17,7 @@ properties:
     example: 2020-02-08T08:30:27Z
   reportingSystemSupplier:
     type: string
-    description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
+    description: The system supplier who generated the event. The ODS code assigned to you as a supplier by NHSD.
     example: supplierName
   reportingPracticeOdsCode:
     type: string
