@@ -23,7 +23,7 @@ info:
     ## Overview
     Use this API to send real-time GP registrations metrics to NHS for service monitoring of patient EHR transfers between GP Practices.
 
-    This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://nhsconnect.github.io/prm-external-developer-website/gp2gp/gp2gp_2.2b/overview/).
+    This API replaces the weekly submission of GP2GP information sent to us via a MESH mailbox, as required by [GP2GP V2.2b](https://gpitbjss.atlassian.net/wiki/spaces/DCSDCS/pages/1391134336/GP2GP).
 
     You can send us Management Information for registrations regardless of the transfer protocol used (GP2GP or GP Connect).
 
