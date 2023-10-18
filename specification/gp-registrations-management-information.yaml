@@ -196,7 +196,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
@@ -276,7 +276,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
@@ -341,7 +341,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567"
@@ -387,7 +387,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
@@ -474,7 +474,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
@@ -546,7 +546,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567"
@@ -599,7 +599,7 @@ paths:
         ### Request Body example:
         ```json
         {
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "payload": {
             "degrades": [
               {
@@ -634,8 +634,8 @@ paths:
                   properties:
                     reportingSystemSupplier:
                       type: string
-                      description: The system supplier who generated the event. A unique identifier given to you as a supplier by NHSD.
-                      example: SupplierName
+                      description: The system supplier who generated the event. The ODS code assigned to you as a supplier by NHSD.
+                      example: SupplierOdsCode
                     payload:
                       description: An object that contains the detailed payload of the event.
                       type: object
@@ -677,7 +677,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:25Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
@@ -746,7 +746,7 @@ paths:
         {
           "conversationId": "4345-986959-4930-684038",
           "registrationEventDateTime": "2020-02-08T08:30:26Z",
-          "reportingSystemSupplier": "SYSTEM_SUPPLIER",
+          "reportingSystemSupplier": "SUPPLIER_ODS_CODE",
           "reportingPracticeOdsCode": "ABC1234",
           "requestingPracticeOdsCode": "ABC1234",
           "sendingPracticeOdsCode": "XYZ4567",
