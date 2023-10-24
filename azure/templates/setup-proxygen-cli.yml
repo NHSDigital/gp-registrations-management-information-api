@@ -8,6 +8,8 @@ steps:
     parameters:
       secret_file_ids:
         - ptl/keycloak/paas/gp-registrations-management-information-client/private_key.pem
+      secret_ids:
+        - ptl/keycloak/paas/gp-registrations-management-information-client/key_id
   
   - bash: |
       set -e
@@ -25,6 +27,7 @@ steps:
       poetry run proxygen settings set endpoint_url 'https://proxygen.prod.api.platform.nhs.uk:9005'
       poetry run proxygen credentials set client_id gp-registrations-management-information-client
       poetry run proxygen credentials set private_key_path private_key.pem
+      poetry run proxygen credentials set key_id $(key_id)
       poetry run proxygen settings set api gp-registrations-management-information
     displayName: Configure proxygen-cli
   
