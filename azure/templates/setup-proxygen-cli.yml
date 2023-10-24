@@ -33,8 +33,8 @@ steps:
 
       cat > ~/.proxygen/credentials.yaml <<- EOF
       client_id: gp-registrations-management-information-client
-      private_key_path:private_key.pem
-      key_id:$(key_id)
+      private_key_path: private_key.pem
+      key_id: $(key_id)
       base_url: https://identity.prod.api.platform.nhs.uk/realms/api-producers
       EOF
       
