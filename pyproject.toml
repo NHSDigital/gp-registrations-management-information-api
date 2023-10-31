@@ -1,5 +1,5 @@
 [project]
-python = "^3.8"
+python = "^3.9"
 
 [tool.poetry]
 name = "gp-registrations-management-information"
@@ -16,10 +16,10 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.9,<4.0"
 
 [tool.poetry.group.deploy.dependencies]
-proxygen-cli = "^2.0.10"
+proxygen-cli = "^2.0.15"
 
 [tool.poetry.group.test.dependencies]
 pytest-nhsd-apim = "^3.3.0"
