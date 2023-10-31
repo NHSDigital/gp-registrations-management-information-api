@@ -392,14 +392,14 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "yaspin"
-version = "2.4.0"
+version = "2.5.0"
 description = "Yet Another Terminal Spinner"
 category = "dev"
 optional = false
-python-versions = ">=3.7.2,<4.0.0"
+python-versions = ">=3.8.1,<4.0.0"
 
 [package.dependencies]
-termcolor = ">=2.2,<3.0"
+termcolor = ">=2.3,<3.0"
 
 [metadata]
 lock-version = "1.1"
@@ -876,6 +876,6 @@ urllib3 = [
     {file = "urllib3-2.0.7.tar.gz", hash = "sha256:c97dfde1f7bd43a71c8d2a58e369e9b2bf692d1334ea9f9cae55add7d0dd0f84"},
 ]
 yaspin = [
-    {file = "yaspin-2.4.0-py3-none-any.whl", hash = "sha256:9b204e3176afd76197939faf9c3ac304b4edd3dbff38d2a3039d08f1c5c4703c"},
-    {file = "yaspin-2.4.0.tar.gz", hash = "sha256:0a7aa4f88e2afff938899cc6160c886dbd439463d2ec06b7d2367b776635b78b"},
+    {file = "yaspin-2.5.0-py3-none-any.whl", hash = "sha256:58aaa19330b9eacf86241043342b4040ded75f170240276d963c570263cd8f53"},
+    {file = "yaspin-2.5.0.tar.gz", hash = "sha256:f96ab3b5c42e1eaa6af3193508082309d9dc43f6963339f9aa606003ee8d7e63"},
 ]
