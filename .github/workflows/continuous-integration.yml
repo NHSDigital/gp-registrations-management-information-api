@@ -31,7 +31,6 @@ jobs:
 
       - name: Install repo
         run:
-            poetry env use python3.9
             poetry install --only tag
 
       - name: Set SPEC_VERSION env var
