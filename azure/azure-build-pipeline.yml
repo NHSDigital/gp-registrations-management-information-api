@@ -39,15 +39,16 @@ stages:
           - checkout: self
             persistCredentials: true
 
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '3.9'
+        #   - task: UsePythonVersion@0
+        #     inputs:
+        #       versionSpec: '3.9'
+        #       addToPath: true
 
           - template: ./templates/setup-proxygen-cli.yml
 
           - bash: |
               set -euo pipefail
-              poetry run proxygen docker get-login | bash
+              proxygen docker get-login | bash
             displayName: Docker login
 
           - bash: |
@@ -55,7 +56,7 @@ stages:
               export build_label="$(Build.BuildId)-sha${commit_hash}"
 
               cd sandbox
-              DOCKER_REGISTRY=$(poetry run proxygen docker registry)
+              DOCKER_REGISTRY=$(proxygen docker registry)
               docker build . -t ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
               docker push ${DOCKER_REGISTRY}/gp-registrations-management-information:${build_label}
 

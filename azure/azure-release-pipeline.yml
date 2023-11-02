@@ -87,7 +87,7 @@ stages:
                 - template: ./templates/setup-proxygen-cli.yml
                 - bash: |
                     set -e
-                    poetry run proxygen spec publish --no-confirm specification/gp-registrations-management-information.yaml
+                    proxygen spec publish --no-confirm specification/gp-registrations-management-information.yaml
                   displayName: Publish spec
 
   - template: azure/common/deploy-manual-approval.yml@common

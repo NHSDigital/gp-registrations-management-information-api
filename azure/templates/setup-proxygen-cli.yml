@@ -13,9 +13,8 @@ steps:
 
   - bash: |
       set -e
-      poetry env use python3.9
-      poetry install --only deploy
-    displayName: Install proxygen-cli
+      pipx install proxygen-cli
+    displayName: Install proxygen-cli using pipx
 
   - bash: |
       set -euo pipefail
@@ -25,12 +24,12 @@ steps:
       # Need to set port to 9005 as *.prod.api.platform.nhs.uk
       # resolves to internal-nlb w/ x-account conection to
       # prod
-      poetry run proxygen settings set endpoint_url 'https://proxygen.prod.api.platform.nhs.uk:9005'
+      proxygen settings set endpoint_url 'https://proxygen.prod.api.platform.nhs.uk:9005'
 
       # This is how the credentials _should_ be set, but need the APM-4755 fix to be implemented first
-      # poetry run proxygen credentials set client_id gp-registrations-management-information-client
-      # poetry run proxygen credentials set private_key_path private_key.pem
-      # poetry run proxygen credentials set key_id $(key_id)
+      # proxygen credentials set client_id gp-registrations-management-information-client
+      # proxygen credentials set private_key_path private_key.pem
+      # proxygen credentials set key_id $(key_id)
 
       cat > ~/.proxygen/credentials.yaml <<- EOF
       client_id: gp-registrations-management-information-client
@@ -39,6 +38,6 @@ steps:
       base_url: https://identity.prod.api.platform.nhs.uk/realms/api-producers
       EOF
 
-      poetry run proxygen settings set api gp-registrations-management-information
+      proxygen settings set api gp-registrations-management-information
     displayName: Configure proxygen-cli
 
