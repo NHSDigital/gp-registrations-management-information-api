@@ -13,7 +13,9 @@ steps:
 
   - bash: |
       set -e
-      python --version
+      which pyenv
+      whereis python
+      python3.9 --version
       pipx install proxygen-cli
     displayName: Install proxygen-cli using pipx
 
