@@ -13,6 +13,7 @@ steps:
 
   - bash: |
       set -e
+      python --version
       pipx install proxygen-cli
     displayName: Install proxygen-cli using pipx
 
