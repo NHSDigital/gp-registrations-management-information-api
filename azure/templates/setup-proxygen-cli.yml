@@ -15,7 +15,7 @@ steps:
       set -e
       python -m pip install --user pipx
       python -m pipx ensurepath
-      pipx install proxygen-cli --python=python3.9
+      pipx install proxygen-cli --python=python3.9.5
     displayName: Install proxygen-cli using pipx
 
   - bash: |
