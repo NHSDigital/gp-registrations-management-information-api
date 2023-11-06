@@ -1,5 +1,5 @@
 [project]
-python = "^3.9"
+python = "^3.8"
 
 [tool.poetry]
 name = "gp-registrations-management-information"
@@ -11,18 +11,15 @@ authors = [
 readme = 'README.md'
 license = "MIT"
 repository = "https://github.com/NHSDigital/gp-registrations-management-information"
-homepage = ""
+homepage = "https://digital.nhs.uk/developer/api-catalogue/gp-registrations-management-information"
 keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-
-[tool.poetry.group.deploy.dependencies]
-proxygen-cli = "^2.0.15"
+python = "^3.8"
 
 [tool.poetry.group.test.dependencies]
-pytest-nhsd-apim = "^3.3.0"
+pytest-nhsd-apim = "^3.3.9"
 
 [tool.poetry.group.tag.dependencies]
 gitpython = "^3.1.35"

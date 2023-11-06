@@ -24,9 +24,6 @@ pool:
   name: 'AWS-ECS'
 
 stages:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.9'
   - template: ./templates/deploy-env-proxy.yml
     parameters:
       apim_env: internal-dev
