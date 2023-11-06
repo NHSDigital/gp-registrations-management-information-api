@@ -1,4 +1,4 @@
-name: "$(SourceBranchName)+$(BuildID) x"
+name: "$(SourceBranchName)+$(BuildID)"
 
 trigger: none
 pr: none
