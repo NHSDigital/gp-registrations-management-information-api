@@ -11,6 +11,7 @@ components:
       $ref: https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/app-level0
 
 x-nhsd-apim:
+  temporary: false
   access:
     $ref: x-nhsd-apim/access.yaml
   target:

@@ -61,6 +61,10 @@ stages:
                         set -e
                         echo "##vso[task.setvariable variable=BASE_PATH_SUFFIX]-${{ replace(replace(replace(variables['Build.SourceBranch'], '/merge', ''), 'refs/pull/', ''), '/', '_') }}"
                       displayName: Set instance name suffix
+                    - bash: |
+                        set -e
+                        sed -i 's/temporary: false/temporary: true/g' specification/gp-registrations-management-information.yaml
+                      displayName: Mark instance as temporary
 
                 - bash: |
                     set -e
