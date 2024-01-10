@@ -22,7 +22,7 @@ python = "^3.8"
 pytest-nhsd-apim = "^3.3.9"
 
 [tool.poetry.group.tag.dependencies]
-gitpython = "^3.1.35"
+gitpython = "^3.1.41"
 semver = "^2.13.0"
 
 [tool.poetry.scripts]
