@@ -11,7 +11,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0  # This causes all history to be fetched, which is required for calculate-version to function
-
+      
+      - name: Set Instance as Temporary
+        if: github.ref != 'refs/heads/master'
+        run: |
+          python scripts/set_temporary_instance.py < specification/gp-registrations-management-information.yaml
+      
       - name: Install Python 3.8
         uses: actions/setup-python@v1
         with:
