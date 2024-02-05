@@ -10,6 +10,8 @@ properties:
       The code associated with the error. All negative acknowledgements should have this populated with the acknowledgement response code.
 
       Other errors should have a code assigned that is understood by the reporting system supplier.
+
+      This field should only contain letters, numbers and underscores and be no longer than 50 charachers in length.
     example: FD34
   errorDescription:
     type: string
