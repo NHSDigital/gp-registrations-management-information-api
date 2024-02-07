@@ -728,7 +728,9 @@ paths:
       summary: Submit Errors
       operationId: errors
       description: |
-        This event gathers information about all errors and events that trigger the sending of a negative acknowledgement that occur during a registration.
+        This event gathers information about all errors and events that trigger the sending of a negative acknowledgement that occur during a registration. The error codes referenced should match the values described in 
+        [NPFIT-PC-BLD-0083.08 GP2GP Response Codes.pdf](https://gpitbjss.atlassian.net/wiki/download/attachments/12665978882/NPFIT-PC-BLD-0083.08%20GP2GP%20Response%20Codes.pdf?version=1&modificationDate=1703173853480&cacheVersion=1&api=v2)
+        which is found on [GP2GP v6.0.0](https://gpitbjss.atlassian.net/wiki/spaces/DCSDCS/pages/12665978882/GP2GP+v6.0.0).
 
         This is used to understand errors and prioritise their resolution to support the successful transfer of patient EHRs.
 
