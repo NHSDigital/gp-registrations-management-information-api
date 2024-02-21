@@ -1,3 +1,4 @@
+THIS IS A DUMMY CHANGE. DO NOT MERGE
 # GP Registrations Management Information API
 
 ![Build](https://github.com/NHSDigital/gp-registrations-management-information/workflows/Build/badge.svg?branch=master)
