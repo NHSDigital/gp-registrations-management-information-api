@@ -58,7 +58,7 @@ info:
     * [GP Connect Send Document - FHIR API](https://digital.nhs.uk/developer/api-catalogue/gp-connect-send-document-fhir)
 
     ## API status and roadmap
-    This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+    This API is [in production](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     To see our roadmap, or to suggest, comment or vote on features for this API, see our [interactive product backlog](https://nhs-digital-api-management.featureupvote.com/suggestions/199324/gp-registrations-management-information-api).
 
